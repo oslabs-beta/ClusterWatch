@@ -21,10 +21,13 @@
   "homepage": "https://github.com/oslabs-beta/kr8os#readme",
   "dependencies": {
     "cors": "^2.8.5",
+    "css-loader": "^6.7.3",
     "express": "^4.18.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.8.1"
+    "react-graph-vis": "^1.0.7",
+    "react-router-dom": "^6.8.1",
+    "style-loader": "^3.3.1"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.20.2",
