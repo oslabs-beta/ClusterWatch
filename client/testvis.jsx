@@ -1,14 +1,14 @@
-import Graph from "react-graph-vis";
-import React, { useState } from "react";
-import ReactDOM from "react-dom";
+import Graph from 'react-graph-vis';
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
 
 const options = {
   layout: {
-    hierarchical: false
+    hierarchical: false,
   },
   edges: {
-    color: "#000000"
-  }
+    color: '#000000',
+  },
 };
 
 function randomColor() {
@@ -18,7 +18,7 @@ function randomColor() {
   return `#${red}${green}${blue}`;
 }
 
-const Testvis = () => {
+function Testvis() {
   const createNode = (x, y) => {
     const color = randomColor();
     setState(({ graph: { nodes, edges }, counter, ...rest }) => {
@@ -28,56 +28,57 @@ const Testvis = () => {
         graph: {
           nodes: [
             ...nodes,
-            { id, label: `Node ${id}`, color, x, y }
+            {
+              id, label: `Node ${id}`, color, x, y,
+            },
           ],
           edges: [
             ...edges,
-            { from, to: id }
-          ]
+            { from, to: id },
+          ],
         },
         counter: id,
-        ...rest
-      }
+        ...rest,
+      };
     });
-  }
+  };
   const [state, setState] = useState({
     counter: 5,
     graph: {
       nodes: [
-        { id: 1, label: "Node 1", color: "#e04141" },
-        { id: 2, label: "Node 2", color: "#e09c41" },
-        { id: 3, label: "Node 3", color: "#e0df41" },
-        { id: 4, label: "Node 4", color: "#7be041" },
-        { id: 5, label: "Node 5", color: "#41e0c9" }
+        { id: 1, label: 'Node 1', color: '#e04141' },
+        { id: 2, label: 'Node 2', color: '#e09c41' },
+        { id: 3, label: 'Node 3', color: '#e0df41' },
+        { id: 4, label: 'Node 4', color: '#7be041' },
+        { id: 5, label: 'Node 5', color: '#41e0c9' },
       ],
       edges: [
         { from: 1, to: 2 },
         { from: 1, to: 3 },
         { from: 2, to: 4 },
-        { from: 2, to: 5 }
-      ]
+        { from: 2, to: 5 },
+      ],
     },
     events: {
       select: ({ nodes, edges }) => {
-        console.log("Selected nodes:");
+        console.log('Selected nodes:');
         console.log(nodes);
-        console.log("Selected edges:");
+        console.log('Selected edges:');
         console.log(edges);
-        alert("Selected node: " + nodes);
+        alert(`Selected node: ${nodes}`);
       },
       doubleClick: ({ pointer: { canvas } }) => {
         createNode(canvas.x, canvas.y);
-      }
-    }
-  })
+      },
+    },
+  });
   const { graph, events } = state;
   return (
     <div>
       <h1>React graph vis</h1>
-      <Graph graph={graph} options={options} events={events} style={{ height: "640px" }} />
+      <Graph graph={graph} options={options} events={events} style={{ height: '640px' }} />
     </div>
   );
-
 }
 
 export default Testvis;
