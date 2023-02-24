@@ -1,14 +1,21 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Testvis from './testvis';
-
+import { Routes, Route } from 'react-router-dom';
+import {
+  Sidebar, Menu, MenuItem, useProSidebar,
+} from 'react-pro-sidebar';
+import Dashboard from './components/dashboard/Dashboard';
 // Custom Theme for Material UI
 
 function App() {
-  return <div className="sidebar">
-    kr8os
-    <Testvis />
-    </div>;
+  return (
+
+    <div>
+      <Routes>
+        <Route path="/*" element={<Dashboard />} />
+      </Routes>
+    </div>
+
+  );
 }
 
 export default App;
