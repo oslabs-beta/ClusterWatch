@@ -13,9 +13,10 @@ const clusterController = {};
 
 // THIS function will return an array of objects like:
 // [{ name: 'default', id: '192e1b4a-d1c0-4e4b-ba97-9b873b210c4a' }]
-clusterController.getNamespaces = async (req, res, next) => {
+clusterController.getClusterInfo = async (req, res, next) => {
   try {
-    res.locals.namespaces = await k8sApi.listNamespace()
+    // get namespace name and id first
+    const namespaces = await k8sApi.listNamespace()
       .then((data) => data.body.items
         .filter((namespace) => namespace.metadata.name.slice(0, 4) !== 'kube')
         .map((namespace) => ({ name: namespace.metadata.name, id: namespace.metadata.uid })));
@@ -29,6 +30,7 @@ clusterController.getNamespaces = async (req, res, next) => {
   }
 };
 
+k8sApi.listPodForAllNamespaces().then(res => console.log(res.body));
 // k8sApi.listNamespace().then(res => {
 //   test = res.body.items
 //     .filter((namespace) => namespace.metadata.name.slice(0, 4) !== 'kube')
