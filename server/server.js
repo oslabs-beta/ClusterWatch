@@ -1,12 +1,14 @@
 const express = require('express');
+const cors = require('cors');
+const clusterController = require('./controllers/clusterController');
+
 const app = express();
 const PORT = 3000;
-const cors = require('cors');
 
 app.use(express.json());
 app.use(cors());
 
-app.get('/clusterdata', )
+app.get('/clusterdata', (req, res) => res.status(200).json(res.locals.namespaces));
 
 // catch all
 app.use((req, res) => res.sendStatus(404));
@@ -18,7 +20,7 @@ app.use((err, req, res, next) => {
     status: 400,
     message: { err: 'An error occurred' },
   };
-  const errorObj = Object.assign({}, defaultErr, err);
+  const errorObj = { defaultErr, ...err };
   console.log(errorObj.log);
   return res.status(errorObj.status).json(errorObj.message);
 });
