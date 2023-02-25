@@ -6,7 +6,7 @@ const cors = require('cors');
 app.use(express.json());
 app.use(cors());
 
-
+app.get('/clusterdata', )
 
 // catch all
 app.use((req, res) => res.sendStatus(404));
