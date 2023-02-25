@@ -19,9 +19,12 @@
     "url": "https://github.com/oslabs-beta/kr8os/issues"
   },
   "homepage": "https://github.com/oslabs-beta/kr8os#readme",
-  "dependencies": {    "@mui/icons-material": "^5.11.9",
+  "dependencies": {
+    "@mui/icons-material": "^5.11.9",
     "@mui/material": "^5.11.10",
+    "babel-loader": "^9.1.2",
     "cors": "^2.8.5",
+    "css-loader": "^6.7.3",
     "express": "^4.18.2",
     "nodemon": "^2.0.20",
     "react": "^18.2.0",
@@ -45,10 +48,10 @@
     "html-webpack-plugin": "^5.5.0",
     "react-graph-vis": "^1.0.7",
     "style-loader": "^3.3.1",
+    "ts-loader": "^9.4.2",
+    "typescript": "^4.9.5",
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1",
-    "webpack-dev-server": "^4.11.1",
-    "ts-loader": "^9.4.2",
-    "typescript": "^4.9.5"
+    "webpack-dev-server": "^4.11.1"
   }
 }

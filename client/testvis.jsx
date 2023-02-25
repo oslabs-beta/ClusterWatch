@@ -1,82 +1,126 @@
 import Graph from 'react-graph-vis';
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
+import './vis-styles.css';
 
 const options = {
+  interaction: {
+    hover: true,
+  },
   layout: {
-    hierarchical: false,
+    hierarchical: true,
   },
   edges: {
     color: '#000000',
-  },
-};
-
-function randomColor() {
-  const red = Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
-  const green = Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
-  const blue = Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
-  return `#${red}${green}${blue}`;
+  }
 }
 
 function Testvis() {
-  const createNode = (x, y) => {
-    const color = randomColor();
-    setState(({ graph: { nodes, edges }, counter, ...rest }) => {
-      const id = counter + 1;
-      const from = Math.floor(Math.random() * (counter - 1)) + 1;
-      return {
-        graph: {
-          nodes: [
-            ...nodes,
-            {
-              id, label: `Node ${id}`, color, x, y,
-            },
-          ],
-          edges: [
-            ...edges,
-            { from, to: id },
-          ],
-        },
-        counter: id,
-        ...rest,
-      };
-    });
-  };
-  const [state, setState] = useState({
-    counter: 5,
+  const obj_id_counter = 6;
+  let ns_counter = 0;
+  const dummy_namespaces = [
+    {
+      title: 'Random information here\nother stuff\nMore',
+      id: 0,
+      label: 'control_plane',
+      color: randomColor(),
+      nodes: [1, 2, 3],
+    },
+    {
+      title: 'Random information here\nother stuff\nMore',
+      id: 1,
+      label: `Namespace ${ns_counter++}`,
+      color: randomColor(),
+      nodes: [4, 5],
+    },
+    {
+      title: 'Random information here\nother stuff\nMore',
+      id: 2,
+      label: `Namespace ${ns_counter++}`,
+      color: randomColor(),
+      nodes: [6, 7],
+    },
+    {
+      title: 'Random information here\nother stuff\nMore',
+      id: 3,
+      label: `Namespace ${ns_counter++}`,
+      color: randomColor(),
+      nodes: [8, 9],
+    },
+  ];
+  let node_counter = 0;
+  const dummy_nodes = [
+    {
+      title: 'Random information here\nother stuff\nMore',
+      id: 4,
+      label: `Node ${node_counter++}`,
+      color: randomColor(),
+      pods: [],
+    },
+    {
+      title: 'Random information here\nother stuff\nMore',
+      id: 5,
+      label: `Node ${node_counter++}`,
+      color: randomColor(),
+      pods: [],
+    },
+    {
+      title: 'Random information here\nother stuff\nMore',
+      id: 6,
+      label: `Node ${node_counter++}`,
+      color: randomColor(),
+      pods: [],
+    },
+    {
+      title: 'Random information here\nother stuff\nMore',
+      id: 7,
+      label: `Node ${node_counter++}`,
+      color: randomColor(),
+      pods: [],
+    },
+    {
+      title: 'Random information here\nother stuff\nMore',
+      id: 8,
+      label: `Node ${node_counter++}`,
+      color: randomColor(),
+      pods: [],
+    },
+    {
+      title: 'Random information here\nother stuff\nMore',
+      id: 9,
+      label: `Node ${node_counter++}`,
+      color: randomColor(),
+      pods: [],
+    },
+  ];
+  const edges = [];
+  dummy_namespaces.forEach((ns) => {
+    ns.nodes.forEach((node) => edges.push({ from: ns.id, to: node }));
+  });
+  console.log('edges', edges);
+
+  const graph = {
     graph: {
       nodes: [
-        { id: 1, label: 'Node 1', color: '#e04141' },
-        { id: 2, label: 'Node 2', color: '#e09c41' },
-        { id: 3, label: 'Node 3', color: '#e0df41' },
-        { id: 4, label: 'Node 4', color: '#7be041' },
-        { id: 5, label: 'Node 5', color: '#41e0c9' },
+        ...dummy_namespaces,
+        ...dummy_nodes,
       ],
-      edges: [
-        { from: 1, to: 2 },
-        { from: 1, to: 3 },
-        { from: 2, to: 4 },
-        { from: 2, to: 5 },
-      ],
+      edges,
     },
-    events: {
-      select: ({ nodes, edges }) => {
-        console.log('Selected nodes:');
-        console.log(nodes);
-        console.log('Selected edges:');
-        console.log(edges);
-        alert(`Selected node: ${nodes}`);
-      },
-      doubleClick: ({ pointer: { canvas } }) => {
-        createNode(canvas.x, canvas.y);
-      },
+  };
+  const events = {
+    select: ({ nodes, edges }) => {
+      console.log('Selected nodes:');
+      console.log(nodes);
+      console.log('Selected edges:');
+      console.log(edges);
+      alert(`Selected node: ${nodes}`);
     },
-  });
-  const { graph, events } = state;
+  };
   return (
     <div>
       <h1>React graph vis</h1>
-      <Graph graph={graph} options={options} events={events} style={{ height: '640px' }} />
+      <Graph graph={graph.graph} options={options} events={events} style={{ height: '640px' }} />
     </div>
   );
 }
