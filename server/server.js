@@ -8,7 +8,9 @@ const PORT = 3000;
 app.use(express.json());
 app.use(cors());
 
-app.get('/clusterdata', (req, res) => res.status(200).json(res.locals.namespaces));
+app.get('/clusterdata', clusterController.getClusterInfo, (req, res) => {
+  res.status(200).json(res.locals.clusterInfo);
+});
 
 // catch all
 app.use((req, res) => res.sendStatus(404));

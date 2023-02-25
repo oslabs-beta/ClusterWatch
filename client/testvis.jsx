@@ -12,7 +12,14 @@ const options = {
   },
   edges: {
     color: '#000000',
-  }
+  },
+};
+
+function randomColor() {
+  const red = Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
+  const green = Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
+  const blue = Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
+  return `#${red}${green}${blue}`;
 }
 
 function Testvis() {
@@ -118,11 +125,12 @@ function Testvis() {
     },
   };
   return (
-    <div>
+    <div id="visualizer">
       <h1>React graph vis</h1>
-      <Graph graph={graph.graph} options={options} events={events} style={{ height: '640px' }} />
+      <Graph graph={graph.graph} options={options} events={events} style={{ height: '640px' }}  />
     </div>
   );
 }
 
 export default Testvis;
+

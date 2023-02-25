@@ -4,40 +4,121 @@ const k8s = require('@kubernetes/client-node');
 const kc = new k8s.KubeConfig();
 kc.loadFromDefault();
 
+const k8sApi2 = kc.makeApiClient(k8s.AppsV1Api);
 const k8sApi = kc.makeApiClient(k8s.CoreV1Api);
+const k8sApi3 = kc.makeApiClient(k8s.NetworkingV1Api);
 
-// k8sApi.listNode().then(res => {
-//   console.log(res.body.items[0].metadata);
-// });
 const clusterController = {};
 
-// THIS function will return an array of objects like:
-// [{ name: 'default', id: '192e1b4a-d1c0-4e4b-ba97-9b873b210c4a' }]
+const getPods = async () => {
+  const res = await k8sApi.listPodForAllNamespaces();
+  const pods = res.body.items.map((data) => {
+    const { name, namespace, uid, creationTimestamp } = data.metadata;
+    const { containers, nodeName } = data.spec;
+    const { containerStatuses, hostIP, podIP, startTime } = data.status;
+    const containersInfo = containers.map((container) => ({
+      image: container.image,
+      name: container.name,
+    }));
+    const response = {
+      name,
+      namespace,
+      uid,
+      creationTimestamp,
+      containersInfo,
+      nodeName,
+      containerStatuses,
+      hostIP,
+      podIP,
+      startTime,
+    };
+    return response;
+  });
+  return pods;
+};
+
+const getNamespaces = async () => {
+  const res = await k8sApi.listNamespace();
+  const test = res.body.items
+    .filter((namespace) => namespace.metadata.name.slice(0, 4) !== 'kube')
+    .map((namespace) => ({
+      creationTimeStamp: namespace.creationTimeStamp,
+      name: namespace.metadata.name,
+      id: namespace.metadata.uid,
+    }));
+  return test;
+};
+
+const getServices = async () => {
+  const res = await k8sApi.listServiceForAllNamespaces();
+  const response = res.body.items;
+  const results = response.map((data) => {
+    const { name, uid, creationTimeStamp } = data.metadata;
+    const { ipFamilies, ports, selector, type } = data.spec;
+    const result = {
+      name,
+      uid,
+      creationTimeStamp,
+      ipFamilies,
+      ports,
+      selector,
+      type,
+    };
+    return result;
+  });
+  return results;
+};
+
+const getDeployments = async () => {
+  const res = await k8sApi2.listDeploymentForAllNamespaces();
+  const response = res.body.items;
+  const results = response.map((data) => {
+    const { name, uid, creationTimeStamp } = data.metadata;
+    const { strategy, replicas } = data.spec;
+    const { availableReplicas, conditions } = data.status;
+    const result = {
+      name,
+      uid,
+      creationTimeStamp,
+      strategy,
+      replicas,
+      availableReplicas,
+      conditions,
+    };
+    return result;
+  });
+  return results;
+};
+
+const getIngresses = async () => {
+  const res = await k8sApi3.listIngressForAllNamespaces();
+  return res.body.items;
+};
+
 clusterController.getClusterInfo = async (req, res, next) => {
   try {
-    // get namespace name and id first
-    const namespaces = await k8sApi.listNamespace()
-      .then((data) => data.body.items
-        .filter((namespace) => namespace.metadata.name.slice(0, 4) !== 'kube')
-        .map((namespace) => ({ name: namespace.metadata.name, id: namespace.metadata.uid })));
+    const pods = await getPods();
+    const namespaces = await getNamespaces();
+    const services = await getServices();
+    const deployments = await getDeployments();
+    const ingresses = await getIngresses();
+    const clusterInfo = {
+      pods,
+      namespaces,
+      services,
+      deployments,
+      ingresses,
+    };
+    res.locals.clusterInfo = clusterInfo;
     return next();
   } catch (err) {
     return next({
       log: `clusterController.getNamespaces ERROR: ${err}`,
       status: 500,
-      message: { err: 'An error occurred' },
+      message: { err: 'An error occurred in getClusterInfo' },
     });
   }
 };
-
-k8sApi.listPodForAllNamespaces().then(res => console.log(res.body));
-// k8sApi.listNamespace().then(res => {
-//   test = res.body.items
-//     .filter((namespace) => namespace.metadata.name.slice(0, 4) !== 'kube')
-//     .map((namespace) => {
-//       return { name: namespace.metadata.name, id: namespace.metadata.uid }
-//     });
-// })
 
 // clusterController.getPods = async (req, res, next) => {
 //   try {
