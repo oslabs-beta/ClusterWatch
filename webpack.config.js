@@ -2,7 +2,7 @@ const path = require('path');
 let HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './client/index.js',
+  entry: './client/index.js',  //change to ts???
   output: {
     publicPath: '/',
     path: path.resolve(__dirname, 'build/'),
@@ -23,6 +23,11 @@ module.exports = {
             presets: ['@babel/preset-env', '@babel/preset-react'],
           },
         },
+      },
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
       },
       {
         test: /\.css$/,
@@ -67,5 +72,5 @@ module.exports = {
       // favicon: 'test.png'
     }),
   ],
-  resolve: { extensions: ['*', '.js', '.jsx'] },
+  resolve: { extensions: ['*', '.js', '.jsx','.tsx','.ts'] }, //whats the *
 };
