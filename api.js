@@ -1,4 +1,5 @@
 const createAPIkey = async () => {
+
   try {
     let respObj;
     let response = await fetch('http://localhost:3001/api/auth/keys', {
@@ -11,7 +12,7 @@ const createAPIkey = async () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        name: 'newuser',
+        name: Math.random().toString(36).substring(7),
         role: 'Admin',
         secondsToLive: 86400,
       }),
@@ -29,33 +30,33 @@ const createAPIkey = async () => {
 
 createAPIkey();
 
-const APIKey =
-  'eyJrIjoiNUhWME9pUmhTbTRVMTNNR3piTjVyTVFxaTU3OXhIb1QiLCJuIjoibmV3dXNlciIsImlkIjoxfQ==';
-const dashboardName = 'Prometheus / Overview';
-const getUid = async () => {
-  try {
-    let response = await fetch(
-      `http://localhost:3001/api/search?query=${encodeURIComponent(dashboardName)}`,
-      {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${APIKey}`,
-          'Content-Type': 'application/json',
-        },
-      }
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        // Get the uid of the first dashboard in the list
-        const uid = data[0].uid;
-        console.log(uid);
-      });
-  } catch {
-    console.log('Error occured creating API key');
-  }
-};
+// const APIKey =
+//   'eyJrIjoiNUhWME9pUmhTbTRVMTNNR3piTjVyTVFxaTU3OXhIb1QiLCJuIjoibmV3dXNlciIsImlkIjoxfQ==';
+// const dashboardName = 'Prometheus / Overview';
+// const getUid = async () => {
+//   try {
+//     let response = await fetch(
+//       `http://localhost:3001/api/search?query=${encodeURIComponent(dashboardName)}`,
+//       {
+//         method: 'GET',
+//         headers: {
+//           Authorization: `Bearer ${APIKey}`,
+//           'Content-Type': 'application/json',
+//         },
+//       }
+//     )
+//       .then((res) => res.json())
+//       .then((data) => {
+//         // Get the uid of the first dashboard in the list
+//         const uid = data[0].uid;
+//         console.log(uid);
+//       });
+//   } catch {
+//     console.log('Error occured creating API key');
+//   }
+// };
 
-getUid();
+// getUid();
 
 // const getDashboards = async () => {
 //     try {
@@ -74,7 +75,7 @@ getUid();
 //       console.log('Error occurred getting dashboards');
 //     }
 //   };
-  
+
 //   getDashboards();
 
 // /api/dashboards/uid/
