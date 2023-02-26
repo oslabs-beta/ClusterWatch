@@ -7,7 +7,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   /* additions here*/
   height: 100vh;
-  background: black;
+  /* background: black; */
 }
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
@@ -39,6 +39,21 @@ code {
 .navbutton {
   text-decoration: none;
 }
+
+.iframe {
+  width:100%
+}
+
+.link {
+  text-decoration: none;
+}
+
+.link:visited {
+  color: inherit;
+}
+
+
+
 #TestVis{
   background: white;
 }
