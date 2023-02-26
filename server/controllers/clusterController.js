@@ -30,7 +30,7 @@ clusterController.getClusterInfo = async (req, res, next) => {
   }
 };
 
-k8sApi.listPodForAllNamespaces().then(res => console.log(res.body));
+k8sApi.listPodForAllNamespaces().then(res => console.log(0));
 // k8sApi.listNamespace().then(res => {
 //   test = res.body.items
 //     .filter((namespace) => namespace.metadata.name.slice(0, 4) !== 'kube')

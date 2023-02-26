@@ -8,12 +8,19 @@ import {
   useProSidebar,
 } from 'react-pro-sidebar';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import AnalyticsOutlinedIcon from '@mui/icons-material/AnalyticsOutlined';
+import ScatterPlotOutlinedIcon from '@mui/icons-material/ScatterPlotOutlined';
+import AccountTreeOutlinedIcon from '@mui/icons-material/AccountTreeOutlined';
 import PeopleOutlinedIcon from '@mui/icons-material/PeopleOutlined';
 import ContactsOutlinedIcon from '@mui/icons-material/ContactsOutlined';
 import ReceiptOutlinedIcon from '@mui/icons-material/ReceiptOutlined';
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
+import ViewInArOutlinedIcon from '@mui/icons-material/ViewInArOutlined';
+import FilterTiltShiftOutlinedIcon from '@mui/icons-material/FilterTiltShiftOutlined';
+import HubOutlinedIcon from '@mui/icons-material/HubOutlined';
+import PodcastsOutlinedIcon from '@mui/icons-material/PodcastsOutlined';
 import Testvis from '../../testvis';
 
 import Overview from '../../Pages/Overview';
@@ -26,7 +33,7 @@ import NodeUseMethod from '../../Pages/Grafana/NodeUseMethod';
 
 // Custom Theme for Material UI
 
-function Navbar() {
+function Navbar({ apiKey }) {
   const { collapseSidebar } = useProSidebar();
   const [teamSubMenuOpen, setTeamSubMenuOpen] = useState(false);
 
@@ -63,35 +70,35 @@ function Navbar() {
 
           <SubMenu
             opened={teamSubMenuOpen}
-            icon={<PeopleOutlinedIcon />}
+            icon={<AnalyticsOutlinedIcon />}
             label="Metrics"
           >
-            <MenuItem>
+            <MenuItem icon={<ScatterPlotOutlinedIcon />}>
               <Link to="/Metrics/Cluster" className="link">
                 Cluster
               </Link>
             </MenuItem>
-            <MenuItem>
+            <MenuItem icon={<AccountTreeOutlinedIcon />}>
               <Link to="/Metrics/Nodes" className="link">
                 Nodes
               </Link>
             </MenuItem>
-            <MenuItem>
+            <MenuItem icon={<ViewInArOutlinedIcon />}>
               <Link to="/Metrics/Kubelet" className="link">
                 Kubelet
               </Link>
             </MenuItem>
-            <MenuItem>
+            <MenuItem icon={<HubOutlinedIcon />}>
               <Link to="/Metrics/ClusterUseMethod" className="link">
                 Use Method(Cluster)
               </Link>
             </MenuItem>
-            <MenuItem>
+            <MenuItem icon={<PodcastsOutlinedIcon />}>
               <Link to="/Metrics/NodeUseMethod" className="link">
                 Use Method(Node)
               </Link>
             </MenuItem>
-            <MenuItem>
+            <MenuItem icon={<FilterTiltShiftOutlinedIcon />}>
               <Link to="/Metrics/CoreDNS" className="link">
                 CoreDNS
               </Link>
@@ -107,15 +114,18 @@ function Navbar() {
 
       <Routes>
         <Route path="/Overview" element={<Overview />} />
-        <Route path="/Metrics/Cluster" element={<Cluster />} />
+        <Route path="/Metrics/Cluster" element={<Cluster apiKey={apiKey} />} />
         <Route
           path="/Metrics/ClusterUseMethod"
-          element={<ClusterUseMethod />}
+          element={<ClusterUseMethod apiKey={apiKey} />}
         />
-        <Route path="/Metrics/CoreDNS" element={<CoreDNS />} />
-        <Route path="/Metrics/Kubelet" element={<Kubelet />} />
-        <Route path="/Metrics/Nodes" element={<Nodes />} />
-        <Route path="/Metrics/NodeUseMethod" element={<NodeUseMethod />} />
+        <Route path="/Metrics/CoreDNS" element={<CoreDNS apiKey={apiKey} />} />
+        <Route path="/Metrics/Kubelet" element={<Kubelet apiKey={apiKey} />} />
+        <Route path="/Metrics/Nodes" element={<Nodes apiKey={apiKey} />} />
+        <Route
+          path="/Metrics/NodeUseMethod"
+          element={<NodeUseMethod apiKey={apiKey} />}
+        />
       </Routes>
     </div>
   );
