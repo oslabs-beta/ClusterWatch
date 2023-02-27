@@ -5,12 +5,15 @@ const clusterController = require('./controllers/clusterController');
 const app = express();
 const PORT = 3000;
 
+const grafanaRouter = require('./routes/grafana');
+
 app.use(express.json());
 app.use(cors());
 
 app.get('/clusterdata', clusterController.getClusterInfo, (req, res) => {
   res.status(200).json(res.locals.clusterInfo);
 });
+
 
 // catch all
 app.use((req, res) => res.sendStatus(404));
