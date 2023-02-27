@@ -17,6 +17,7 @@ function Cluster({ apiKey }) {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         setUid(data);
       });
   }, []);
