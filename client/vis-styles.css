@@ -14,3 +14,6 @@ div.vis-tooltip {
     pointer-events: none;
     z-index: 5;
   }
+  #visualizer{
+    background-color: white;
+  }
