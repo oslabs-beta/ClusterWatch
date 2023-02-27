@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import Banner from './Banner';
+import TestVis from '../../testvis';
 
 function Dashboard() {
   const [api, setApi] = useState(null);
@@ -20,7 +21,9 @@ function Dashboard() {
   return (
     <div className="dashboard">
       <Banner />
-      <Navbar apiKey={api} />
+      <Navbar />
+      <TestVis />
+
     </div>
   );
 }
