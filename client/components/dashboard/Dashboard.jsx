@@ -20,10 +20,7 @@ function Dashboard() {
   }, []);
   return (
     <div className="dashboard">
-      <Banner />
-      <Navbar />
-      <TestVis />
-
+      <Navbar apiKey={api} />
     </div>
   );
 }

@@ -14,6 +14,7 @@ app.get('/clusterdata', clusterController.getClusterInfo, (req, res) => {
   res.status(200).json(res.locals.clusterInfo);
 });
 
+app.use('/grafana', grafanaRouter);
 
 // catch all
 app.use((req, res) => res.sendStatus(404));

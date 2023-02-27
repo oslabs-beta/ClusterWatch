@@ -30,6 +30,8 @@ apiController.getApi = async (req, res, next) => {
 };
 
 apiController.getUid = async (req, res, next) => {
+  console.log('received uid request');
+  console.log(req.body);
   const { key, dashboard } = req.body;
 
   try {
