@@ -19,7 +19,6 @@ function Dashboard() {
   }, []);
   return (
     <div className="dashboard">
-      <Banner />
       <Navbar apiKey={api} />
     </div>
   );
