@@ -1,19 +1,18 @@
 const express = require('express');
 const cors = require('cors');
-const clusterController = require('./controllers/clusterController');
+const clusterRouter = require('./routes/cluster');
+const grafanaRouter = require('./routes/grafana');
+const setupRouter = require('./routes/setup');
 
 const app = express();
 const PORT = 3000;
 
-const grafanaRouter = require('./routes/grafana');
 
 app.use(express.json());
 app.use(cors());
 
-app.get('/clusterdata', clusterController.getClusterInfo, (req, res) => {
-  res.status(200).json(res.locals.clusterInfo);
-});
-
+app.use('setup', setupRouter);
+app.use('/clusterdata', clusterRouter);
 app.use('/grafana', grafanaRouter);
 
 // catch all
