@@ -20,13 +20,7 @@ function Dashboard() {
   }, []);
   return (
     <div className="dashboard">
-<<<<<<< HEAD
-      <Banner />
-      <Navbar />
-
-=======
       <Navbar apiKey={api} />
->>>>>>> dev
     </div>
   );
 }
