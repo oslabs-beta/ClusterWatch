@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 import Banner from './Banner';
-import TestVis from '../../testvis';
+import TestVis from '../visualizer/Visualizer';
 
 function Dashboard() {
   const [api, setApi] = useState(null);
@@ -22,7 +22,6 @@ function Dashboard() {
     <div className="dashboard">
       <Banner />
       <Navbar />
-      <TestVis />
 
     </div>
   );

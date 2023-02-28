@@ -21,7 +21,7 @@ import ViewInArOutlinedIcon from '@mui/icons-material/ViewInArOutlined';
 import FilterTiltShiftOutlinedIcon from '@mui/icons-material/FilterTiltShiftOutlined';
 import HubOutlinedIcon from '@mui/icons-material/HubOutlined';
 import PodcastsOutlinedIcon from '@mui/icons-material/PodcastsOutlined';
-import Testvis from '../../testvis';
+import Testvis from '../visualizer/Visualizer';
 
 import Overview from '../../Pages/Overview';
 import Nodes from '../../Pages/Grafana/Nodes';
