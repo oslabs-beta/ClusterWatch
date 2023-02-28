@@ -23,6 +23,8 @@ import FilterTiltShiftOutlinedIcon from '@mui/icons-material/FilterTiltShiftOutl
 import HubOutlinedIcon from '@mui/icons-material/HubOutlined';
 import PodcastsOutlinedIcon from '@mui/icons-material/PodcastsOutlined';
 import QueryStatsOutlinedIcon from '@mui/icons-material/QueryStatsOutlined';
+import AddAlertOutlinedIcon from '@mui/icons-material/AddAlertOutlined';
+import NotificationAddOutlinedIcon from '@mui/icons-material/NotificationAddOutlined';
 import Testvis from '../../testvis';
 
 import Overview from '../../Pages/Overview';
@@ -33,6 +35,8 @@ import CoreDNS from '../../Pages/Grafana/CoreDNS';
 import Kubelet from '../../Pages/Grafana/Kubelet';
 import NodeUseMethod from '../../Pages/Grafana/NodeUseMethod';
 import PromQuery from '../../Pages/PromQuery';
+import Alerts from '../../Pages/Alerts';
+import CustomAlerts from '../../Pages/CustomAlerts';
 
 // Custom Theme for Material UI
 
@@ -159,9 +163,27 @@ function Navbar({ apiKey }) {
               Prom Query
             </Link>
           </MenuItem>
-          <MenuItem icon={<ReceiptOutlinedIcon />}>Profile</MenuItem>
-          <MenuItem icon={<HelpOutlineOutlinedIcon />}>FAQ</MenuItem>
-          <MenuItem icon={<CalendarTodayOutlinedIcon />}>Calendar</MenuItem>
+          <MenuItem
+            icon={<AddAlertOutlinedIcon />}
+            onClick={(e) =>
+              setTitle(e.currentTarget.querySelector('.link').textContent)
+            }
+          >
+            <Link to="/Alerts" className="link">
+              Alert Manager
+            </Link>
+          </MenuItem>
+          <MenuItem
+            icon={<NotificationAddOutlinedIcon />}
+            onClick={(e) =>
+              setTitle(e.currentTarget.querySelector('.link').textContent)
+            }
+          >
+            <Link to="/CustomAlerts" className="link">
+              Custom Alerts
+            </Link>
+          </MenuItem>
+          <MenuItem icon={<NotificationAddOutlinedIcon />}>Calendar</MenuItem>
         </Menu>
       </Sidebar>
 
@@ -170,6 +192,8 @@ function Navbar({ apiKey }) {
 
         <Routes>
           <Route path="/Overview" element={<Overview />} />
+          <Route path="/Alerts" element={<Alerts />} />
+          <Route path="/CustomAlerts" element={<CustomAlerts />} />
           <Route
             path="/Metrics/Cluster"
             element={<Cluster apiKey={apiKey} />}
