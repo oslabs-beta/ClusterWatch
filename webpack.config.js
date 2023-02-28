@@ -2,7 +2,7 @@ const path = require('path');
 let HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './client/index.js',  //change to ts???
+  entry: './client/index.js', //change to ts???
   output: {
     publicPath: '/',
     path: path.resolve(__dirname, 'build/'),
@@ -48,7 +48,7 @@ module.exports = {
         ],
       },
       {
-        test: /\.(png|jpe?g|gif)$/i,
+        test: /\.(png|jpe?g|gif|svg)$/i,
         use: 'file-loader',
       },
       {
@@ -72,5 +72,5 @@ module.exports = {
       // favicon: 'test.png'
     }),
   ],
-  resolve: { extensions: ['*', '.js', '.jsx','.tsx','.ts'] }, //whats the *
+  resolve: { extensions: ['*', '.js', '.jsx', '.tsx', '.ts'] }, //whats the *
 };

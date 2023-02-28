@@ -25,7 +25,7 @@ import PodcastsOutlinedIcon from '@mui/icons-material/PodcastsOutlined';
 import QueryStatsOutlinedIcon from '@mui/icons-material/QueryStatsOutlined';
 import AddAlertOutlinedIcon from '@mui/icons-material/AddAlertOutlined';
 import NotificationAddOutlinedIcon from '@mui/icons-material/NotificationAddOutlined';
-import Testvis from '../../testvis';
+// import Testvis from '../../testvis';
 
 import Overview from '../../Pages/Overview';
 import Nodes from '../../Pages/Grafana/Nodes';
