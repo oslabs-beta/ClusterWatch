@@ -1,0 +1,14 @@
+additionalPrometheusRulesMap:
+ custom-rules:
+  groups:
+  - name: GroupA
+    rules:
+    - alert: HighMemoryUsage
+      expr: sum(container_memory_working_set_bytes{namespace="default"}) by (pod_name) > 1e+09
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: "High memory usage in pod {{ $labels.pod_name }}"
+        description: "The pod {{ $labels.pod_name }} in the default namespace has used more than 1GB of memory for the past 5 minutes."
+    

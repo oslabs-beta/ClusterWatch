@@ -31,7 +31,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-pro-sidebar": "^1.0.0",
-    "react-router-dom": "^6.8.1"
+    "react-router-dom": "^6.8.1",
+    "string-replace-all": "^2.0.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.20.2",
