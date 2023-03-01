@@ -1,4 +1,4 @@
-const { exec, spawn, spawnSync } = require('child_process');
+const { exec, execSync, spawn, spawnSync } = require('child_process');
 
 const setupController = {};
 
@@ -10,23 +10,70 @@ const setupController = {};
 setupController.promInit = () => {
   spawnSync('helm repo add prometheus-community https://prometheus-community.github.io/helm-charts', {
     stdio: 'inherit',
-    shell: true
+    shell: true,
   });
   spawnSync('helm repo update', {
     stdio: 'inherit',
-    shell: true
+    shell: true,
   });
   spawnSync('helm install prometheus prometheus-community/kube-prometheus-stack', {
     stdio: 'inherit',
-    shell: true
+    shell: true,
   });
 };
 
-setupController.grafanaInit = () => {
+setupController.grafEmbed = async () => {
   let podName;
-  exec('kubectl get pods', (err, stdout, stderr) => {
+  const getter = exec('kubectl get pods', (err, stdout, stderr) => {
     if (err) {
       console.error(`exec error: ${err}`);
+      return;
+    }
+    if (stderr) {
+      console.log(`stderr: ${stderr}`);
+      return;
+    }
+    const output = stdout.split('\n');
+    output.forEach((line) => {
+      if (line.includes('prometheus-grafana')) {
+        [podName] = line.split(' ');
+      }
+    });
+
+    console.log(podName);
+  });
+
+  // kubectl replace -f prometheus-grafana.yaml
+  // spawnSync('kubectl apply -f prometheus-grafana.yaml', {
+  //   stdio: 'inherit',
+  //   shell: true
+  // });
+  // execSync(`kubectl delete pod ${podName}`, {
+  //   // stdio: 'inherit',
+  //   // shell: true
+  // });
+  getter.once('close', () => {
+    spawnSync('kubectl apply -f prometheus-grafana.yaml', {
+      stdio: 'inherit',
+      shell: true
+    });
+    spawnSync(`kubectl delete pod ${podName}`, {
+      stdio: 'inherit',
+      shell: true,
+    });
+    setupController.forwardPort();
+  });
+};
+
+setupController.forwardPort = () => {
+  let podName;
+  const getter = exec('kubectl get pods', (err, stdout, stderr) => {
+    if (err) {
+      console.error(`exec error: ${err}`);
+      return;
+    }
+    if (stderr) {
+      console.log(`stderr: ${stderr}`);
       return;
     }
     const output = stdout.split('\n');
@@ -38,28 +85,25 @@ setupController.grafanaInit = () => {
     console.log(podName);
   });
 
-  // const child = spawn('kubectl get pods', {
-  //   stdio: 'inherit',
-  //   shell: true
-  // });
+  getter.on('close', () => {
+    const grafana = spawn(`kubectl port-forward ${podName} 3001:3000`, {
+      shell: true,
+    });
 
-  const grafana = spawn(`kubectl port-forward ${podName} 3001:3000`, {
-    shell: true,
-  });
+    grafana.stdout.on('data', (data) => {
+      console.log(`stdout: ${data}`);
+    });
 
-  grafana.stdout.on('data', (data) => {
-    console.log(`stdout: ${data}`);
-  });
+    grafana.stderr.on('data', (data) => {
+      console.error(`stderr in grafana: ${data}`);
+    });
 
-  grafana.stderr.on('data', (data) => {
-    console.error(`stderr: ${data}`);
+    grafana.on('exit', (code) => {
+      console.log(`child process exited with code ${code}`);
+    });
   });
-
-  grafana.on('close', (code) => {
-    console.log(`child process exited with code ${code}`);
-  });
-}
+};
 
 module.exports = setupController;
 
-setupController.init();
+// setupController.promInit();
