@@ -1,10 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import TestVis from '../components/visualizer/Visualizer';
+import Banner from '../components/dashboard/Banner';
 
-function Overview() {
+function Overview(props) {
   return (
-    <div>
+    <div id="visualizer">
+      {/* <Banner title={props.title}/> */}
       <TestVis />
     </div>
     // <div className='iframe'>

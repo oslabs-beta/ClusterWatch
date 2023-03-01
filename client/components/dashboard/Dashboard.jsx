@@ -21,6 +21,7 @@ function Dashboard() {
   return (
     <div className="dashboard">
       <Navbar apiKey={api} />
+      {/* <TestVis /> */}
     </div>
   );
 }

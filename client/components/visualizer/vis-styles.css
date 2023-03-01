@@ -1,7 +1,7 @@
 
 div.vis-tooltip {
     position: absolute;
-    visibility: hidden;
+    /* visibility: hidden;
     padding: 5px;
     white-space: normal;
     font-family: verdana;
@@ -12,8 +12,8 @@ div.vis-tooltip {
     border: 1px solid #808074;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
     pointer-events: none;
-    z-index: 5;
+    z-index: 5; */
   }
-  #visualizer{
+  /* #visualizer{
     background-color: white;
-  }
+  } */

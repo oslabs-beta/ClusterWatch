@@ -12,6 +12,7 @@ const clusterController = {};
 
 const getNodes = async () => {
   const res = await k8sApi.listNode();
+  // console.log(res.body.items[0]);
   const nodes = res.body.items.map((data) => {
     const { name, namespace, uid, creationTimeStamp } = data.metadata;
     const { configSource, providerID } = data.spec;
@@ -25,11 +26,12 @@ const getNodes = async () => {
       providerID,
       status,
     };
-    //console.log(response);
+    // console.log(response);
     return response;
   });
   return nodes;
 };
+// getNodes();
 
 const getPods = async () => {
   const res = await k8sApi.listPodForAllNamespaces();
