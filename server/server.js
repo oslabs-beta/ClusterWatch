@@ -3,13 +3,13 @@ const cors = require('cors');
 const clusterRouter = require('./routes/cluster');
 const grafanaRouter = require('./routes/grafana');
 const setupRouter = require('./routes/setup');
-// const setupController = require('./controllers/setupController');
+const setupController = require('./controllers/setupController');
 
 const app = express();
 const PORT = 3000;
 
-// setupController.promInit(); uncomment these to test the grafana pod
-// setupController.grafEmbed();
+// setupController.promInit(); // uncomment this to install prom
+setupController.grafEmbed(); // ths port forwards
 
 app.use(express.json());
 app.use(cors());
