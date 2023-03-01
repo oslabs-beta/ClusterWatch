@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import TestVis from '../components/visualizer/Visualizer';
+import Banner from '../components/dashboard/Banner';
 
 function Overview() {
   return (
-    <div>
+    <div id="visualizer">
       <TestVis />
     </div>
     // <div className='iframe'>

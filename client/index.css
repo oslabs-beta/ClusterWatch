@@ -57,7 +57,7 @@ code {
 
 .page {
  
-  width: 100%;
+  /* width: 100%; */
 }
 
 #logo {
@@ -66,6 +66,39 @@ code {
 }
 
 
-#TestVis{
-  background: white;
+#visualizer{
+  height: 100%;
+}
+/* canvas {
+
+}
+
+#viz-container {
+  z-index: 200000000000;
+} */
+
+
+.popup {
+
+  /* top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999; */
+  
+  background-color: #232d96;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  padding: 20px;
+  color: #fff;
+}
+
+.popup h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 0;
+}
+
+.popup p {
+  font-size: 1.2rem;
+  margin-bottom: 20px;
 }

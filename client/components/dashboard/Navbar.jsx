@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import {
+  BrowserRouter as Router, Routes, Route, Link,
+} from 'react-router-dom';
 import {
   Sidebar,
   Menu,
@@ -7,7 +9,6 @@ import {
   SubMenu,
   useProSidebar,
 } from 'react-pro-sidebar';
-import Banner from './Banner';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import AnalyticsOutlinedIcon from '@mui/icons-material/AnalyticsOutlined';
 import ScatterPlotOutlinedIcon from '@mui/icons-material/ScatterPlotOutlined';
@@ -25,6 +26,7 @@ import PodcastsOutlinedIcon from '@mui/icons-material/PodcastsOutlined';
 import QueryStatsOutlinedIcon from '@mui/icons-material/QueryStatsOutlined';
 import AddAlertOutlinedIcon from '@mui/icons-material/AddAlertOutlined';
 import NotificationAddOutlinedIcon from '@mui/icons-material/NotificationAddOutlined';
+import Banner from './Banner';
 // import Testvis from '../../testvis';
 
 import Overview from '../../Pages/Overview';
@@ -67,9 +69,7 @@ function Navbar({ apiKey }) {
           </MenuItem>
           <MenuItem
             icon={<HomeOutlinedIcon />}
-            onClick={(e) =>
-              setTitle(e.currentTarget.querySelector('.link').textContent)
-            }
+            onClick={(e) => setTitle(e.currentTarget.querySelector('.link').textContent)}
           >
             <Link to="/Overview" className="link">
               Overview
@@ -77,9 +77,7 @@ function Navbar({ apiKey }) {
           </MenuItem>
           <MenuItem
             icon={<PeopleOutlinedIcon />}
-            onClick={(e) =>
-              setTitle(e.currentTarget.querySelector('.link').textContent)
-            }
+            onClick={(e) => setTitle(e.currentTarget.querySelector('.link').textContent)}
           >
             <Link to="/Metrics/Cluster" className="link">
               Team
@@ -93,9 +91,7 @@ function Navbar({ apiKey }) {
           >
             <MenuItem
               icon={<ScatterPlotOutlinedIcon />}
-              onClick={(e) =>
-                setTitle(e.currentTarget.querySelector('.link').textContent)
-              }
+              onClick={(e) => setTitle(e.currentTarget.querySelector('.link').textContent)}
             >
               <Link to="/Metrics/Cluster" className="link">
                 Kubernetes API Server
@@ -103,9 +99,7 @@ function Navbar({ apiKey }) {
             </MenuItem>
             <MenuItem
               icon={<AccountTreeOutlinedIcon />}
-              onClick={(e) =>
-                setTitle(e.currentTarget.querySelector('.link').textContent)
-              }
+              onClick={(e) => setTitle(e.currentTarget.querySelector('.link').textContent)}
             >
               <Link to="/Metrics/Nodes" className="link">
                 Nodes
@@ -113,9 +107,7 @@ function Navbar({ apiKey }) {
             </MenuItem>
             <MenuItem
               icon={<ViewInArOutlinedIcon />}
-              onClick={(e) =>
-                setTitle(e.currentTarget.querySelector('.link').textContent)
-              }
+              onClick={(e) => setTitle(e.currentTarget.querySelector('.link').textContent)}
             >
               <Link to="/Metrics/Kubelet" className="link">
                 Kubelet
@@ -123,9 +115,7 @@ function Navbar({ apiKey }) {
             </MenuItem>
             <MenuItem
               icon={<HubOutlinedIcon />}
-              onClick={(e) =>
-                setTitle(e.currentTarget.querySelector('.link').textContent)
-              }
+              onClick={(e) => setTitle(e.currentTarget.querySelector('.link').textContent)}
             >
               <Link to="/Metrics/ClusterUseMethod" className="link">
                 Use Method(Cluster)
@@ -133,9 +123,7 @@ function Navbar({ apiKey }) {
             </MenuItem>
             <MenuItem
               icon={<PodcastsOutlinedIcon />}
-              onClick={(e) =>
-                setTitle(e.currentTarget.querySelector('.link').textContent)
-              }
+              onClick={(e) => setTitle(e.currentTarget.querySelector('.link').textContent)}
             >
               <Link to="/Metrics/NodeUseMethod" className="link">
                 Use Method(Node)
@@ -143,9 +131,7 @@ function Navbar({ apiKey }) {
             </MenuItem>
             <MenuItem
               icon={<FilterTiltShiftOutlinedIcon />}
-              onClick={(e) =>
-                setTitle(e.currentTarget.querySelector('.link').textContent)
-              }
+              onClick={(e) => setTitle(e.currentTarget.querySelector('.link').textContent)}
             >
               <Link to="/Metrics/CoreDNS" className="link">
                 CoreDNS
@@ -155,9 +141,7 @@ function Navbar({ apiKey }) {
 
           <MenuItem
             icon={<QueryStatsOutlinedIcon />}
-            onClick={(e) =>
-              setTitle(e.currentTarget.querySelector('.link').textContent)
-            }
+            onClick={(e) => setTitle(e.currentTarget.querySelector('.link').textContent)}
           >
             <Link to="/PromQuery" className="link">
               Prom Query
@@ -165,9 +149,7 @@ function Navbar({ apiKey }) {
           </MenuItem>
           <MenuItem
             icon={<AddAlertOutlinedIcon />}
-            onClick={(e) =>
-              setTitle(e.currentTarget.querySelector('.link').textContent)
-            }
+            onClick={(e) => setTitle(e.currentTarget.querySelector('.link').textContent)}
           >
             <Link to="/Alerts" className="link">
               Alert Manager
@@ -175,9 +157,7 @@ function Navbar({ apiKey }) {
           </MenuItem>
           <MenuItem
             icon={<NotificationAddOutlinedIcon />}
-            onClick={(e) =>
-              setTitle(e.currentTarget.querySelector('.link').textContent)
-            }
+            onClick={(e) => setTitle(e.currentTarget.querySelector('.link').textContent)}
           >
             <Link to="/CustomAlerts" className="link">
               Custom Alerts
@@ -186,12 +166,11 @@ function Navbar({ apiKey }) {
           <MenuItem icon={<NotificationAddOutlinedIcon />}>Calendar</MenuItem>
         </Menu>
       </Sidebar>
-
       <div className="page">
         <Banner title={title} />
 
         <Routes>
-          <Route path="/Overview" element={<Overview />} />
+          <Route path="/Overview" element={<Overview title={title} />} />
           <Route path="/Alerts" element={<Alerts />} />
           <Route path="/CustomAlerts" element={<CustomAlerts />} />
           <Route
@@ -217,6 +196,7 @@ function Navbar({ apiKey }) {
           />
           <Route path="/PromQuery" element={<PromQuery />} />
         </Routes>
+
       </div>
     </div>
   );
