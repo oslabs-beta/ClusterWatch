@@ -7,9 +7,11 @@ import './index.css';
 
 const root = createRoot(document.getElementById('mainBody'));
 root.render(
+  // <React.StrictMode>
   <ProSidebarProvider>
     <BrowserRouter>
       <App />
     </BrowserRouter>
   </ProSidebarProvider>
+  /* </React.StrictMode>, */
 );
