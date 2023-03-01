@@ -10,11 +10,35 @@ const k8sApi3 = kc.makeApiClient(k8s.NetworkingV1Api);
 
 const clusterController = {};
 
+const getNodes = async () => {
+  const res = await k8sApi.listNode();
+  // console.log(res.body.items[0]);
+  const nodes = res.body.items.map((data) => {
+    const { name, namespace, uid, creationTimeStamp } = data.metadata;
+    const { configSource, providerID } = data.spec;
+    const { status } = data;
+    const response = {
+      name,
+      namespace,
+      uid,
+      creationTimeStamp,
+      configSource,
+      providerID,
+      status,
+    };
+    // console.log(response);
+    return response;
+  });
+  return nodes;
+};
+// getNodes();
+
 const getPods = async () => {
   const res = await k8sApi.listPodForAllNamespaces();
+  //console.log(res.body.items[0].metadata.labels);
   const pods = res.body.items.map((data) => {
-    const { name, namespace, uid, creationTimestamp } = data.metadata;
-    const { containers, nodeName } = data.spec;
+    const { name, namespace, uid, creationTimestamp, labels } = data.metadata;
+    const { containers, nodeName, serviceAccount } = data.spec;
     const { containerStatuses, hostIP, podIP, startTime } = data.status;
     const containersInfo = containers.map((container) => ({
       image: container.image,
@@ -25,8 +49,10 @@ const getPods = async () => {
       namespace,
       uid,
       creationTimestamp,
+      labels,
       containersInfo,
       nodeName,
+      serviceAccount,
       containerStatuses,
       hostIP,
       podIP,
@@ -36,6 +62,7 @@ const getPods = async () => {
   });
   return pods;
 };
+// getPods();
 
 const getNamespaces = async () => {
   const res = await k8sApi.listNamespace();
@@ -52,13 +79,16 @@ const getNamespaces = async () => {
 const getServices = async () => {
   const res = await k8sApi.listServiceForAllNamespaces();
   const response = res.body.items;
+  // //console.log(res.body.items[0]);
   const results = response.map((data) => {
-    const { name, uid, creationTimeStamp } = data.metadata;
+    //console.log('service name:', data.metadata.name);
+    const { name, uid, creationTimeStamp, namespace } = data.metadata;
     const { ipFamilies, ports, selector, type } = data.spec;
     const result = {
       name,
       uid,
       creationTimeStamp,
+      namespace,
       ipFamilies,
       ports,
       selector,
@@ -66,29 +96,38 @@ const getServices = async () => {
     };
     return result;
   });
+  // console.log(results);
   return results;
 };
+// getServices();
 
 const getDeployments = async () => {
   const res = await k8sApi2.listDeploymentForAllNamespaces();
   const response = res.body.items;
+  //console.log(response[0].spec.selector.matchLabels);
   const results = response.map((data) => {
-    const { name, uid, creationTimeStamp } = data.metadata;
-    const { strategy, replicas } = data.spec;
+    // console.log(data.spec.template);
+    const { name, uid, creationTimeStamp, namespace } = data.metadata;
+    const { strategy, replicas, selector: matchLabels } = data.spec;
     const { availableReplicas, conditions } = data.status;
     const result = {
       name,
       uid,
       creationTimeStamp,
+      namespace,
       strategy,
+      matchLabels,
       replicas,
       availableReplicas,
       conditions,
     };
     return result;
   });
+  // console.log(results);
   return results;
 };
+
+// getDeployments();
 
 const getIngresses = async () => {
   const res = await k8sApi3.listIngressForAllNamespaces();
@@ -97,18 +136,21 @@ const getIngresses = async () => {
 
 clusterController.getClusterInfo = async (req, res, next) => {
   try {
+    const nodes = await getNodes();
     const pods = await getPods();
     const namespaces = await getNamespaces();
     const services = await getServices();
     const deployments = await getDeployments();
     const ingresses = await getIngresses();
     const clusterInfo = {
+      nodes,
       pods,
       namespaces,
       services,
       deployments,
       ingresses,
     };
+    //console.log('server side nodes', clusterInfo.nodes);
     res.locals.clusterInfo = clusterInfo;
     return next();
   } catch (err) {
