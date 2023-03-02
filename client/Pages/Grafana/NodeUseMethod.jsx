@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 
 function NodeUseMethod({ apiKey }) {
   const [uid, setUid] = useState(null);
+  const now = new Date().getTime();
+  const from = new Date(now - 4 * 60 * 60 * 1000).getTime();
 
   useEffect(() => {
     fetch('http://localhost:3000/grafana/uid', {
@@ -20,7 +22,7 @@ function NodeUseMethod({ apiKey }) {
         setUid(data);
       });
   }, [apiKey]);
-  const url = `http://localhost:3001/d/${uid}/node-exporter-use-method-node?orgId=1&refresh=30s&from=1677342096975&to=1677345696975&kiosk=true`;
+  const url = `http://localhost:3001/d/${uid}/node-exporter-use-method-node?orgId=1&refresh=30s&from=${from}&to=${now}&kiosk=true`;
 
   return (
     <div className="iframe">

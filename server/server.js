@@ -6,6 +6,7 @@ const app = express();
 const PORT = 3000;
 
 const grafanaRouter = require('./routes/grafana');
+const alertsRouter = require('./routes/alerts');
 
 app.use(express.json());
 app.use(cors());
@@ -15,6 +16,8 @@ app.get('/clusterdata', clusterController.getClusterInfo, (req, res) => {
 });
 
 app.use('/grafana', grafanaRouter);
+
+app.use('/alerts', alertsRouter);
 
 // catch all
 app.use((req, res) => res.sendStatus(404));

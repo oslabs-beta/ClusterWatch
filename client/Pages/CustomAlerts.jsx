@@ -5,6 +5,10 @@ function CustomAlerts() {
   const [submittedAlertOption, setSubmittedAlertOption] = useState('');
   const [selectedMemory, setSelectedMemory] = useState('');
   const [submittedMemory, setsubmittedMemory] = useState('');
+  const [selectedCPU, setSelectedCPU] = useState('');
+  const [submittedCPU, setSubmittedCPU] = useState('');
+
+  const [alertName, setAlertName] = useState('');
 
   const handleTypeSubmit = (event) => {
     event.preventDefault();
@@ -23,6 +27,50 @@ function CustomAlerts() {
     event.preventDefault();
     setsubmittedMemory(selectedMemory);
   };
+
+  const handleCPUChange = (event) => {
+    setSelectedCPU(event.target.value);
+  };
+
+  const handleCPUSubmit = (event) => {
+    event.preventDefault();
+    setSubmittedCPU(selectedCPU);
+  };
+
+  const handleNameChange = (event) => {
+    setAlertName(event.target.value);
+  };
+
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+    event.preventDefault();
+    setSubmittedAlertOption(selectedAlertOption);
+    const threshold =
+      submittedAlertOption === 'Memory' ? submittedMemory : submittedCPU;
+    const result = { name: alertName, type: submittedAlertOption, threshold };
+    setsubmittedMemory('');
+    setSelectedMemory('');
+    setSubmittedCPU('');
+    setSelectedCPU('');
+    setAlertName('');
+    setSelectedAlertOption('');
+    setSubmittedAlertOption('');
+    fetch('http://localhost:3000/alerts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(result),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  };
+
   return (
     <div>
       {submittedAlertOption === '' && (
@@ -60,7 +108,7 @@ function CustomAlerts() {
           </form>
         </div>
       )}
-      {submittedAlertOption === 'Memory' && (
+      {submittedAlertOption === 'Memory' && submittedMemory === '' && (
         <div className="add-alert">
           <h3>Memory Threshold</h3>
           <form onSubmit={handleMemorySubmit}>
@@ -68,11 +116,49 @@ function CustomAlerts() {
               Alert after memory usage exceeds (in Gigabytes)
             </label>
             <input
-              type="input"
+              type="number"
               id="memorythreshold"
               name="memorythreshold"
-              value="2"
               onChange={handleMemoryChange}
+            />
+            <br />
+            <input type="submit" value="Next"></input>
+          </form>
+        </div>
+      )}
+
+      {(submittedMemory !== '' ||
+        submittedCPU !== '' ||
+        submittedAlertOption === 'Kube') && (
+        <div className="add-alert">
+          <h3>Create Alert Name</h3>
+          <form onSubmit={handleFormSubmit}>
+            <label htmlFor="memorythreshold">Enter alert name</label>
+            <input
+              type="input"
+              id="alertname"
+              name="alertname"
+              onChange={handleNameChange}
+            />
+            <br />
+            <input type="submit" value="Create Alert"></input>
+          </form>
+        </div>
+      )}
+
+      {submittedAlertOption === 'CPU' && submittedCPU === '' && (
+        <div className="add-alert">
+          <h3>CPU Threshold</h3>
+          <form onSubmit={handleCPUSubmit}>
+            <label htmlFor="cputhreshold">
+              Alert after total CPU usage exceeds
+            </label>
+            <input
+              type="number"
+              id="cputhreshold"
+              name="cputhreshold"
+              step="0.1"
+              onChange={handleCPUChange}
             />
             <br />
             <input type="submit" value="Next"></input>
