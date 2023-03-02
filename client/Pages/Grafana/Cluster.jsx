@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 
 function Cluster({ apiKey }) {
   const [uid, setUid] = useState(null);
+  const now = new Date().getTime();
+  const from = new Date(now - 4 * 60 * 60 * 1000).getTime();
 
   useEffect(() => {
     fetch('http://localhost:3000/grafana/uid', {
@@ -22,7 +24,7 @@ function Cluster({ apiKey }) {
       });
   }, []);
 
-  const url = `http://localhost:3001/d/${uid}/kubernetes-api-server?orgId=1&refresh=10s&from=1677342274613&to=1677345874613&kiosk=true&theme=light`;
+  const url = `http://localhost:3001/d/${uid}/kubernetes-api-server?orgId=1&refresh=10s&from=${from}&to=${now}&kiosk=true&theme=light`;
 
   return (
     <div className="iframe">
@@ -38,3 +40,5 @@ function Cluster({ apiKey }) {
 }
 
 export default Cluster;
+
+// http://localhost:3001/d/${uid}/kubernetes-api-server?orgId=1&refresh=10s&from=1677342274613&to=1677345874613&kiosk=true&theme=light
