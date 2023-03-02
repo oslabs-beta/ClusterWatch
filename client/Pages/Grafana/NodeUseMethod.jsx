@@ -22,7 +22,7 @@ function NodeUseMethod({ apiKey }) {
         setUid(data);
       });
   }, [apiKey]);
-  const url = `http://localhost:3001/d/${uid}/node-exporter-use-method-node?orgId=1&refresh=30s&from=${from}&to=${now}&kiosk=true`;
+  const url = `http://localhost:3001/d/${uid}/node-exporter-use-method-node?orgId=1&refresh=30s&from=${from}&to=${now}&kiosk=true&theme=light`;
 
   return (
     <div className="iframe">

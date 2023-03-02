@@ -22,7 +22,7 @@ function Kubelet({ apiKey }) {
         setUid(data);
       });
   }, [apiKey]);
-  const url = `http://localhost:3001/d/${uid}/kubernetes-kubelet?orgId=1&refresh=10s&from=${from}&to=${now}&kiosk=true`;
+  const url = `http://localhost:3001/d/${uid}/kubernetes-kubelet?orgId=1&refresh=10s&from=${from}&to=${now}&kiosk=true&theme=light`;
 
   return (
     <div className="iframe">
