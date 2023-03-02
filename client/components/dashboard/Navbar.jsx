@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  BrowserRouter as Router, Routes, Route, Link,
+  BrowserRouter as Router, Routes, Route, Link, Navigate,
 } from 'react-router-dom';
 import {
   Sidebar,
@@ -30,6 +30,7 @@ import Banner from './Banner';
 // import Testvis from '../../testvis';
 
 import Overview from '../../Pages/Overview';
+import Setup from '../../Pages/Setup';
 import Nodes from '../../Pages/Grafana/Nodes';
 import Cluster from '../../Pages/Grafana/Cluster';
 import ClusterUseMethod from '../../Pages/Grafana/ClusterUseMethod';
@@ -68,109 +69,109 @@ function Navbar({ apiKey }) {
             <h2>ClusterWatch</h2>
           </MenuItem>
           <MenuItem
+            component={<Link to="/Overview"> Overview</Link>}
             icon={<HomeOutlinedIcon />}
-            onClick={(e) => setTitle(e.currentTarget.querySelector('.link').textContent)}
+            onClick={(e) => {
+              setTitle(e.currentTarget.textContent);
+            }}
           >
-            <Link to="/Overview" className="link">
-              Overview
-            </Link>
-          </MenuItem>
-          <MenuItem
-            icon={<PeopleOutlinedIcon />}
-            onClick={(e) => setTitle(e.currentTarget.querySelector('.link').textContent)}
-          >
-            <Link to="/Metrics/Cluster" className="link">
-              Team
-            </Link>
-          </MenuItem>
+            Overview
 
+          </MenuItem>
+          {/* <MenuItem
+            component={<Link to="/Metrics/Cluster"> Overview</Link>}
+            icon={<PeopleOutlinedIcon />}
+            onClick={(e) => setTitle(e.currentTarget.textContent)}
+          >
+            Team
+          </MenuItem> */}
+          <MenuItem
+            component={<Link to="/Setup" className="link" />}
+            icon={<PeopleOutlinedIcon />}
+            onClick={(e) => setTitle(e.currentTarget.textContent)}
+          >
+            Setup
+
+          </MenuItem>
           <SubMenu
             opened={teamSubMenuOpen}
             icon={<AnalyticsOutlinedIcon />}
             label="Metrics"
           >
             <MenuItem
+              component={<Link to="/Metrics/Cluster" />}
               icon={<ScatterPlotOutlinedIcon />}
-              onClick={(e) => setTitle(e.currentTarget.querySelector('.link').textContent)}
+              onClick={(e) => setTitle(e.currentTarget.textContent)}
             >
-              <Link to="/Metrics/Cluster" className="link">
-                Kubernetes API Server
-              </Link>
+              Kubernetes API Server
             </MenuItem>
             <MenuItem
+              component={<Link to="/Metrics/Nodes" />}
               icon={<AccountTreeOutlinedIcon />}
-              onClick={(e) => setTitle(e.currentTarget.querySelector('.link').textContent)}
+              onClick={(e) => setTitle(e.currentTarget.textContent)}
             >
-              <Link to="/Metrics/Nodes" className="link">
-                Nodes
-              </Link>
+              Nodes
             </MenuItem>
             <MenuItem
+              component={<Link to="/Metrics/Kubelet" />}
               icon={<ViewInArOutlinedIcon />}
-              onClick={(e) => setTitle(e.currentTarget.querySelector('.link').textContent)}
+              onClick={(e) => setTitle(e.currentTarget.textContent)}
             >
-              <Link to="/Metrics/Kubelet" className="link">
-                Kubelet
-              </Link>
+              Kubelet
             </MenuItem>
             <MenuItem
+              component={<Link to="/ClusterUseMethod" />}
               icon={<HubOutlinedIcon />}
-              onClick={(e) => setTitle(e.currentTarget.querySelector('.link').textContent)}
+              onClick={(e) => setTitle(e.currentTarget.textContent)}
             >
-              <Link to="/Metrics/ClusterUseMethod" className="link">
-                Use Method(Cluster)
-              </Link>
+              Use Method(Cluster)
             </MenuItem>
             <MenuItem
+              component={<Link to="/Metrics/NodeUseMethod" />}
               icon={<PodcastsOutlinedIcon />}
-              onClick={(e) => setTitle(e.currentTarget.querySelector('.link').textContent)}
+              onClick={(e) => setTitle(e.currentTarget.textContent)}
             >
-              <Link to="/Metrics/NodeUseMethod" className="link">
-                Use Method(Node)
-              </Link>
+              Use Method(Node)
             </MenuItem>
             <MenuItem
+              component={<Link to="/Metrics/CoreDNS" />}
               icon={<FilterTiltShiftOutlinedIcon />}
-              onClick={(e) => setTitle(e.currentTarget.querySelector('.link').textContent)}
+              onClick={(e) => setTitle(e.currentTarget.textContent)}
             >
-              <Link to="/Metrics/CoreDNS" className="link">
-                CoreDNS
-              </Link>
+              CoreDNS
             </MenuItem>
           </SubMenu>
 
           <MenuItem
+            component={<Link to="/PromQuery" />}
             icon={<QueryStatsOutlinedIcon />}
-            onClick={(e) => setTitle(e.currentTarget.querySelector('.link').textContent)}
+            onClick={(e) => setTitle(e.currentTarget.textContent)}
           >
-            <Link to="/PromQuery" className="link">
-              Prom Query
-            </Link>
+            Prom Query
           </MenuItem>
           <MenuItem
+            component={<Link to="/Alerts" />}
             icon={<AddAlertOutlinedIcon />}
-            onClick={(e) => setTitle(e.currentTarget.querySelector('.link').textContent)}
+            onClick={(e) => setTitle(e.currentTarget.textContent)}
           >
-            <Link to="/Alerts" className="link">
-              Alert Manager
-            </Link>
+            Alert Manager
           </MenuItem>
           <MenuItem
+            component={<Link to="/CustomAlerts" />}
             icon={<NotificationAddOutlinedIcon />}
-            onClick={(e) => setTitle(e.currentTarget.querySelector('.link').textContent)}
+            onClick={(e) => setTitle(e.currentTarget.textContent)}
           >
-            <Link to="/CustomAlerts" className="link">
-              Custom Alerts
-            </Link>
+            Custom Alerts
           </MenuItem>
-          <MenuItem icon={<NotificationAddOutlinedIcon />}>Calendar</MenuItem>
+          {/* <MenuItem icon={<NotificationAddOutlinedIcon />}>Calendar</MenuItem> */}
         </Menu>
       </Sidebar>
       <div className="page">
         <Banner title={title} />
 
         <Routes>
-          <Route path="/Overview" element={<Overview title={title} />} />
+          <Route path="/Overview" element={<Overview />} />
+          <Route path="/Setup" element={<Setup />} />
           <Route path="/Alerts" element={<Alerts />} />
           <Route path="/CustomAlerts" element={<CustomAlerts />} />
           <Route
