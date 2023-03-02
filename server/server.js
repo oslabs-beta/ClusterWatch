@@ -9,7 +9,8 @@ const app = express();
 const PORT = 3000;
 
 // setupController.promInit(); // uncomment this to install prom
-setupController.grafEmbed(); // ths port forwards
+// setupController.grafEmbed(); // ths port forwards
+setupController.forwardPort();
 
 app.use(express.json());
 app.use(cors());
