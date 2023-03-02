@@ -13,9 +13,12 @@ import svcIcon from './icons/service-icon.svg';
 import podIcon from './icons/pod-icon.svg';
 
 const options = {
+  height: '100%',
+  width: '100%',
   interaction: {
     hover: true,
   },
+  autoResize: true,
   physics: {
     barnesHut: {
       gravitationalConstant: -1000,
@@ -30,6 +33,9 @@ const options = {
     color: '#8526d3',
   },
 };
+function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 // helper function that will take an object
 const helperFunc = (obj) => {
@@ -40,20 +46,21 @@ const helperFunc = (obj) => {
   for (const key in obj) {
     if (Array.isArray(obj[key])) {
       const outerLi = document.createElement('li');
-      outerLi.innerText = key;
+      outerLi.innerText = `${capitalizeFirstLetter(key)}:`;
       const subUl = document.createElement('ul');
       obj[key].forEach((entry) => {
         const newLi = document.createElement('li');
         for (const field in entry) {
-          newLi.innerText += `${field}: ${entry[field]} `;
+          newLi.innerText += `${capitalizeFirstLetter(field)}: ${entry[field]}, `;
         }
+        newLi.innerText = newLi.innerText.slice(0, newLi.innerText.length - 2);
         subUl.append(newLi);
       });
       outerLi.appendChild(subUl);
       ul.appendChild(outerLi);
     } else {
       const li = document.createElement('li');
-      li.innerText = `${key}: ${obj[key]}\n`;
+      li.innerText = `${capitalizeFirstLetter(key)}: ${obj[key]}\n`;
       ul.appendChild(li);
     }
   }
@@ -243,7 +250,7 @@ function Testvis() {
                 name,
                 namespace,
                 strategy: {
-                  type
+                  type,
                 },
                 replicas,
                 availableReplicas,
@@ -306,22 +313,34 @@ function Testvis() {
   };
   return (
 
-    <Box
-      id="viz-container"
-      sx={{
-        flexGrow: 1,
-        height: '90vh',
-      }}
-    >
-      {' '}
-      {' '}
-      <Graph
-        graph={graph}
-        options={options}
-        events={events}
-      />
-    </Box>
+  // <Box
+  //   id="viz-container"
+  //   sx={{
+  //     flexGrow: 1,
+  //     height: '90vh',
+  //   }}
+  // >
+  // <div id="viz-wrapper">
 
+  // {' '}
+  // {' '}
+    <Graph
+      graph={graph}
+      options={options}
+      events={events}
+      getNetwork={(network) => {
+        // ensure that the network eases in to fit the viewport
+        setTimeout(() => network.fit({
+          animation: {
+            duration: 2000,
+            easingFunction: 'linear',
+          },
+        }), 1000);
+      }}
+      // width="450px"
+    />
+  // </div>
+  // {/* </Box> */}
   // <div>
   //   <h1>
   //     React graph vis
