@@ -9,14 +9,17 @@ const app = express();
 const PORT = 3000;
 
 // setupController.promInit(); // uncomment this to install prom
-setupController.grafEmbed(); // ths port forwards
+// setupController.grafEmbed(); // ths port forwards
+const alertsRouter = require('./routes/alerts');
 
 app.use(express.json());
 app.use(cors());
 
-app.use('setup', setupRouter);
+// app.use('/setup', setupRouter);
 app.use('/clusterdata', clusterRouter);
 app.use('/grafana', grafanaRouter);
+
+app.use('/alerts', alertsRouter);
 
 // catch all
 app.use((req, res) => res.sendStatus(404));
