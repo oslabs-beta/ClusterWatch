@@ -13,7 +13,7 @@ const alertsRouter = require('./routes/alerts');
 app.use(express.json());
 app.use(cors());
 
-// app.use('/setup', setupRouter);
+app.use('/setup', setupRouter);
 app.use('/clusterdata', clusterRouter);
 app.use('/grafana', grafanaRouter);
 

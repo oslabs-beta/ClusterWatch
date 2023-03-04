@@ -2,27 +2,36 @@ const { exec, execSync, spawn, spawnSync } = require('child_process');
 
 const setupController = {};
 
-
 // helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 // helm repo update
 // helm install prometheus prometheus-community/kube-prometheus-stack
 // kubectl port-forward prometheus-grafana-5f98c899f8-tv8gp 3001:3000
-setupController.promInit = () => {
-  spawnSync('helm repo add prometheus-community https://prometheus-community.github.io/helm-charts', {
-    stdio: 'inherit',
-    shell: true,
-  });
+setupController.promInit = (req, res, next) => {
+  console.log('\n\nPrometheus Setup Starting\n\n');
+
+  spawnSync(
+    'helm repo add prometheus-community https://prometheus-community.github.io/helm-charts',
+    {
+      stdio: 'inherit',
+      shell: true,
+    }
+  );
   spawnSync('helm repo update', {
     stdio: 'inherit',
     shell: true,
   });
-  spawnSync('helm install prometheus prometheus-community/kube-prometheus-stack', {
-    stdio: 'inherit',
-    shell: true,
-  });
+  spawnSync(
+    'helm install prometheus prometheus-community/kube-prometheus-stack',
+    {
+      stdio: 'inherit',
+      shell: true,
+    }
+  );
+  return next();
 };
 
-setupController.grafEmbed = () => {
+setupController.grafEmbed = async (req, res, next) => {
+  console.log('\n\nGrafana Setup Starting\n\n');
   let podName;
   const getter = exec('kubectl get pods', (err, stdout, stderr) => {
     if (err) {
@@ -57,55 +66,60 @@ setupController.grafEmbed = () => {
       stdio: 'inherit',
       shell: true,
     });
-    setupController.forwardPort();
+    // setupController.forwardPort();
+    return next();
   });
 };
 
-setupController.forwardPort = () => {
+setupController.forwardPort = (req, res, next) => {
+  console.log('\n\nForwarding Port\n\n');
   let podName;
   let podStatus;
   while (podStatus !== 'Running') {
     const abc = execSync('kubectl get pods');
-    abc.toString().split('\n').forEach((line) => {
-      if (line.includes('prometheus-grafana')) {
-        if (line.includes('Running')) {
-          podStatus = 'Running';
+    abc
+      .toString()
+      .split('\n')
+      .forEach((line) => {
+        if (line.includes('prometheus-grafana')) {
+          if (line.includes('Running')) {
+            podStatus = 'Running';
+          }
+          [podName] = line.split(' ');
+          console.log(podName);
         }
-        [podName] = line.split(' ');
-        console.log(podName);
-      }
-    });
+      });
   }
   // const abc = execSync('kubectl get pods');
   // console.log(abc.toString());
   // while (podStatus !== 'Running') {
-    // exec('kubectl get pods', (err, stdout, stderr) => {
-    //   if (err) {
-    //     console.error(`exec error: ${err}`);
-    //     return;
-    //   }
-    //   if (stderr) {
-    //     console.log(`stderr: ${stderr}`);
-    //     return;
-    //   }
-    //   console.log(stdout);
-    //   const output = stdout.split('\n');
-    //   output.forEach((line) => {
-    //     if (line.includes('prometheus-grafana')) {
-    //       if (line.includes('Running')) {
-    //         podStatus = 'Running';
-    //         console.log('omg', podStatus);
-    //       }
-    //       [podName] = line.split(' ');
-    //     }
-    //   });
-    //   console.log(podName);
-    // });
+  // exec('kubectl get pods', (err, stdout, stderr) => {
+  //   if (err) {
+  //     console.error(`exec error: ${err}`);
+  //     return;
+  //   }
+  //   if (stderr) {
+  //     console.log(`stderr: ${stderr}`);
+  //     return;
+  //   }
+  //   console.log(stdout);
+  //   const output = stdout.split('\n');
+  //   output.forEach((line) => {
+  //     if (line.includes('prometheus-grafana')) {
+  //       if (line.includes('Running')) {
+  //         podStatus = 'Running';
+  //         console.log('omg', podStatus);
+  //       }
+  //       [podName] = line.split(' ');
+  //     }
+  //   });
+  //   console.log(podName);
+  // });
   // }
 
   // //let forwarding = false
   // //while !forwarding
-  //   //attempt to port forward  
+  //   //attempt to port forward
   // getter.on('close', () => {
   const grafana = spawn(`kubectl port-forward ${podName} 3001:3000`, {
     shell: true,
@@ -119,11 +133,12 @@ setupController.forwardPort = () => {
     console.error(`stderr in grafana: ${data}`);
   });
 
-  grafana.on('close', (code) => {
+  grafana.on('exit', (code) => {
     console.log(`child process exited with code ${code}`);
   });
-  // });
+  return next();
 };
+// });
 module.exports = setupController;
 
 // setupController.promInit();
