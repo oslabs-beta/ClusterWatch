@@ -1,0 +1,13 @@
+additionalPrometheusRulesMap:
+ custom-rules:
+  groups:
+  - name: Kubernetes cluster alerts
+    rules:
+    - alert: HighCPUUsage
+      expr: sum(rate(container_cpu_usage_seconds_total{namespace="default"}[5m])) by (pod_name) > 1
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: "High CPU usage in pod {{ $labels.pod_name }}"
+        description: "The pod {{ $labels.pod_name }} in the default namespace has had high CPU usage for the past 5 minutes."

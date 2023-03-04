@@ -1,8 +1,0 @@
-- alert: KubeNodeDown
-  expr: up{job="kubelet"} == 0
-  for: 1m
-  labels:
-    severity: critical
-  annotations:
-    summary: "Kubernetes node is down"
-    description: "A Kubernetes node is down and is not responding to requests."
