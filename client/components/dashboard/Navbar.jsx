@@ -69,7 +69,7 @@ function Navbar({ apiKey }) {
             <h2>ClusterWatch</h2>
           </MenuItem>
           <MenuItem
-            component={<Link to="/Overview"> Overview</Link>}
+            component={<Link to="Dashboard/Overview"> </Link>}
             icon={<HomeOutlinedIcon />}
             onClick={(e) => {
               setTitle(e.currentTarget.textContent);
@@ -86,7 +86,7 @@ function Navbar({ apiKey }) {
             Team
           </MenuItem> */}
           <MenuItem
-            component={<Link to="/Setup" className="link" />}
+            component={<Link to="Dashboard/Setup" className="link" />}
             icon={<PeopleOutlinedIcon />}
             onClick={(e) => setTitle(e.currentTarget.textContent)}
           >
@@ -99,42 +99,42 @@ function Navbar({ apiKey }) {
             label="Metrics"
           >
             <MenuItem
-              component={<Link to="/Metrics/Cluster" />}
+              component={<Link to="Dashboard/Metrics/Cluster" />}
               icon={<ScatterPlotOutlinedIcon />}
               onClick={(e) => setTitle(e.currentTarget.textContent)}
             >
               Kubernetes API Server
             </MenuItem>
             <MenuItem
-              component={<Link to="/Metrics/Nodes" />}
+              component={<Link to="Dashboard/Metrics/Nodes" />}
               icon={<AccountTreeOutlinedIcon />}
               onClick={(e) => setTitle(e.currentTarget.textContent)}
             >
               Nodes
             </MenuItem>
             <MenuItem
-              component={<Link to="/Metrics/Kubelet" />}
+              component={<Link to="Dashboard/Metrics/Kubelet" />}
               icon={<ViewInArOutlinedIcon />}
               onClick={(e) => setTitle(e.currentTarget.textContent)}
             >
               Kubelet
             </MenuItem>
             <MenuItem
-              component={<Link to="/ClusterUseMethod" />}
+              component={<Link to="Dashboard/ClusterUseMethod" />}
               icon={<HubOutlinedIcon />}
               onClick={(e) => setTitle(e.currentTarget.textContent)}
             >
               Use Method(Cluster)
             </MenuItem>
             <MenuItem
-              component={<Link to="/Metrics/NodeUseMethod" />}
+              component={<Link to="Dashboard/Metrics/NodeUseMethod" />}
               icon={<PodcastsOutlinedIcon />}
               onClick={(e) => setTitle(e.currentTarget.textContent)}
             >
               Use Method(Node)
             </MenuItem>
             <MenuItem
-              component={<Link to="/Metrics/CoreDNS" />}
+              component={<Link to="Dashboard/Metrics/CoreDNS" />}
               icon={<FilterTiltShiftOutlinedIcon />}
               onClick={(e) => setTitle(e.currentTarget.textContent)}
             >
@@ -143,21 +143,21 @@ function Navbar({ apiKey }) {
           </SubMenu>
 
           <MenuItem
-            component={<Link to="/PromQuery" />}
+            component={<Link to="Dashboard/PromQuery" />}
             icon={<QueryStatsOutlinedIcon />}
             onClick={(e) => setTitle(e.currentTarget.textContent)}
           >
             Prom Query
           </MenuItem>
           <MenuItem
-            component={<Link to="/Alerts" />}
+            component={<Link to="Dashboard/Alerts" />}
             icon={<AddAlertOutlinedIcon />}
             onClick={(e) => setTitle(e.currentTarget.textContent)}
           >
             Alert Manager
           </MenuItem>
           <MenuItem
-            component={<Link to="/CustomAlerts" />}
+            component={<Link to="Dashboard/CustomAlerts" />}
             icon={<NotificationAddOutlinedIcon />}
             onClick={(e) => setTitle(e.currentTarget.textContent)}
           >
@@ -170,32 +170,32 @@ function Navbar({ apiKey }) {
         <Banner title={title} />
 
         <Routes>
-          <Route path="/Overview" element={<Overview />} />
-          <Route path="/Setup" element={<Setup />} />
-          <Route path="/Alerts" element={<Alerts />} />
-          <Route path="/CustomAlerts" element={<CustomAlerts />} />
+          <Route path="Dashboard/Overview" element={<Overview />} />
+          <Route path="Dashboard/Setup" element={<Setup />} />
+          <Route path="Dashboard/Alerts" element={<Alerts />} />
+          <Route path="Dashboard/CustomAlerts" element={<CustomAlerts />} />
           <Route
-            path="/Metrics/Cluster"
+            path="Dashboard/Metrics/Cluster"
             element={<Cluster apiKey={apiKey} />}
           />
           <Route
-            path="/Metrics/ClusterUseMethod"
+            path="Dashboard/Metrics/ClusterUseMethod"
             element={<ClusterUseMethod apiKey={apiKey} />}
           />
           <Route
-            path="/Metrics/CoreDNS"
+            path="Dashboard/Metrics/CoreDNS"
             element={<CoreDNS apiKey={apiKey} />}
           />
           <Route
-            path="/Metrics/Kubelet"
+            path="Dashboard/Metrics/Kubelet"
             element={<Kubelet apiKey={apiKey} />}
           />
-          <Route path="/Metrics/Nodes" element={<Nodes apiKey={apiKey} />} />
+          <Route path="Dashboard/Metrics/Nodes" element={<Nodes apiKey={apiKey} />} />
           <Route
-            path="/Metrics/NodeUseMethod"
+            path="Dashboard/Metrics/NodeUseMethod"
             element={<NodeUseMethod apiKey={apiKey} />}
           />
-          <Route path="/PromQuery" element={<PromQuery />} />
+          <Route path="Dashboard/PromQuery" element={<PromQuery />} />
         </Routes>
 
       </div>

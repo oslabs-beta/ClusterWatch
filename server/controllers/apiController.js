@@ -21,7 +21,7 @@ apiController.getApi = async (req, res, next) => {
       .then((res) => res.json())
       .then((data) => {
         res.locals.key = data.key;
-        console.log(data.key);
+        console.log('returned key:', data.key);
       });
     return next();
   } catch (error) {

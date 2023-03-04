@@ -103,53 +103,53 @@ function Testvis() {
         let controlPlaneId;
         // console.log(clusterNodes);
         clusterData.nodes.forEach((node) => {
-          if (node.name.includes('control-plane')) {
-            const {
-              name,
-              uid,
-              status: {
-                allocatable,
-                capacity,
-                conditions,
-                nodeInfo: {
-                  architecture,
-                  operatingSystem,
-                  osImage,
-                },
-              },
-            } = node;
-            const nodeConditions = {};
-            conditions.forEach((cond) => {
-              nodeConditions[cond.type] = cond.status;
-            });
-            nodeConditions['CPU Availability'] = `${allocatable.cpu} / ${capacity.cpu}`;
-            nodeConditions['Memory Availability'] = `${allocatable.memory} / ${capacity.memory}`;
-            nodeConditions['Pod Availability'] = `${allocatable.pods} / ${capacity.pods}`;
-
-            console.log(name, uid);
-            test.innerText += `Name: ${name}\nUID: ${uid}`;
-            // console.log('found control-plane');
-            localGraph.nodes.push({
-              kind: 'node',
-              id: `${node.name}-node`,
-              // label: node.name,
-              title: helperFunc({
-                name,
-                uid,
+          // if (node.name.includes('control-plane')) {
+          const {
+            name,
+            uid,
+            status: {
+              allocatable,
+              capacity,
+              conditions,
+              nodeInfo: {
                 architecture,
                 operatingSystem,
                 osImage,
-                ...nodeConditions,
+              },
+            },
+          } = node;
+          const nodeConditions = {};
+          conditions.forEach((cond) => {
+            nodeConditions[cond.type] = cond.status;
+          });
+          nodeConditions['CPU Availability'] = `${allocatable.cpu} / ${capacity.cpu}`;
+          nodeConditions['Memory Availability'] = `${allocatable.memory} / ${capacity.memory}`;
+          nodeConditions['Pod Availability'] = `${allocatable.pods} / ${capacity.pods}`;
 
-              }),
-              label: 'node',
-              size: 100,
-              font: { color: '#ffffff', size: 48 },
-              image: cpIcon,
-              shape: 'image',
-            });
-            controlPlaneId = `${node.name}-node`;
-          }
+          console.log(name, uid);
+          test.innerText += `Name: ${name}\nUID: ${uid}`;
+          // console.log('found control-plane');
+          localGraph.nodes.push({
+            kind: 'node',
+            id: `${node.name}-node`,
+            // label: node.name,
+            title: helperFunc({
+              name,
+              uid,
+              architecture,
+              operatingSystem,
+              osImage,
+              ...nodeConditions,
+
+            }),
+            label: 'node',
+            size: 100,
+            font: { color: '#ffffff', size: 48 },
+            image: nodeIcon,
+            shape: 'image',
+          });
+          controlPlaneId = `${node.name}-node`;
+          // }
         });
         clusterData.namespaces.forEach((ns) => {
           const nsId = `${ns.name}-ns`;
@@ -312,18 +312,6 @@ function Testvis() {
     },
   };
   return (
-
-  // <Box
-  //   id="viz-container"
-  //   sx={{
-  //     flexGrow: 1,
-  //     height: '90vh',
-  //   }}
-  // >
-  // <div id="viz-wrapper">
-
-  // {' '}
-  // {' '}
     <Graph
       graph={graph}
       options={options}
@@ -337,17 +325,7 @@ function Testvis() {
           },
         }), 1000);
       }}
-      // width="450px"
     />
-  // </div>
-  // {/* </Box> */}
-  // <div>
-  //   <h1>
-  //     React graph vis
-  //     {' '}
-  //   </h1>
-
-  // </div>
   );
 }
 
