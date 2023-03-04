@@ -77,46 +77,49 @@ setupController.forwardPort = (req, res, next) => {
   let podStatus;
   while (podStatus !== 'Running') {
     const abc = execSync('kubectl get pods');
-    abc.toString().split('\n').forEach((line) => {
-      if (line.includes('prometheus-grafana')) {
-        if (line.includes('Running')) {
-          podStatus = 'Running';
+    abc
+      .toString()
+      .split('\n')
+      .forEach((line) => {
+        if (line.includes('prometheus-grafana')) {
+          if (line.includes('Running')) {
+            podStatus = 'Running';
+          }
+          [podName] = line.split(' ');
+          console.log(podName);
         }
-        [podName] = line.split(' ');
-        console.log(podName);
-      }
-    });
+      });
   }
   // const abc = execSync('kubectl get pods');
   // console.log(abc.toString());
   // while (podStatus !== 'Running') {
-    // exec('kubectl get pods', (err, stdout, stderr) => {
-    //   if (err) {
-    //     console.error(`exec error: ${err}`);
-    //     return;
-    //   }
-    //   if (stderr) {
-    //     console.log(`stderr: ${stderr}`);
-    //     return;
-    //   }
-    //   console.log(stdout);
-    //   const output = stdout.split('\n');
-    //   output.forEach((line) => {
-    //     if (line.includes('prometheus-grafana')) {
-    //       if (line.includes('Running')) {
-    //         podStatus = 'Running';
-    //         console.log('omg', podStatus);
-    //       }
-    //       [podName] = line.split(' ');
-    //     }
-    //   });
-    //   console.log(podName);
-    // });
+  // exec('kubectl get pods', (err, stdout, stderr) => {
+  //   if (err) {
+  //     console.error(`exec error: ${err}`);
+  //     return;
+  //   }
+  //   if (stderr) {
+  //     console.log(`stderr: ${stderr}`);
+  //     return;
+  //   }
+  //   console.log(stdout);
+  //   const output = stdout.split('\n');
+  //   output.forEach((line) => {
+  //     if (line.includes('prometheus-grafana')) {
+  //       if (line.includes('Running')) {
+  //         podStatus = 'Running';
+  //         console.log('omg', podStatus);
+  //       }
+  //       [podName] = line.split(' ');
+  //     }
+  //   });
+  //   console.log(podName);
+  // });
   // }
 
   // //let forwarding = false
   // //while !forwarding
-  //   //attempt to port forward  
+  //   //attempt to port forward
   // getter.on('close', () => {
   const grafana = spawn(`kubectl port-forward ${podName} 3001:3000`, {
     shell: true,
@@ -130,13 +133,12 @@ setupController.forwardPort = (req, res, next) => {
     console.error(`stderr in grafana: ${data}`);
   });
 
-    grafana.on('exit', (code) => {
-      console.log(`child process exited with code ${code}`);
-    });
-    return next();
+  grafana.on('exit', (code) => {
+    console.log(`child process exited with code ${code}`);
   });
-  // });
+  return next();
 };
+// });
 module.exports = setupController;
 
 // setupController.promInit();
