@@ -1,17 +1,22 @@
-const fs = require('fs');
-const { exec } = require('child_process');
-const path = require('path');
+import fs from 'fs';
+import { exec } from 'child_process';
+import path from 'path';
+import { Request, Response, NextFunction, RequestHandler } from 'express';
+// import { PathOrFileDescriptor } from 'fs-extra';
 
-const alertController = {};
 
-alertController.createAlert = async (req, res, next) => {
-  const { type, threshold, name } = req.body;
+const createAlert:RequestHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const { type, threshold, name } :{type:string, threshold:number, name:string}= req.body;
 
-  let filePath;
-  let oldText;
-  let newText;
-  let oldName;
-  let command;
+  let filePath: string;
+  let oldText: string | RegExp;
+  let newText: string;
+  let oldName: string;
+  let command: string;
 
   switch (type) {
     case 'CPU':
@@ -47,7 +52,7 @@ alertController.createAlert = async (req, res, next) => {
       return res.status(500).send('Failed to read file');
     }
 
-    let newData =
+    let newData : string =
       type === 'Kube'
         ? data.replace(new RegExp(oldName, 'g'), name)
         : data
@@ -72,7 +77,7 @@ alertController.createAlert = async (req, res, next) => {
         }
         console.log(`Command output: ${stdout}`);
 
-        const templateFilePath = filePath.replace('.yaml', '-template.yaml');
+        const templateFilePath : string = filePath.replace('.yaml', '-template.yaml');
         fs.readFile(templateFilePath, 'utf8', (err, data) => {
           if (err) {
             console.error(err);
@@ -95,4 +100,8 @@ alertController.createAlert = async (req, res, next) => {
   });
 };
 
-module.exports = alertController;
+const alertController = {
+  createAlert,
+};
+
+export default alertController;
