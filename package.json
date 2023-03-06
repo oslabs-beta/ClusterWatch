@@ -41,6 +41,7 @@
     "@emotion/styled": "^11.10.6",
     "@kubernetes/client-node": "^0.18.1",
     "@types/cors": "^2.8.13",
+    "@types/fs-extra": "^11.0.1",
     "concurrently": "^7.6.0",
     "eslint": "^8.34.0",
     "eslint-config-airbnb": "^19.0.4",
