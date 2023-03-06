@@ -43,10 +43,14 @@ import CustomAlerts from '../../Pages/CustomAlerts';
 
 // Custom Theme for Material UI
 
-function Navbar({ apiKey }) {
+type navbarProps = {
+  apiKey: string,
+}
+
+function Navbar({ apiKey }: navbarProps) {
   const { collapseSidebar } = useProSidebar();
   const [teamSubMenuOpen, setTeamSubMenuOpen] = useState(false);
-  const [title, setTitle] = useState('Overview');
+  const [title, setTitle] = useState<string>('Overview');
 
   // const toggleTeamSubMenu = () => {
   //   setTeamSubMenuOpen(!teamSubMenuOpen);
@@ -94,7 +98,6 @@ function Navbar({ apiKey }) {
 
           </MenuItem>
           <SubMenu
-            opened={teamSubMenuOpen}
             icon={<AnalyticsOutlinedIcon />}
             label="Metrics"
           >

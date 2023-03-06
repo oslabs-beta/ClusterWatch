@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-function Kubelet({ apiKey }) {
+type KubeletProps = {
+  apiKey: string | any,
+}
+
+function Kubelet({ apiKey } : KubeletProps) {
   const [uid, setUid] = useState(null);
   const now = new Date().getTime();
   const from = new Date(now - 4 * 60 * 60 * 1000).getTime();

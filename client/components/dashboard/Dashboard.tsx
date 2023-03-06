@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
 
+
 function Dashboard() {
-  const [api, setApi] = useState(null);
+  const [api, setApi] = useState<string>('');
   useEffect(() => {
     fetch('http://localhost:3000/grafana/key', {
       method: 'GET',
