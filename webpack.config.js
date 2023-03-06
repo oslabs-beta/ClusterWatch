@@ -2,7 +2,7 @@ const path = require('path');
 let HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './client/index.js', //change to ts???
+  entry: './client/index.tsx', //change to ts???
   output: {
     publicPath: '/',
     path: path.resolve(__dirname, 'build/'),

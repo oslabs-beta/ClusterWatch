@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { AlignType } from 'react-bootstrap/esm/types';
 
 function CustomAlerts() {
   const [selectedAlertOption, setSelectedAlertOption] = useState('');
@@ -10,38 +11,38 @@ function CustomAlerts() {
 
   const [alertName, setAlertName] = useState('');
 
-  const handleTypeSubmit = (event) => {
+  const handleTypeSubmit = (event : any) => {
     event.preventDefault();
     setSubmittedAlertOption(selectedAlertOption);
   };
 
-  const handleRadioChange = (event) => {
+  const handleRadioChange = (event : any) => {
     setSelectedAlertOption(event.target.value);
   };
 
-  const handleMemoryChange = (event) => {
+  const handleMemoryChange = (event : any) => {
     setSelectedMemory(event.target.value);
   };
 
-  const handleMemorySubmit = (event) => {
+  const handleMemorySubmit = (event : any) => {
     event.preventDefault();
     setsubmittedMemory(selectedMemory);
   };
 
-  const handleCPUChange = (event) => {
+  const handleCPUChange = (event : any) => {
     setSelectedCPU(event.target.value);
   };
 
-  const handleCPUSubmit = (event) => {
+  const handleCPUSubmit = (event : any) => {
     event.preventDefault();
     setSubmittedCPU(selectedCPU);
   };
 
-  const handleNameChange = (event) => {
+  const handleNameChange = (event : any) => {
     setAlertName(event.target.value);
   };
 
-  const handleFormSubmit = (event) => {
+  const handleFormSubmit = (event : any) => {
     event.preventDefault();
     event.preventDefault();
     setSubmittedAlertOption(selectedAlertOption);
@@ -73,7 +74,7 @@ function CustomAlerts() {
 
   return (
     <div>
-      <iframe src="https://giphy.com/embed/dWa2rUaiahx1FB3jor" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+      <iframe src="https://giphy.com/embed/dWa2rUaiahx1FB3jor" width="480" height="480" frameBorder="0" className="giphy-embed" allowFullScreen></iframe>
       {submittedAlertOption === '' && (
         <div className="add-alert">
           <h3>type of alerts</h3>

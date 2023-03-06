@@ -13,7 +13,7 @@ function App() {
         <Route path="/Setup" element={<Setup />} />
         <Route path="/" element={<Setup />} />
 
-        <Route exact path="/Dashboard" element={<Navigate to="Dashboard/Overview" />} />
+        <Route path="/Dashboard" element={<Navigate to="Dashboard/Overview" />} /> // removed exact from path
       </Routes>
     </div>
   );

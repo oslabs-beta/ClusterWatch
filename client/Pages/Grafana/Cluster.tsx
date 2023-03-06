@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-function Cluster({ apiKey }) {
+type Clusterprops = {
+  apiKey: string | any,
+}
+
+function Cluster({ apiKey } : Clusterprops) {
   const [uid, setUid] = useState(null);
   const now = new Date().getTime();
   const from = new Date(now - 4 * 60 * 60 * 1000).getTime();
@@ -33,7 +37,6 @@ function Cluster({ apiKey }) {
         src={url}
         width="100%"
         height="100%"
-        frameBorder="0"
       ></iframe>
     </div>
   );

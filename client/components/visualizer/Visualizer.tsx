@@ -3,6 +3,8 @@ import Graph from 'react-graph-vis';
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './vis-styles.css';
+// import react-graph-vis  from '../../../custom'
+// import { graphData } from 'react-graph-vis';
 
 import { Box } from '@mui/material';
 import cpIcon from './icons/control-plane-icon.svg';
@@ -11,6 +13,32 @@ import nodeIcon from './icons/node-icon.svg';
 import deplIcon from './icons/deployment-icon.svg';
 import svcIcon from './icons/service-icon.svg';
 import podIcon from './icons/pod-icon.svg';
+
+interface ClusterNode {
+  kind: string,
+  id: string,
+  title: string,
+  label: string | undefined,
+  size: number, 
+  font: {
+    color: string,
+    size?: number
+  }
+  labels?: any, // any?
+  matchLabels?: any,
+  image: any,
+  shape: string,
+}
+interface clusterGraphData {
+  nodes: ClusterNode[],
+  edges: ClusterEdge[]
+}
+
+interface ClusterEdge {
+  from: string,
+  to: string,
+  length: number
+}
 
 const options = {
   height: '100%',
@@ -33,12 +61,24 @@ const options = {
     color: '#8526d3',
   },
 };
-function capitalizeFirstLetter(string) {
+function capitalizeFirstLetter(string: string): string {
   return string.charAt(0).toUpperCase() + string.slice(1);
+}
+interface ClusterDataResponse {
+    nodes: any[],
+    pods: any[],
+    namespaces: any[],
+    services: any[],
+    deployments: any[],
+    ingresses: any[]
+}
+
+interface divInfo {
+
 }
 
 // helper function that will take an object
-const helperFunc = (obj) => {
+const helperFunc = (obj: { [k: string] : any}) : string => {
   const div = document.createElement('div');
   div.className = 'popup';
   const ul = document.createElement('ul');
@@ -48,7 +88,7 @@ const helperFunc = (obj) => {
       const outerLi = document.createElement('li');
       outerLi.innerText = `${capitalizeFirstLetter(key)}:`;
       const subUl = document.createElement('ul');
-      obj[key].forEach((entry) => {
+      obj[key].forEach((entry : any) => {
         const newLi = document.createElement('li');
         for (const field in entry) {
           newLi.innerText += `${capitalizeFirstLetter(field)}: ${entry[field]}, `;
@@ -64,7 +104,8 @@ const helperFunc = (obj) => {
       ul.appendChild(li);
     }
   }
-  return div;
+  const val = div as unknown as string;
+  return val;
 };
 // create a div
 // add an unorder list to the div
@@ -73,13 +114,13 @@ const helperFunc = (obj) => {
 // return the div
 
 function Testvis() {
-  const [graph, setGraph] = useState({
+  const [graph, setGraph] = useState<clusterGraphData>({
     nodes: [],
     edges: [],
   });
-  let clusterData;
+  let clusterData: ClusterDataResponse;
   useEffect(() => {
-    const localGraph = {
+    const localGraph: clusterGraphData = {
       nodes: [],
       edges: [],
     };
@@ -100,9 +141,9 @@ function Testvis() {
         const {
           pods, services, deployments, ingresses,
         } = data;
-        let controlPlaneId;
+        let controlPlaneId: string;
         // console.log(clusterNodes);
-        clusterData.nodes.forEach((node) => {
+        clusterData.nodes.forEach((node: { [k : string] : any }) => {
           // if (node.name.includes('control-plane')) {
           const {
             name,
@@ -118,9 +159,17 @@ function Testvis() {
               },
             },
           } = node;
-          const nodeConditions = {};
-          conditions.forEach((cond) => {
-            nodeConditions[cond.type] = cond.status;
+          const nodeConditions: {
+              'CPU Availability': string,
+              'Memory Availability': string,
+              'Pod Availability': string,
+          } = {
+            'CPU Availability': '',
+            'Memory Availability': '',
+            'Pod Availability': ''
+          };
+          conditions.forEach((cond: {type: string, status: string}) => {
+            nodeConditions[cond.type as keyof typeof nodeConditions] = cond.status;
           });
           nodeConditions['CPU Availability'] = `${allocatable.cpu} / ${capacity.cpu}`;
           nodeConditions['Memory Availability'] = `${allocatable.memory} / ${capacity.memory}`;
@@ -168,7 +217,7 @@ function Testvis() {
             shape: 'image',
           });
           localGraph.edges.push({ from: controlPlaneId, to: nsId, length: 500 });
-          pods.forEach((pod) => {
+          pods.forEach((pod: {[k: string]: any}) => {
             const {
               name,
               namespace,
@@ -210,7 +259,7 @@ function Testvis() {
               // localGraph.edges.push({ from: `${pod.serviceAccount}-service`, to: podName });
             }
           });
-          services.forEach((service) => {
+          services.forEach((service: any) => {
             if (service.namespace === ns.name) {
               const {
                 name,
@@ -218,8 +267,12 @@ function Testvis() {
                 ports,
                 type,
               } = service;
-              const serviceInfo = [];
-              ports.forEach((port) => {
+              const serviceInfo: {
+                name:string,
+                port:string,
+                protocol:string,
+              }[] = [];
+              ports.forEach((port : any) => {
                 serviceInfo.push({ name: port.name, port: port.port, protocol: port.protocol });
               });
               const serviceName = `${service.name}-service`;
@@ -244,7 +297,7 @@ function Testvis() {
             }
           });
 
-          deployments.forEach((deployment) => {
+          deployments.forEach((deployment : any) => {
             if (deployment.namespace === ns.name) {
               const {
                 name,
@@ -289,7 +342,7 @@ function Testvis() {
             }
           });
 
-          ingresses.forEach((ingress) => {
+          ingresses.forEach((ingress : any) => {
             if (ingress.namespace === ns.name) return;
           });
         });
@@ -301,21 +354,21 @@ function Testvis() {
     };
     func();
   }, []);
-  const events = {
-    select: ({ nodes, edges }) => {
-      console.log('Selected nodes:');
-      console.log(nodes);
-      console.log('Selected edges:');
-      console.log(edges);
-      alert(`Selected node: ${nodes}`);
-      // asdfasdasdf
-    },
-  };
+  // const events = {
+  //   select: ({ nodes, edges }) => {
+  //     console.log('Selected nodes:');
+  //     console.log(nodes);
+  //     console.log('Selected edges:');
+  //     console.log(edges);
+  //     alert(`Selected node: ${nodes}`);
+  //     // asdfasdasdf
+  //   },
+  // };
   return (
     <Graph
       graph={graph}
       options={options}
-      events={events}
+      // events={events}
       getNetwork={(network) => {
         // ensure that the network eases in to fit the viewport
         setTimeout(() => network.fit({
