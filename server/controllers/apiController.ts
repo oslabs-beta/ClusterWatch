@@ -1,9 +1,17 @@
-const apiController = {};
+import { Request, Response, NextFunction, RequestHandler } from 'express';
 
-apiController.getApi = async (req, res, next) => {
+
+type Controller ={
+  
+  getApi?: RequestHandler;
+  getUid?: RequestHandler;
+}
+const apiController:Controller = {};
+
+apiController.getApi = async (req:Request, res:Response, next:NextFunction) => {
   console.log('received get request');
   try {
-    let response = await fetch('http://localhost:3001/api/auth/keys', {
+    let response  = await fetch('http://localhost:3001/api/auth/keys', {
       method: 'POST',
       mode: 'no-cors',
       headers: {
@@ -29,10 +37,10 @@ apiController.getApi = async (req, res, next) => {
   }
 };
 
-apiController.getUid = async (req, res, next) => {
+apiController.getUid = async (req:Request, res:Response, next:NextFunction) => {
   console.log('received uid request');
   console.log(req.body);
-  const { key, dashboard } = req.body;
+  const { key, dashboard } :{key : string, dashboard: string}= req.body;
 
   try {
     let response = await fetch(
@@ -48,7 +56,7 @@ apiController.getUid = async (req, res, next) => {
       .then((res) => res.json())
       .then((data) => {
         // Get the uid of the first dashboard in the list
-        const uid = data[0].uid;
+        const uid:string = data[0].uid;
         res.locals.uid = uid;
       });
     return next();
@@ -57,4 +65,4 @@ apiController.getUid = async (req, res, next) => {
   }
 };
 
-module.exports = apiController;
+export default apiController;

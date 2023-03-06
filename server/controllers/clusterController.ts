@@ -1,23 +1,104 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-const k8s = require('@kubernetes/client-node');
 
-const kc = new k8s.KubeConfig();
+import {
+  KubeConfig,
+  AppsV1Api,
+  CoreV1Api,
+  NetworkingV1Api,
+} from '@kubernetes/client-node';
+import { Request, Response, NextFunction, RequestHandler } from 'express';
+
+const kc = new KubeConfig();
 kc.loadFromDefault();
 
-const k8sApi2 = kc.makeApiClient(k8s.AppsV1Api);
-const k8sApi = kc.makeApiClient(k8s.CoreV1Api);
-const k8sApi3 = kc.makeApiClient(k8s.NetworkingV1Api);
+const k8sApi2: AppsV1Api = kc.makeApiClient(AppsV1Api);
+const k8sApi: CoreV1Api = kc.makeApiClient(CoreV1Api);
+const k8sApi3: NetworkingV1Api = kc.makeApiClient(NetworkingV1Api);
 
-const clusterController = {};
+type Controller = {
+  getNodes?: RequestHandler;
+  getPods?: RequestHandler;
+  getNamespaces?: RequestHandler;
+  getServices?: RequestHandler;
+  getDeployments?: RequestHandler;
+  getIngresses?: RequestHandler;
+  getClusterInfo?:RequestHandler ;
+};
+
+interface Node  {
+  name: string;
+  namespace: string;
+  uid: string;
+  creationTimeStamp?: any;
+  labels: any;
+  configSource: any;
+  providerID: string;
+  status: any;
+};
+
+interface Pod {
+  name: string;
+  namespace: string;
+  uid : string;
+  creationTimestamp: any;
+  labels: any;
+  containersInfo: any;
+  nodeName : string;
+  serviceAccount: any;
+  containerStatuses: any;
+  hostIP: string;
+  podIP: string;
+  startTime :any;
+}
+
+interface Test {
+  creationTimeStamp: any;
+  name: string;
+  id: string;
+}
+
+interface Service {
+  name: string;
+  uid: string;
+  creationTimeStamp: any;
+  namespace: string;
+  ipFamilies: any;
+  ports: any;
+  selector: any;
+  type: any;
+}
+
+interface Deployment {
+  name: string;
+  uid: string;
+  creationTimeStamp: any;
+  namespace: string;
+  strategy: any;
+  matchLabels: any;
+  replicas: any;
+  availableReplicas: any;
+  conditions: any;
+}
+
+interface ClusterInfo {
+  nodes: Node[];
+  pods: Pod[];
+  namespaces: Test[];
+  services: Service[];
+  deployments: Deployment[];
+  ingresses: any[];
+}
+
+const clusterController: Controller = {};
 
 const getNodes = async () => {
   const res = await k8sApi.listNode();
   console.log(res.body.items[0]);
-  const nodes = res.body.items.map((data) => {
-    const { name, namespace, uid, creationTimeStamp, labels } = data.metadata;
+  const nodes: Node[] = res.body.items.map((data) => {
+    const { name, namespace, uid, labels } = data.metadata;
+    const creationTimeStamp: any = data.metadata.creationTimestamp;
     const { configSource, providerID } = data.spec;
     const { status } = data;
-    const response = {
+    const response: Node = {
       name,
       namespace,
       uid,
@@ -37,7 +118,7 @@ const getNodes = async () => {
 const getPods = async () => {
   const res = await k8sApi.listPodForAllNamespaces();
   //console.log(res.body.items[0].metadata.labels);
-  const pods = res.body.items.map((data) => {
+  const pods: Pod[] = res.body.items.map((data) => {
     const { name, namespace, uid, creationTimestamp, labels } = data.metadata;
     const { containers, nodeName, serviceAccount } = data.spec;
     const { containerStatuses, hostIP, podIP, startTime } = data.status;
@@ -67,13 +148,16 @@ const getPods = async () => {
 
 const getNamespaces = async () => {
   const res = await k8sApi.listNamespace();
-  const test = res.body.items
+  const test: Test[] = res.body.items
     .filter((namespace) => namespace.metadata.name.slice(0, 4) !== 'kube')
-    .map((namespace) => ({
-      creationTimeStamp: namespace.creationTimeStamp,
-      name: namespace.metadata.name,
-      id: namespace.metadata.uid,
-    }));
+    .map((namespace) => {
+      const {creationTimeStamp} = namespace as any;
+      return {
+        creationTimeStamp: creationTimeStamp,
+        name: namespace.metadata.name,
+        id: namespace.metadata.uid,
+      }
+    });
   return test;
 };
 
@@ -81,11 +165,11 @@ const getServices = async () => {
   const res = await k8sApi.listServiceForAllNamespaces();
   const response = res.body.items;
   // //console.log(res.body.items[0]);
-  const results = response.map((data) => {
+  const results :Service[] = response.map((data) => {
     //console.log('service name:', data.metadata.name);
-    const { name, uid, creationTimeStamp, namespace } = data.metadata;
+    const { name, uid, creationTimeStamp, namespace } = data.metadata as any;
     const { ipFamilies, ports, selector, type } = data.spec;
-    const result = {
+    const result: Service = {
       name,
       uid,
       creationTimeStamp,
@@ -106,12 +190,12 @@ const getDeployments = async () => {
   const res = await k8sApi2.listDeploymentForAllNamespaces();
   const response = res.body.items;
   //console.log(response[0].spec.selector.matchLabels);
-  const results = response.map((data) => {
+  const results: Deployment[] = response.map((data) => {
     // console.log(data.spec.template);
-    const { name, uid, creationTimeStamp, namespace } = data.metadata;
+    const { name, uid, creationTimeStamp, namespace } = data.metadata as any;
     const { strategy, replicas, selector: matchLabels } = data.spec;
     const { availableReplicas, conditions } = data.status;
-    const result = {
+    const result: Deployment = {
       name,
       uid,
       creationTimeStamp,
@@ -143,7 +227,7 @@ clusterController.getClusterInfo = async (req, res, next) => {
     const services = await getServices();
     const deployments = await getDeployments();
     const ingresses = await getIngresses();
-    const clusterInfo = {
+    const clusterInfo:ClusterInfo = {
       nodes,
       pods,
       namespaces,
@@ -163,78 +247,5 @@ clusterController.getClusterInfo = async (req, res, next) => {
   }
 };
 
-// clusterController.getPods = async (req, res, next) => {
-//   try {
-//     const kc = new k8s.KubeConfig();
-//     kc.loadFromDefault();
 
-//     const k8sApi = kc.makeApiClient(k8s.CoreV1Api);
-
-//     res.locals.pods = await k8sApi.listNamespacedPod(req.params.namespace);
-//     return next();
-//   } catch (err) {
-//     return next({
-//       log: `clusterController.getPods ERROR: ${err}`,
-//       message: { err: 'An error occurred' },
-//     });
-//   }
-// };
-
-// clusterController.getServices = async (req, res, next) => {
-//   try {
-//     const kc = new k8s.KubeConfig();
-//     kc.loadFromDefault();
-
-//     const k8sApi = kc.makeApiClient(k8s.CoreV1Api);
-
-//     res.locals.services = await k8sApi.listNamespacedService(
-//       req.params.namespace
-//     );
-//     return next();
-//   } catch (err) {
-//     return next({
-//       log: `clusterController.getServices ERROR: ${err}`,
-//       message: { err: 'An error occurred' },
-//     });
-//   }
-// };
-
-// clusterController.getDeployments = async (req, res, next) => {
-//   try {
-//     const kc = new k8s.KubeConfig();
-//     kc.loadFromDefault();
-
-//     const k8sApi = kc.makeApiClient(k8s.AppsV1Api);
-
-//     res.locals.deployments = await k8sApi.listNamespacedDeployment(
-//       req.params.namespace
-//     );
-//     return next();
-//   } catch (err) {
-//     return next({
-//       log: `clusterController.getDeployments ERROR: ${err}`,
-//       message: { err: 'An error occurred' },
-//     });
-//   }
-// };
-
-// clusterController.getIngresses = async (req, res, next) => {
-//   try {
-//     const kc = new k8s.KubeConfig();
-//     kc.loadFromDefault();
-
-//     const k8sApi = kc.makeApiClient(k8s.ExtensionsV1beta1Api);
-
-//     res.locals.ingresses = await k8sApi.listNamespacedIngress(
-//       req.params.namespace
-//     );
-//     return next();
-//   } catch (err) {
-//     return next({
-//       log: `clusterController.getIngresses ERROR: ${err}`,
-//       message: { err: 'An error occurred' },
-//     });
-//   }
-// };
-
-module.exports = clusterController;
+export default clusterController;

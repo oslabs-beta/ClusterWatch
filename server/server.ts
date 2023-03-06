@@ -1,5 +1,3 @@
-
-
 import express, { Application, Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import clusterRouter from './routes/cluster';
@@ -29,10 +27,10 @@ app.use('/grafana', grafanaRouter);
 app.use('/alerts', alertsRouter);
 
 // catch all
-app.use((req: Request, res: Response) => res.sendStatus(404));
+app.use((req: Request, res: Response):Response => res.sendStatus(404));
 
 // global err handler
-app.use((err: ServerError, req: Request, res: Response, next: NextFunction) => {
+app.use((err: ServerError, req: Request, res: Response, next: NextFunction):Response => {
   const defaultErr: ServerError = {
     log: 'Express error handler caught unknown middleware error',
     status: 400,

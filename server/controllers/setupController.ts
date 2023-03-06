@@ -1,12 +1,22 @@
-const { exec, execSync, spawn, spawnSync } = require('child_process');
+import { exec, execSync, spawn, spawnSync } from 'child_process';
+import { Request, Response, NextFunction, RequestHandler } from 'express';
 
-const setupController = {};
+type Controller = {
+  promInit?: RequestHandler;
+  grafEmbed?: RequestHandler;
+  forwardPort?: RequestHandler;
+};
+const setupController : Controller = {};
 
 // helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 // helm repo update
 // helm install prometheus prometheus-community/kube-prometheus-stack
 // kubectl port-forward prometheus-grafana-5f98c899f8-tv8gp 3001:3000
-setupController.promInit = (req, res, next) => {
+setupController.promInit = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   console.log('\n\nPrometheus Setup Starting\n\n');
 
   spawnSync(
@@ -30,9 +40,13 @@ setupController.promInit = (req, res, next) => {
   return next();
 };
 
-setupController.grafEmbed = async (req, res, next) => {
+setupController.grafEmbed = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   console.log('\n\nGrafana Setup Starting\n\n');
-  let podName;
+  let podName: any;
   const getter = exec('kubectl get pods', (err, stdout, stderr) => {
     if (err) {
       console.error(`exec error: ${err}`);
@@ -90,37 +104,7 @@ setupController.forwardPort = (req, res, next) => {
         }
       });
   }
-  // const abc = execSync('kubectl get pods');
-  // console.log(abc.toString());
-  // while (podStatus !== 'Running') {
-  // exec('kubectl get pods', (err, stdout, stderr) => {
-  //   if (err) {
-  //     console.error(`exec error: ${err}`);
-  //     return;
-  //   }
-  //   if (stderr) {
-  //     console.log(`stderr: ${stderr}`);
-  //     return;
-  //   }
-  //   console.log(stdout);
-  //   const output = stdout.split('\n');
-  //   output.forEach((line) => {
-  //     if (line.includes('prometheus-grafana')) {
-  //       if (line.includes('Running')) {
-  //         podStatus = 'Running';
-  //         console.log('omg', podStatus);
-  //       }
-  //       [podName] = line.split(' ');
-  //     }
-  //   });
-  //   console.log(podName);
-  // });
-  // }
 
-  // //let forwarding = false
-  // //while !forwarding
-  //   //attempt to port forward
-  // getter.on('close', () => {
   const grafana = spawn(`kubectl port-forward ${podName} 3001:3000`, {
     shell: true,
     // detached: true,
@@ -139,7 +123,7 @@ setupController.forwardPort = (req, res, next) => {
   return next();
 };
 // });
-module.exports = setupController;
+export default setupController;
 
 // setupController.promInit();
 // setupController.grafEmbed();
