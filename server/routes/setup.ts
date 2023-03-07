@@ -18,11 +18,18 @@ router.get(
   }
 );
 router.get(
-  '/forwardPort',
-  setupController.forwardPort,
+  '/forwardGraf',
+  setupController.forwardGraf,
   (req: Request, res: Response): void => {
     res.sendStatus(200);
   }
 );
+
+// router.get(
+//   '/forwardProm',
+//   setupController.forwardProm, (req: Request, res: Response): void => {
+//     res.sendStatus(200);
+//   }
+// );
 
 export default router;
