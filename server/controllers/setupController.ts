@@ -4,7 +4,7 @@ import { Request, Response, NextFunction, RequestHandler } from 'express';
 type Controller = {
   promInit?: RequestHandler;
   grafEmbed?: RequestHandler;
-  forwardPort?: RequestHandler;
+  forwardGraf?: RequestHandler;
 };
 const setupController : Controller = {};
 
@@ -85,7 +85,7 @@ setupController.grafEmbed = async (
   });
 };
 
-setupController.forwardPort = (req, res, next) => {
+setupController.forwardGraf = (req, res, next) => {
   console.log('\n\nForwarding Port\n\n');
   let podName;
   let podStatus;
