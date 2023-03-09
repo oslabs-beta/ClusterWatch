@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "start": "webpack serve --hot --open",
-    "dev": "concurrently \"nodemon ./server/server.ts\" \"webpack serve --hot --open\""
+    "dev": "concurrently \"nodemon ./server/server.ts\" \"webpack serve --hot --open\"",
+    "cypress:open": "cypress open"
   },
   "repository": {
     "type": "git",
