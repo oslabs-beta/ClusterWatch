@@ -10,7 +10,7 @@ function Alerts() {
       
       width="100%"
       height="100%"
-     
+      title='alert embed'
     ></iframe>
     </div>
 

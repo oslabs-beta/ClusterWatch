@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
+import { ProSidebarProvider } from 'react-pro-sidebar';
 
 
 function Dashboard() {
@@ -19,7 +20,9 @@ function Dashboard() {
   }, []);
   return (
     <div className="dashboard">
-      <Navbar apiKey={api} />
+      <ProSidebarProvider>
+      <Navbar apiKey={api} data-testid="navbar"/>
+      </ProSidebarProvider>
     </div>
   );
 }

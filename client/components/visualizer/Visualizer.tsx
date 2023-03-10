@@ -354,16 +354,7 @@ function Testvis() {
     };
     func();
   }, []);
-  // const events = {
-  //   select: ({ nodes, edges }) => {
-  //     console.log('Selected nodes:');
-  //     console.log(nodes);
-  //     console.log('Selected edges:');
-  //     console.log(edges);
-  //     alert(`Selected node: ${nodes}`);
-  //     // asdfasdasdf
-  //   },
-  // };
+
   return (
     <Graph
       graph={graph}

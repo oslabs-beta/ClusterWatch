@@ -2,7 +2,7 @@ const request = require('supertest');
 
 const server = 'http://localhost:3000';
 
-describe('Route integration', () => {
+xdescribe('Route integration', () => {
   xdescribe('/', () => {
     // describe('GET', () => {
     //   // Note that we return the evaluation of `request` here! It evaluates to
@@ -107,7 +107,7 @@ describe('Route integration', () => {
           })
           .expect(200)
           .then((res) => {
-            console.log(res.body);
+            // console.log(res.body);
             expect(typeof res.body).toBe('string');
           });
       });

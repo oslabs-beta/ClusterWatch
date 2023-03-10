@@ -10,7 +10,7 @@ function App() {
     <div>
       <Routes>
         <Route path="/Dashboard/*" element={<Dashboard />} />
-        <Route path="/Setup" element={<Setup />} />
+        {/* <Route path="/Setup" element={<Setup />} /> */}
         <Route path="/" element={<Setup />} />
 
         <Route path="/Dashboard" element={<Navigate to="Dashboard/Overview" />} /> // removed exact from path
