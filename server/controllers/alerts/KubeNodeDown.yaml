@@ -3,7 +3,7 @@ additionalPrometheusRulesMap:
   groups:
   - name: Kubernetes cluster alerts
     rules:
-    - alert: KubeNodeDown
+    - alert: iguh
       expr: up{job="kubelet"} == 0
       for: 1m
       labels:
