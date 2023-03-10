@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest --verbose",
     "start": "webpack serve --hot --open",
-    "dev": "concurrently \"nodemon ./server/server.ts\" \"webpack serve --hot --open\""
+    "dev": "concurrently \"nodemon ./server/server.ts\" \"webpack serve --hot --open\"",
+    "cypress:open": "cypress open"
   },
   "repository": {
     "type": "git",
@@ -48,11 +49,13 @@
     "@testing-library/user-event": "^14.4.3",
     "@types/cors": "^2.8.13",
     "@types/fs-extra": "^11.0.1",
+    "@types/mocha": "^10.0.1",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
     "@types/vis": "^4.21.24",
     "babel-jest": "^29.5.0",
     "concurrently": "^7.6.0",
+    "cypress": "^12.7.0",
     "eslint": "^8.34.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.27.5",
