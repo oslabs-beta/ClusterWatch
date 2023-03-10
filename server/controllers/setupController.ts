@@ -9,10 +9,7 @@ type Controller = {
 };
 const setupController : Controller = {};
 
-// helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-// helm repo update
-// helm install prometheus prometheus-community/kube-prometheus-stack
-// kubectl port-forward prometheus-grafana-5f98c899f8-tv8gp 3001:3000
+// synchronous child processes used here because these commands must execute successively
 setupController.promInit = (
   req: Request,
   res: Response,
@@ -41,7 +38,8 @@ setupController.promInit = (
   return next();
 };
 
-setupController.grafEmbed = async (
+// need to use kubectl to find unique grafana pod name, apply maniefests, then restart pod in order to have manifest rules take effect
+setupController.grafEmbed = (
   req: Request,
   res: Response,
   next: NextFunction
@@ -67,11 +65,6 @@ setupController.grafEmbed = async (
     console.log(podName);
   });
 
-  // kubectl replace -f prometheus-grafana.yaml
-  // execSync(`kubectl delete pod ${podName}`, {
-  //   // stdio: 'inherit',
-  //   // shell: true
-  // });
   getter.once('close', () => {
     spawnSync('kubectl apply -f prometheus-grafana.yaml', {
       stdio: 'inherit',
@@ -86,6 +79,7 @@ setupController.grafEmbed = async (
   });
 };
 
+// while loop checks to ensure kubernetes pod is ready otherwise port forwarding will fail
 setupController.forwardPorts = (req : Request, res: Response, next : NextFunction) => {
   console.log('\n\nForwarding Ports\n\n');
   let grafPod: string, promPod : string, alertPod: string;
