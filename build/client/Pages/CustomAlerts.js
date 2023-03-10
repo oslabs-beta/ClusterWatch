@@ -85,7 +85,7 @@ function CustomAlerts() {
         });
     };
     return (react_1.default.createElement("div", null,
-        react_1.default.createElement("iframe", { src: "https://giphy.com/embed/dWa2rUaiahx1FB3jor", width: "480", height: "480", frameBorder: "0", class: "giphy-embed", allowFullScreen: true }),
+        react_1.default.createElement("iframe", { src: "https://giphy.com/embed/dWa2rUaiahx1FB3jor", width: "480", height: "480", frameBorder: "0", className: "giphy-embed", allowFullScreen: true }),
         submittedAlertOption === '' && (react_1.default.createElement("div", { className: "add-alert" },
             react_1.default.createElement("h3", null, "type of alerts"),
             react_1.default.createElement("form", { onSubmit: handleTypeSubmit },

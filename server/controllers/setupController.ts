@@ -4,7 +4,8 @@ import { Request, Response, NextFunction, RequestHandler } from 'express';
 type Controller = {
   promInit?: RequestHandler;
   grafEmbed?: RequestHandler;
-  forwardGraf?: RequestHandler;
+  forwardPorts?: RequestHandler;
+  forwardProm?: RequestHandler;
 };
 const setupController : Controller = {};
 
@@ -85,9 +86,9 @@ setupController.grafEmbed = async (
   });
 };
 
-setupController.forwardGraf = (req, res, next) => {
-  console.log('\n\nForwarding Port\n\n');
-  let podName;
+setupController.forwardPorts = (req : Request, res: Response, next : NextFunction) => {
+  console.log('\n\nForwarding Ports\n\n');
+  let grafPod: string, promPod : string, alertPod: string;
   let podStatus;
   while (podStatus !== 'Running') {
     const abc = execSync('kubectl get pods');
@@ -95,35 +96,25 @@ setupController.forwardGraf = (req, res, next) => {
       .toString()
       .split('\n')
       .forEach((line) => {
+        if (!promPod && line.includes('prometheus-0')) [promPod] = line.split(' ');
+        if (!alertPod && line.includes('alertmanager-0')) [alertPod] = line.split(' ')
         if (line.includes('prometheus-grafana')) {
-          if (line.includes('Running')) {
-            podStatus = 'Running';
-          }
-          [podName] = line.split(' ');
-          console.log(podName);
+          if (line.includes('Running')) podStatus = 'Running';
+          [grafPod] = line.split(' ');
         }
+        console.log('grapod:', grafPod);
       });
   }
 
-  const grafana = spawn(`kubectl port-forward ${podName} 3001:3000`, {
-    shell: true,
-    // detached: true,
-  });
-  // grafana.unref();
-  grafana.stdout.on('data', (data) => {
+  const ports = spawn(`kubectl port-forward ${grafPod} 3001:3000 & kubectl port-forward ${promPod} 9090 & kubectl port-forward ${alertPod} 9093`, { shell: true, });
+  ports.stdout.on('data', (data) => {
     console.log(`stdout: ${data}`);
   });
-  grafana.stderr.on('data', (data) => {
-    console.error(`stderr in grafana: ${data}`);
+  ports.stderr.on('data', (data) => {
+    console.error(`grafana port forwarding error: ${data}`);
   });
 
-  grafana.on('exit', (code) => {
-    console.log(`child process exited with code ${code}`);
-  });
+  
   return next();
 };
-// });
 export default setupController;
-
-// setupController.promInit();
-// setupController.grafEmbed();

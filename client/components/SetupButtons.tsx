@@ -9,7 +9,7 @@ function Setup() {
       <h2>Fancy Buttons</h2>
       <button onClick={() => fetch('http://localhost:3000/setup/promSetup')} type="button">Setup Prometheus</button>
       <button onClick={() => fetch('http://localhost:3000/setup/grafSetup')} type="button">Setup Grafana</button>
-      <button onClick={() => fetch('http://localhost:3000/setup/forwardGraf')} type="button">Start Port Forwarding</button>
+      <button onClick={() => fetch('http://localhost:3000/setup/forwardPorts')} type="button">Start Port Forwarding</button>
       <button type="button"><Link to="/Dashboard">Go to dashboard</Link></button>
     </div>
   );

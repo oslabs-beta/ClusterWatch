@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -7,11 +8,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-const fs = require('fs');
-const { exec } = require('child_process');
-const path = require('path');
-const alertController = {};
-alertController.createAlert = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const fs_1 = __importDefault(require("fs"));
+const child_process_1 = require("child_process");
+const path_1 = __importDefault(require("path"));
+// import { PathOrFileDescriptor } from 'fs-extra';
+const createAlert = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { type, threshold, name } = req.body;
     let filePath;
     let oldText;
@@ -20,7 +25,7 @@ alertController.createAlert = (req, res, next) => __awaiter(this, void 0, void 0
     let command;
     switch (type) {
         case 'CPU':
-            filePath = path.join(__dirname, 'alerts/HighCPUUsage.yaml');
+            filePath = path_1.default.join(__dirname, 'alerts/HighCPUUsage.yaml');
             oldText = /1\b/g;
             newText = `sum(rate(container_cpu_usage_seconds_total{namespace="default"}[5m])) by (pod_name) > ${threshold}`;
             oldName = 'HighCPUUsage';
@@ -28,7 +33,7 @@ alertController.createAlert = (req, res, next) => __awaiter(this, void 0, void 0
                 'helm upgrade --reuse-values -f server/controllers/alerts/HighCPUUsage.yaml prometheus prometheus-community/kube-prometheus-stack -n default';
             break;
         case 'Memory':
-            filePath = path.join(__dirname, 'alerts/HighMemoryUsage.yaml');
+            filePath = path_1.default.join(__dirname, 'alerts/HighMemoryUsage.yaml');
             oldText =
                 'sum(container_memory_working_set_bytes{namespace="default"}) by (pod_name) > 1e+09';
             newText = `sum(container_memory_working_set_bytes{namespace="default"}) by (pod_name) > ${threshold}e+09`;
@@ -37,7 +42,7 @@ alertController.createAlert = (req, res, next) => __awaiter(this, void 0, void 0
                 'helm upgrade --reuse-values -f server/controllers/alerts/HighMemoryUsage.yaml prometheus prometheus-community/kube-prometheus-stack -n default';
             break;
         default:
-            filePath = path.join(__dirname, 'alerts/KubeNodeDown.yaml');
+            filePath = path_1.default.join(__dirname, 'alerts/KubeNodeDown.yaml');
             oldText = '';
             newText = '';
             oldName = 'KubeNodeDown';
@@ -45,7 +50,7 @@ alertController.createAlert = (req, res, next) => __awaiter(this, void 0, void 0
                 'helm upgrade --reuse-values -f server/controllers/alerts/KubeNodeDown.yaml prometheus prometheus-community/kube-prometheus-stack -n default';
             break;
     }
-    fs.readFile(filePath, 'utf8', (err, data) => {
+    fs_1.default.readFile(filePath, 'utf8', (err, data) => {
         if (err) {
             console.error(err);
             return res.status(500).send('Failed to read file');
@@ -55,13 +60,13 @@ alertController.createAlert = (req, res, next) => __awaiter(this, void 0, void 0
             : data
                 .replace(new RegExp(oldText, 'g'), newText)
                 .replace(new RegExp(oldName, 'g'), name);
-        fs.writeFile(filePath, newData, 'utf8', (err) => {
+        fs_1.default.writeFile(filePath, newData, 'utf8', (err) => {
             if (err) {
                 console.error(err);
                 return res.status(500).send('Failed to write file');
             }
             console.log('File updated successfully!');
-            exec(command, (error, stdout, stderr) => {
+            (0, child_process_1.exec)(command, (error, stdout, stderr) => {
                 if (error) {
                     console.error(`Error running command: ${error.message}`);
                     return res.status(500).send('Failed to upgrade Prometheus chart');
@@ -72,12 +77,12 @@ alertController.createAlert = (req, res, next) => __awaiter(this, void 0, void 0
                 }
                 console.log(`Command output: ${stdout}`);
                 const templateFilePath = filePath.replace('.yaml', '-template.yaml');
-                fs.readFile(templateFilePath, 'utf8', (err, data) => {
+                fs_1.default.readFile(templateFilePath, 'utf8', (err, data) => {
                     if (err) {
                         console.error(err);
                         return res.status(500).send('Failed to read template file');
                     }
-                    fs.writeFile(filePath, data, 'utf8', (err) => {
+                    fs_1.default.writeFile(filePath, data, 'utf8', (err) => {
                         if (err) {
                             console.error(err);
                             return res
@@ -92,4 +97,7 @@ alertController.createAlert = (req, res, next) => __awaiter(this, void 0, void 0
         });
     });
 });
-module.exports = alertController;
+const alertController = {
+    createAlert,
+};
+exports.default = alertController;

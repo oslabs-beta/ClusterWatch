@@ -34,10 +34,6 @@ const AnalyticsOutlined_1 = __importDefault(require("@mui/icons-material/Analyti
 const ScatterPlotOutlined_1 = __importDefault(require("@mui/icons-material/ScatterPlotOutlined"));
 const AccountTreeOutlined_1 = __importDefault(require("@mui/icons-material/AccountTreeOutlined"));
 const PeopleOutlined_1 = __importDefault(require("@mui/icons-material/PeopleOutlined"));
-const ContactsOutlined_1 = __importDefault(require("@mui/icons-material/ContactsOutlined"));
-const ReceiptOutlined_1 = __importDefault(require("@mui/icons-material/ReceiptOutlined"));
-const CalendarTodayOutlined_1 = __importDefault(require("@mui/icons-material/CalendarTodayOutlined"));
-const HelpOutlineOutlined_1 = __importDefault(require("@mui/icons-material/HelpOutlineOutlined"));
 const MenuOutlined_1 = __importDefault(require("@mui/icons-material/MenuOutlined"));
 const ViewInArOutlined_1 = __importDefault(require("@mui/icons-material/ViewInArOutlined"));
 const FilterTiltShiftOutlined_1 = __importDefault(require("@mui/icons-material/FilterTiltShiftOutlined"));
@@ -59,7 +55,6 @@ const NodeUseMethod_1 = __importDefault(require("../../Pages/Grafana/NodeUseMeth
 const PromQuery_1 = __importDefault(require("../../Pages/PromQuery"));
 const Alerts_1 = __importDefault(require("../../Pages/Alerts"));
 const CustomAlerts_1 = __importDefault(require("../../Pages/CustomAlerts"));
-// Custom Theme for Material UI
 function Navbar({ apiKey }) {
     const { collapseSidebar } = (0, react_pro_sidebar_1.useProSidebar)();
     const [teamSubMenuOpen, setTeamSubMenuOpen] = (0, react_1.useState)(false);
@@ -72,14 +67,14 @@ function Navbar({ apiKey }) {
             react_1.default.createElement(react_pro_sidebar_1.Menu, null,
                 react_1.default.createElement(react_pro_sidebar_1.MenuItem, { icon: react_1.default.createElement(MenuOutlined_1.default, null), onClick: () => {
                         collapseSidebar();
-                    }, style: { textAlign: 'center' }, id: "logo" },
+                    }, style: { textAlign: 'center' }, id: "logo", "data-testid": "pro-sidebar" },
                     ' ',
                     react_1.default.createElement("h2", null, "ClusterWatch")),
                 react_1.default.createElement(react_pro_sidebar_1.MenuItem, { component: react_1.default.createElement(react_router_dom_1.Link, { to: "Dashboard/Overview" }, " "), icon: react_1.default.createElement(HomeOutlined_1.default, null), onClick: (e) => {
                         setTitle(e.currentTarget.textContent);
                     } }, "Overview"),
                 react_1.default.createElement(react_pro_sidebar_1.MenuItem, { component: react_1.default.createElement(react_router_dom_1.Link, { to: "Dashboard/Setup", className: "link" }), icon: react_1.default.createElement(PeopleOutlined_1.default, null), onClick: (e) => setTitle(e.currentTarget.textContent) }, "Setup"),
-                react_1.default.createElement(react_pro_sidebar_1.SubMenu, { opened: teamSubMenuOpen, icon: react_1.default.createElement(AnalyticsOutlined_1.default, null), label: "Metrics" },
+                react_1.default.createElement(react_pro_sidebar_1.SubMenu, { icon: react_1.default.createElement(AnalyticsOutlined_1.default, null), label: "Metrics" },
                     react_1.default.createElement(react_pro_sidebar_1.MenuItem, { component: react_1.default.createElement(react_router_dom_1.Link, { to: "Dashboard/Metrics/Cluster" }), icon: react_1.default.createElement(ScatterPlotOutlined_1.default, null), onClick: (e) => setTitle(e.currentTarget.textContent) }, "Kubernetes API Server"),
                     react_1.default.createElement(react_pro_sidebar_1.MenuItem, { component: react_1.default.createElement(react_router_dom_1.Link, { to: "Dashboard/Metrics/Nodes" }), icon: react_1.default.createElement(AccountTreeOutlined_1.default, null), onClick: (e) => setTitle(e.currentTarget.textContent) }, "Nodes"),
                     react_1.default.createElement(react_pro_sidebar_1.MenuItem, { component: react_1.default.createElement(react_router_dom_1.Link, { to: "Dashboard/Metrics/Kubelet" }), icon: react_1.default.createElement(ViewInArOutlined_1.default, null), onClick: (e) => setTitle(e.currentTarget.textContent) }, "Kubelet"),

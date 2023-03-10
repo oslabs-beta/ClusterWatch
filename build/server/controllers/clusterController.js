@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -7,19 +8,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-// eslint-disable-next-line import/no-extraneous-dependencies
-const k8s = require('@kubernetes/client-node');
-const kc = new k8s.KubeConfig();
+Object.defineProperty(exports, "__esModule", { value: true });
+const client_node_1 = require("@kubernetes/client-node");
+const kc = new client_node_1.KubeConfig();
 kc.loadFromDefault();
-const k8sApi2 = kc.makeApiClient(k8s.AppsV1Api);
-const k8sApi = kc.makeApiClient(k8s.CoreV1Api);
-const k8sApi3 = kc.makeApiClient(k8s.NetworkingV1Api);
+const k8sApi2 = kc.makeApiClient(client_node_1.AppsV1Api);
+const k8sApi = kc.makeApiClient(client_node_1.CoreV1Api);
+const k8sApi3 = kc.makeApiClient(client_node_1.NetworkingV1Api);
+;
 const clusterController = {};
-const getNodes = () => __awaiter(this, void 0, void 0, function* () {
+const getNodes = () => __awaiter(void 0, void 0, void 0, function* () {
     const res = yield k8sApi.listNode();
     console.log(res.body.items[0]);
     const nodes = res.body.items.map((data) => {
-        const { name, namespace, uid, creationTimeStamp, labels } = data.metadata;
+        const { name, namespace, uid, labels } = data.metadata;
+        const creationTimeStamp = data.metadata.creationTimestamp;
         const { configSource, providerID } = data.spec;
         const { status } = data;
         const response = {
@@ -38,7 +41,7 @@ const getNodes = () => __awaiter(this, void 0, void 0, function* () {
     return nodes;
 });
 // getNodes();
-const getPods = () => __awaiter(this, void 0, void 0, function* () {
+const getPods = () => __awaiter(void 0, void 0, void 0, function* () {
     const res = yield k8sApi.listPodForAllNamespaces();
     //console.log(res.body.items[0].metadata.labels);
     const pods = res.body.items.map((data) => {
@@ -68,18 +71,21 @@ const getPods = () => __awaiter(this, void 0, void 0, function* () {
     return pods;
 });
 // getPods();
-const getNamespaces = () => __awaiter(this, void 0, void 0, function* () {
+const getNamespaces = () => __awaiter(void 0, void 0, void 0, function* () {
     const res = yield k8sApi.listNamespace();
     const test = res.body.items
         .filter((namespace) => namespace.metadata.name.slice(0, 4) !== 'kube')
-        .map((namespace) => ({
-        creationTimeStamp: namespace.creationTimeStamp,
-        name: namespace.metadata.name,
-        id: namespace.metadata.uid,
-    }));
+        .map((namespace) => {
+        const { creationTimeStamp } = namespace;
+        return {
+            creationTimeStamp: creationTimeStamp,
+            name: namespace.metadata.name,
+            id: namespace.metadata.uid,
+        };
+    });
     return test;
 });
-const getServices = () => __awaiter(this, void 0, void 0, function* () {
+const getServices = () => __awaiter(void 0, void 0, void 0, function* () {
     const res = yield k8sApi.listServiceForAllNamespaces();
     const response = res.body.items;
     // //console.log(res.body.items[0]);
@@ -103,7 +109,7 @@ const getServices = () => __awaiter(this, void 0, void 0, function* () {
     return results;
 });
 // getServices();
-const getDeployments = () => __awaiter(this, void 0, void 0, function* () {
+const getDeployments = () => __awaiter(void 0, void 0, void 0, function* () {
     const res = yield k8sApi2.listDeploymentForAllNamespaces();
     const response = res.body.items;
     //console.log(response[0].spec.selector.matchLabels);
@@ -129,11 +135,11 @@ const getDeployments = () => __awaiter(this, void 0, void 0, function* () {
     return results;
 });
 // getDeployments();
-const getIngresses = () => __awaiter(this, void 0, void 0, function* () {
+const getIngresses = () => __awaiter(void 0, void 0, void 0, function* () {
     const res = yield k8sApi3.listIngressForAllNamespaces();
     return res.body.items;
 });
-clusterController.getClusterInfo = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+clusterController.getClusterInfo = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const nodes = yield getNodes();
         const pods = yield getPods();
@@ -161,66 +167,4 @@ clusterController.getClusterInfo = (req, res, next) => __awaiter(this, void 0, v
         });
     }
 });
-// clusterController.getPods = async (req, res, next) => {
-//   try {
-//     const kc = new k8s.KubeConfig();
-//     kc.loadFromDefault();
-//     const k8sApi = kc.makeApiClient(k8s.CoreV1Api);
-//     res.locals.pods = await k8sApi.listNamespacedPod(req.params.namespace);
-//     return next();
-//   } catch (err) {
-//     return next({
-//       log: `clusterController.getPods ERROR: ${err}`,
-//       message: { err: 'An error occurred' },
-//     });
-//   }
-// };
-// clusterController.getServices = async (req, res, next) => {
-//   try {
-//     const kc = new k8s.KubeConfig();
-//     kc.loadFromDefault();
-//     const k8sApi = kc.makeApiClient(k8s.CoreV1Api);
-//     res.locals.services = await k8sApi.listNamespacedService(
-//       req.params.namespace
-//     );
-//     return next();
-//   } catch (err) {
-//     return next({
-//       log: `clusterController.getServices ERROR: ${err}`,
-//       message: { err: 'An error occurred' },
-//     });
-//   }
-// };
-// clusterController.getDeployments = async (req, res, next) => {
-//   try {
-//     const kc = new k8s.KubeConfig();
-//     kc.loadFromDefault();
-//     const k8sApi = kc.makeApiClient(k8s.AppsV1Api);
-//     res.locals.deployments = await k8sApi.listNamespacedDeployment(
-//       req.params.namespace
-//     );
-//     return next();
-//   } catch (err) {
-//     return next({
-//       log: `clusterController.getDeployments ERROR: ${err}`,
-//       message: { err: 'An error occurred' },
-//     });
-//   }
-// };
-// clusterController.getIngresses = async (req, res, next) => {
-//   try {
-//     const kc = new k8s.KubeConfig();
-//     kc.loadFromDefault();
-//     const k8sApi = kc.makeApiClient(k8s.ExtensionsV1beta1Api);
-//     res.locals.ingresses = await k8sApi.listNamespacedIngress(
-//       req.params.namespace
-//     );
-//     return next();
-//   } catch (err) {
-//     return next({
-//       log: `clusterController.getIngresses ERROR: ${err}`,
-//       message: { err: 'An error occurred' },
-//     });
-//   }
-// };
-module.exports = clusterController;
+exports.default = clusterController;

@@ -24,7 +24,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importStar(require("react"));
-const react_router_dom_1 = require("react-router-dom");
 function Kubelet({ apiKey }) {
     const [uid, setUid] = (0, react_1.useState)(null);
     const now = new Date().getTime();
