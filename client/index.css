@@ -124,3 +124,7 @@ code {
 #viz-wrapper {
 
 }
+
+div.vis-tooltip {
+  position: absolute;
+}

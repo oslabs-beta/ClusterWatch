@@ -9,6 +9,7 @@ import {
   SubMenu,
   useProSidebar,
 } from 'react-pro-sidebar';
+
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import AnalyticsOutlinedIcon from '@mui/icons-material/AnalyticsOutlined';
 import ScatterPlotOutlinedIcon from '@mui/icons-material/ScatterPlotOutlined';
@@ -59,7 +60,7 @@ function Navbar({ apiKey }: navbarProps) {
   return (
     <div id="app" style={{ height: '100vh', display: 'flex' }}>
       {/* <Testvis /> */}
-      <Sidebar style={{ height: '100vh' }}>
+      <Sidebar style={{ height: '100vh' }} >
         <Menu>
           <MenuItem
             icon={<MenuOutlinedIcon />}
@@ -68,6 +69,7 @@ function Navbar({ apiKey }: navbarProps) {
             }}
             style={{ textAlign: 'center' }}
             id="logo"
+            data-testid="pro-sidebar"
           >
             {' '}
             <h2>ClusterWatch</h2>
