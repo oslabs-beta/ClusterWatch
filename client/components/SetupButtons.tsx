@@ -3,7 +3,10 @@ import {
   Link,
 } from 'react-router-dom';
 
+
+
 function Setup() {
+  
   return (
     <div>
       <h2>Fancy Buttons</h2>

@@ -4,7 +4,7 @@ import SetupButtons from '../components/SetupButtons';
 function SetupPage() {
   return (
     <div>
-      <SetupButtons />
+      <SetupButtons/>
     </div>
   );
 }
