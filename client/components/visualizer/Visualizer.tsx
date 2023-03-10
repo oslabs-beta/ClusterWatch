@@ -377,6 +377,7 @@ function Testvis() {
             easingFunction: 'linear',
           },
         }), 1000);
+        network.moveTo({position: {x:0, y:0},})
       }}
     />
   );
