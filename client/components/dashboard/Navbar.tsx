@@ -52,7 +52,16 @@ function Navbar({ apiKey }: navbarProps) {
   const { collapseSidebar } = useProSidebar();
   const [teamSubMenuOpen, setTeamSubMenuOpen] = useState(false);
   const [title, setTitle] = useState<string>('Overview');
+const [activePage, setActivePage] = useState(null) ;
 
+function handleActive(event :any) {
+  if (!event.target.classList.value.includes("active")) {
+    event.target.classList.toggle('active') ;
+    if (activePage)
+      activePage.classList.remove("active") ;
+    setActivePage(event.target) ;
+  }
+}
   // const toggleTeamSubMenu = () => {
   //   setTeamSubMenuOpen(!teamSubMenuOpen);
   // };
@@ -60,9 +69,12 @@ function Navbar({ apiKey }: navbarProps) {
   return (
     <div id="app" style={{ height: '100vh', display: 'flex' }}>
       {/* <Testvis /> */}
-      <Sidebar style={{ height: '100vh' }} >
-        <Menu>
+      <Sidebar>
+        <Menu
+          style={{ height: '100vh', backgroundColor: 'rgb(11,193,209, 0.6)' }}
+        >
           <MenuItem
+            className="k8title"
             icon={<MenuOutlinedIcon />}
             onClick={() => {
               collapseSidebar();
@@ -71,18 +83,18 @@ function Navbar({ apiKey }: navbarProps) {
             id="logo"
             data-testid="pro-sidebar"
           >
-            {' '}
-            <h2>ClusterWatch</h2>
+            ClusterWatch
           </MenuItem>
           <MenuItem
+            className="k8"
             component={<Link to="Dashboard/Overview"> </Link>}
             icon={<HomeOutlinedIcon />}
             onClick={(e) => {
-              setTitle(e.currentTarget.textContent);
+              setTitle(e.currentTarget.textContent)
+              
             }}
           >
             Overview
-
           </MenuItem>
           {/* <MenuItem
             component={<Link to="/Metrics/Cluster"> Overview</Link>}
@@ -92,18 +104,17 @@ function Navbar({ apiKey }: navbarProps) {
             Team
           </MenuItem> */}
           <MenuItem
+            className="k8"
             component={<Link to="Dashboard/Setup" className="link" />}
             icon={<PeopleOutlinedIcon />}
-            onClick={(e) => setTitle(e.currentTarget.textContent)}
+            onClick={/*(e) => setTitle(e.currentTarget.textContent*/handleActive}
+            
           >
             Setup
-
           </MenuItem>
-          <SubMenu
-            icon={<AnalyticsOutlinedIcon />}
-            label="Metrics"
-          >
+          <SubMenu icon={<AnalyticsOutlinedIcon />} label="Metrics">
             <MenuItem
+              className="k8"
               component={<Link to="Dashboard/Metrics/Cluster" />}
               icon={<ScatterPlotOutlinedIcon />}
               onClick={(e) => setTitle(e.currentTarget.textContent)}
@@ -111,6 +122,7 @@ function Navbar({ apiKey }: navbarProps) {
               Kubernetes API Server
             </MenuItem>
             <MenuItem
+              className="k8"
               component={<Link to="Dashboard/Metrics/Nodes" />}
               icon={<AccountTreeOutlinedIcon />}
               onClick={(e) => setTitle(e.currentTarget.textContent)}
@@ -118,6 +130,7 @@ function Navbar({ apiKey }: navbarProps) {
               Nodes
             </MenuItem>
             <MenuItem
+              className="k8"
               component={<Link to="Dashboard/Metrics/Kubelet" />}
               icon={<ViewInArOutlinedIcon />}
               onClick={(e) => setTitle(e.currentTarget.textContent)}
@@ -125,6 +138,7 @@ function Navbar({ apiKey }: navbarProps) {
               Kubelet
             </MenuItem>
             <MenuItem
+              className="k8"
               component={<Link to="Dashboard/ClusterUseMethod" />}
               icon={<HubOutlinedIcon />}
               onClick={(e) => setTitle(e.currentTarget.textContent)}
@@ -132,6 +146,7 @@ function Navbar({ apiKey }: navbarProps) {
               Use Method(Cluster)
             </MenuItem>
             <MenuItem
+              className="k8"
               component={<Link to="Dashboard/Metrics/NodeUseMethod" />}
               icon={<PodcastsOutlinedIcon />}
               onClick={(e) => setTitle(e.currentTarget.textContent)}
@@ -139,6 +154,7 @@ function Navbar({ apiKey }: navbarProps) {
               Use Method(Node)
             </MenuItem>
             <MenuItem
+              className="k8"
               component={<Link to="Dashboard/Metrics/CoreDNS" />}
               icon={<FilterTiltShiftOutlinedIcon />}
               onClick={(e) => setTitle(e.currentTarget.textContent)}
@@ -148,6 +164,7 @@ function Navbar({ apiKey }: navbarProps) {
           </SubMenu>
 
           <MenuItem
+            className="k8"
             component={<Link to="Dashboard/PromQuery" />}
             icon={<QueryStatsOutlinedIcon />}
             onClick={(e) => setTitle(e.currentTarget.textContent)}
@@ -155,6 +172,7 @@ function Navbar({ apiKey }: navbarProps) {
             Prom Query
           </MenuItem>
           <MenuItem
+            className="k8"
             component={<Link to="Dashboard/Alerts" />}
             icon={<AddAlertOutlinedIcon />}
             onClick={(e) => setTitle(e.currentTarget.textContent)}
@@ -162,6 +180,7 @@ function Navbar({ apiKey }: navbarProps) {
             Alert Manager
           </MenuItem>
           <MenuItem
+            className="k8"
             component={<Link to="Dashboard/CustomAlerts" />}
             icon={<NotificationAddOutlinedIcon />}
             onClick={(e) => setTitle(e.currentTarget.textContent)}
@@ -195,14 +214,16 @@ function Navbar({ apiKey }: navbarProps) {
             path="Dashboard/Metrics/Kubelet"
             element={<Kubelet apiKey={apiKey} />}
           />
-          <Route path="Dashboard/Metrics/Nodes" element={<Nodes apiKey={apiKey} />} />
+          <Route
+            path="Dashboard/Metrics/Nodes"
+            element={<Nodes apiKey={apiKey} />}
+          />
           <Route
             path="Dashboard/Metrics/NodeUseMethod"
             element={<NodeUseMethod apiKey={apiKey} />}
           />
           <Route path="Dashboard/PromQuery" element={<PromQuery />} />
         </Routes>
-
       </div>
     </div>
   );
