@@ -1,8 +1,8 @@
 const path = require('path');
-let HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './client/index.tsx', //change to ts???
+  entry: './client/index.tsx',
   output: {
     publicPath: '/',
     path: path.resolve(__dirname, 'build/'),
@@ -83,5 +83,5 @@ module.exports = {
       // favicon: 'test.png'
     }),
   ],
-  resolve: { extensions: ['*', '.js', '.jsx', '.tsx', '.ts'] }, //whats the *
+  resolve: { extensions: ['*', '.js', '.jsx', '.tsx', '.ts'] },
 };
