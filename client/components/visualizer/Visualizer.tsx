@@ -15,29 +15,29 @@ import svcIcon from './icons/service-icon.svg';
 import podIcon from './icons/pod-icon.svg';
 
 interface ClusterNode {
-  kind: string,
-  id: string,
-  title: string,
-  label: string | undefined,
-  size: number, 
+  kind: string;
+  id: string;
+  title: string;
+  label: string | undefined;
+  size: number;
   font: {
-    color: string,
-    size?: number
-  }
-  labels?: any, // any?
-  matchLabels?: any,
-  image: any,
-  shape: string,
+    color: string;
+    size?: number;
+  };
+  labels?: any; // any?
+  matchLabels?: any;
+  image: any;
+  shape: string;
 }
 interface clusterGraphData {
-  nodes: ClusterNode[],
-  edges: ClusterEdge[]
+  nodes: ClusterNode[];
+  edges: ClusterEdge[];
 }
 
 interface ClusterEdge {
-  from: string,
-  to: string,
-  length: number
+  from: string;
+  to: string;
+  length: number;
 }
 
 const options = {
@@ -65,20 +65,18 @@ function capitalizeFirstLetter(string: string): string {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 interface ClusterDataResponse {
-    nodes: any[],
-    pods: any[],
-    namespaces: any[],
-    services: any[],
-    deployments: any[],
-    ingresses: any[]
+  nodes: any[];
+  pods: any[];
+  namespaces: any[];
+  services: any[];
+  deployments: any[];
+  ingresses: any[];
 }
 
-interface divInfo {
-
-}
+interface divInfo {}
 
 // helper function that will take an object
-const helperFunc = (obj: { [k: string] : any}) : string => {
+const helperFunc = (obj: { [k: string]: any }): string => {
   const div = document.createElement('div');
   div.className = 'popup';
   const ul = document.createElement('ul');
@@ -88,10 +86,12 @@ const helperFunc = (obj: { [k: string] : any}) : string => {
       const outerLi = document.createElement('li');
       outerLi.innerText = `${capitalizeFirstLetter(key)}:`;
       const subUl = document.createElement('ul');
-      obj[key].forEach((entry : any) => {
+      obj[key].forEach((entry: any) => {
         const newLi = document.createElement('li');
         for (const field in entry) {
-          newLi.innerText += `${capitalizeFirstLetter(field)}: ${entry[field]}, `;
+          newLi.innerText += `${capitalizeFirstLetter(field)}: ${
+            entry[field]
+          }, `;
         }
         newLi.innerText = newLi.innerText.slice(0, newLi.innerText.length - 2);
         subUl.append(newLi);
@@ -128,7 +128,8 @@ function Testvis() {
       try {
         const response = await fetch('http://localhost:3000/clusterdata');
         // alert('finished fetch');
-        if (!response.ok) throw new Error('failed to fetch data for visualizer');
+        if (!response.ok)
+          throw new Error('failed to fetch data for visualizer');
         const data = await response.json();
 
         // console.log('data', data);
@@ -138,12 +139,10 @@ function Testvis() {
         clusterData = data;
         const clusterNodes = data.nodes;
 
-        const {
-          pods, services, deployments, ingresses,
-        } = data;
+        const { pods, services, deployments, ingresses } = data;
         let controlPlaneId: string;
         // console.log(clusterNodes);
-        clusterData.nodes.forEach((node: { [k : string] : any }) => {
+        clusterData.nodes.forEach((node: { [k: string]: any }) => {
           // if (node.name.includes('control-plane')) {
           const {
             name,
@@ -152,28 +151,31 @@ function Testvis() {
               allocatable,
               capacity,
               conditions,
-              nodeInfo: {
-                architecture,
-                operatingSystem,
-                osImage,
-              },
+              nodeInfo: { architecture, operatingSystem, osImage },
             },
           } = node;
           const nodeConditions: {
-              'CPU Availability': string,
-              'Memory Availability': string,
-              'Pod Availability': string,
+            'CPU Availability': string;
+            'Memory Availability': string;
+            'Pod Availability': string;
           } = {
             'CPU Availability': '',
             'Memory Availability': '',
-            'Pod Availability': ''
+            'Pod Availability': '',
           };
-          conditions.forEach((cond: {type: string, status: string}) => {
-            nodeConditions[cond.type as keyof typeof nodeConditions] = cond.status;
+          conditions.forEach((cond: { type: string; status: string }) => {
+            nodeConditions[cond.type as keyof typeof nodeConditions] =
+              cond.status;
           });
-          nodeConditions['CPU Availability'] = `${allocatable.cpu} / ${capacity.cpu}`;
-          nodeConditions['Memory Availability'] = `${allocatable.memory} / ${capacity.memory}`;
-          nodeConditions['Pod Availability'] = `${allocatable.pods} / ${capacity.pods}`;
+          nodeConditions[
+            'CPU Availability'
+          ] = `${allocatable.cpu} / ${capacity.cpu}`;
+          nodeConditions[
+            'Memory Availability'
+          ] = `${allocatable.memory} / ${capacity.memory}`;
+          nodeConditions[
+            'Pod Availability'
+          ] = `${allocatable.pods} / ${capacity.pods}`;
 
           console.log(name, uid);
           test.innerText += `Name: ${name}\nUID: ${uid}`;
@@ -189,7 +191,6 @@ function Testvis() {
               operatingSystem,
               osImage,
               ...nodeConditions,
-
             }),
             label: 'node',
             size: 100,
@@ -216,8 +217,12 @@ function Testvis() {
             image: nsIcon,
             shape: 'image',
           });
-          localGraph.edges.push({ from: controlPlaneId, to: nsId, length: 500 });
-          pods.forEach((pod: {[k: string]: any}) => {
+          localGraph.edges.push({
+            from: controlPlaneId,
+            to: nsId,
+            length: 500,
+          });
+          pods.forEach((pod: { [k: string]: any }) => {
             const {
               name,
               namespace,
@@ -261,19 +266,18 @@ function Testvis() {
           });
           services.forEach((service: any) => {
             if (service.namespace === ns.name) {
-              const {
-                name,
-                namespace,
-                ports,
-                type,
-              } = service;
+              const { name, namespace, ports, type } = service;
               const serviceInfo: {
-                name:string,
-                port:string,
-                protocol:string,
+                name: string;
+                port: string;
+                protocol: string;
               }[] = [];
-              ports.forEach((port : any) => {
-                serviceInfo.push({ name: port.name, port: port.port, protocol: port.protocol });
+              ports.forEach((port: any) => {
+                serviceInfo.push({
+                  name: port.name,
+                  port: port.port,
+                  protocol: port.protocol,
+                });
               });
               const serviceName = `${service.name}-service`;
               localGraph.nodes.push({
@@ -293,21 +297,22 @@ function Testvis() {
                 image: svcIcon,
                 shape: 'image',
               });
-              localGraph.edges.push({ from: nsId, to: serviceName, length: 50 });
+              localGraph.edges.push({
+                from: nsId,
+                to: serviceName,
+                length: 50,
+              });
             }
           });
 
-          deployments.forEach((deployment : any) => {
+          deployments.forEach((deployment: any) => {
             if (deployment.namespace === ns.name) {
               const {
                 name,
                 namespace,
-                strategy: {
-                  type,
-                },
+                strategy: { type },
                 replicas,
                 availableReplicas,
-
               } = deployment;
 
               const deploymentName = `${deployment.name}-deployment`;
@@ -330,7 +335,11 @@ function Testvis() {
                 shape: 'image',
                 // nodes: [`${ns.name}-ns`],
               });
-              localGraph.edges.push({ from: nsId, to: deploymentName, length: 50 });
+              localGraph.edges.push({
+                from: nsId,
+                to: deploymentName,
+                length: 50,
+              });
               console.log('match labels', deployment.matchLabels);
               // localGraph.nodes.forEach(((node) => {
               //   // if (node.kind === 'pod') console.log('labels', node.labels);
@@ -342,7 +351,7 @@ function Testvis() {
             }
           });
 
-          ingresses.forEach((ingress : any) => {
+          ingresses.forEach((ingress: any) => {
             if (ingress.namespace === ns.name) return;
           });
         });
@@ -362,13 +371,17 @@ function Testvis() {
       // events={events}
       getNetwork={(network) => {
         // ensure that the network eases in to fit the viewport
-        setTimeout(() => network.fit({
-          animation: {
-            duration: 2000,
-            easingFunction: 'linear',
-          },
-        }), 1000);
-        network.moveTo({position: {x:0, y:0},})
+        setTimeout(
+          () =>
+            network.fit({
+              animation: {
+                duration: 2000,
+                easingFunction: 'linear',
+              },
+            }),
+          1000
+        );
+        network.moveTo({ position: { x: 0, y: 0 } });
       }}
     />
   );

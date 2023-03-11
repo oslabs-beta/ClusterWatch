@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import {
-  BrowserRouter as Router, Routes, Route, Link, Navigate,
-} from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 import {
   Sidebar,
   Menu,
@@ -9,16 +7,12 @@ import {
   SubMenu,
   useProSidebar,
 } from 'react-pro-sidebar';
-
+// import icons
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import AnalyticsOutlinedIcon from '@mui/icons-material/AnalyticsOutlined';
 import ScatterPlotOutlinedIcon from '@mui/icons-material/ScatterPlotOutlined';
 import AccountTreeOutlinedIcon from '@mui/icons-material/AccountTreeOutlined';
 import PeopleOutlinedIcon from '@mui/icons-material/PeopleOutlined';
-import ContactsOutlinedIcon from '@mui/icons-material/ContactsOutlined';
-import ReceiptOutlinedIcon from '@mui/icons-material/ReceiptOutlined';
-import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
-import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import ViewInArOutlinedIcon from '@mui/icons-material/ViewInArOutlined';
 import FilterTiltShiftOutlinedIcon from '@mui/icons-material/FilterTiltShiftOutlined';
@@ -28,8 +22,8 @@ import QueryStatsOutlinedIcon from '@mui/icons-material/QueryStatsOutlined';
 import AddAlertOutlinedIcon from '@mui/icons-material/AddAlertOutlined';
 import NotificationAddOutlinedIcon from '@mui/icons-material/NotificationAddOutlined';
 import Banner from './Banner';
-// import Testvis from '../../testvis';
 
+// import components
 import Overview from '../../Pages/Overview';
 import Setup from '../../Pages/Setup';
 import Nodes from '../../Pages/Grafana/Nodes';
@@ -42,29 +36,22 @@ import PromQuery from '../../Pages/PromQuery';
 import Alerts from '../../Pages/Alerts';
 import CustomAlerts from '../../Pages/CustomAlerts';
 
-// Custom Theme for Material UI
-
 type navbarProps = {
-  apiKey: string,
-}
+  apiKey: string;
+};
 
 function Navbar({ apiKey }: navbarProps) {
   const { collapseSidebar } = useProSidebar();
-  const [teamSubMenuOpen, setTeamSubMenuOpen] = useState(false);
   const [title, setTitle] = useState<string>('Overview');
-const [activePage, setActivePage] = useState(null) ;
+  const [activePage, setActivePage] = useState(null);
 
-function handleActive(event :any) {
-  if (!event.target.classList.value.includes("active")) {
-    event.target.classList.toggle('active') ;
-    if (activePage)
-      activePage.classList.remove("active") ;
-    setActivePage(event.target) ;
+  function handleActive(event: any) {
+    if (!event.target.classList.value.includes('active')) {
+      event.target.classList.toggle('active');
+      if (activePage) activePage.classList.remove('active');
+      setActivePage(event.target);
+    }
   }
-}
-  // const toggleTeamSubMenu = () => {
-  //   setTeamSubMenuOpen(!teamSubMenuOpen);
-  // };
 
   return (
     <div id="app" style={{ height: '100vh', display: 'flex' }}>
@@ -90,25 +77,18 @@ function handleActive(event :any) {
             component={<Link to="Dashboard/Overview"> </Link>}
             icon={<HomeOutlinedIcon />}
             onClick={(e) => {
-              setTitle(e.currentTarget.textContent)
-              
+              setTitle(e.currentTarget.textContent);
             }}
           >
             Overview
           </MenuItem>
-          {/* <MenuItem
-            component={<Link to="/Metrics/Cluster"> Overview</Link>}
-            icon={<PeopleOutlinedIcon />}
-            onClick={(e) => setTitle(e.currentTarget.textContent)}
-          >
-            Team
-          </MenuItem> */}
           <MenuItem
             className="k8"
             component={<Link to="Dashboard/Setup" className="link" />}
             icon={<PeopleOutlinedIcon />}
-            onClick={/*(e) => setTitle(e.currentTarget.textContent*/handleActive}
-            
+            onClick={
+              /*(e) => setTitle(e.currentTarget.textContent*/ handleActive
+            }
           >
             Setup
           </MenuItem>
@@ -139,7 +119,7 @@ function handleActive(event :any) {
             </MenuItem>
             <MenuItem
               className="k8"
-              component={<Link to="Dashboard/ClusterUseMethod" />}
+              component={<Link to="Dashboard/Metrics/ClusterUseMethod" />}
               icon={<HubOutlinedIcon />}
               onClick={(e) => setTitle(e.currentTarget.textContent)}
             >
@@ -187,7 +167,6 @@ function handleActive(event :any) {
           >
             Custom Alerts
           </MenuItem>
-          {/* <MenuItem icon={<NotificationAddOutlinedIcon />}>Calendar</MenuItem> */}
         </Menu>
       </Sidebar>
       <div className="page">
