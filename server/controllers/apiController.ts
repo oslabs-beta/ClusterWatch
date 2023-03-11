@@ -15,6 +15,7 @@ apiController.getApi = async (req, res, next) => {
     if (cachedValue !== null) {
       // Return the cached API key if it exists
       res.locals.key = cachedValue;
+      console.log('cached retrieved', cachedValue);
       return next();
     }
     // If the API key is not in the cache, fetch it from the API
@@ -53,6 +54,12 @@ apiController.getUid = async (
   const { key, dashboard }: { key: string; dashboard: string } = req.body;
 
   try {
+    const cachedValue = await redis.get(dashboard);
+    if (cachedValue !== null) {
+      res.locals.uid = cachedValue;
+      console.log('uid retrieved', cachedValue);
+      return next();
+    }
     let response = await fetch(
       `http://localhost:3001/api/search?query=${encodeURIComponent(dashboard)}`,
       {
@@ -62,13 +69,14 @@ apiController.getUid = async (
           'Content-Type': 'application/json',
         },
       }
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        // Get the uid of the first dashboard in the list
-        const uid: string = data[0].uid;
-        res.locals.uid = uid;
-      });
+    );
+    let data: any = await response.json();
+
+    // Get the uid of the first dashboard in the list
+    const uid: string = data[0].uid;
+    res.locals.uid = uid;
+    await redis.set(dashboard, uid, 'EX', 3600);
+
     return next();
   } catch (error) {
     return next(error);

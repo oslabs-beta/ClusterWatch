@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import {
-  BrowserRouter as Router, Routes, Route, Link, Navigate,
-} from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 import {
   Sidebar,
   Menu,
@@ -9,16 +7,12 @@ import {
   SubMenu,
   useProSidebar,
 } from 'react-pro-sidebar';
-
+// import icons
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import AnalyticsOutlinedIcon from '@mui/icons-material/AnalyticsOutlined';
 import ScatterPlotOutlinedIcon from '@mui/icons-material/ScatterPlotOutlined';
 import AccountTreeOutlinedIcon from '@mui/icons-material/AccountTreeOutlined';
 import PeopleOutlinedIcon from '@mui/icons-material/PeopleOutlined';
-import ContactsOutlinedIcon from '@mui/icons-material/ContactsOutlined';
-import ReceiptOutlinedIcon from '@mui/icons-material/ReceiptOutlined';
-import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
-import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
 import ViewInArOutlinedIcon from '@mui/icons-material/ViewInArOutlined';
 import FilterTiltShiftOutlinedIcon from '@mui/icons-material/FilterTiltShiftOutlined';
@@ -28,8 +22,8 @@ import QueryStatsOutlinedIcon from '@mui/icons-material/QueryStatsOutlined';
 import AddAlertOutlinedIcon from '@mui/icons-material/AddAlertOutlined';
 import NotificationAddOutlinedIcon from '@mui/icons-material/NotificationAddOutlined';
 import Banner from './Banner';
-// import Testvis from '../../testvis';
 
+// import components
 import Overview from '../../Pages/Overview';
 import Setup from '../../Pages/Setup';
 import Nodes from '../../Pages/Grafana/Nodes';
@@ -42,25 +36,16 @@ import PromQuery from '../../Pages/PromQuery';
 import Alerts from '../../Pages/Alerts';
 import CustomAlerts from '../../Pages/CustomAlerts';
 
-// Custom Theme for Material UI
-
 type navbarProps = {
-  apiKey: string,
-}
+  apiKey: string;
+};
 
 function Navbar({ apiKey }: navbarProps) {
   const { collapseSidebar } = useProSidebar();
-  const [teamSubMenuOpen, setTeamSubMenuOpen] = useState(false);
   const [title, setTitle] = useState<string>('Overview');
-
-  // const toggleTeamSubMenu = () => {
-  //   setTeamSubMenuOpen(!teamSubMenuOpen);
-  // };
-
   return (
     <div id="app" style={{ height: '100vh', display: 'flex' }}>
-      {/* <Testvis /> */}
-      <Sidebar style={{ height: '100vh' }} >
+      <Sidebar style={{ height: '100vh' }}>
         <Menu>
           <MenuItem
             icon={<MenuOutlinedIcon />}
@@ -82,27 +67,15 @@ function Navbar({ apiKey }: navbarProps) {
             }}
           >
             Overview
-
           </MenuItem>
-          {/* <MenuItem
-            component={<Link to="/Metrics/Cluster"> Overview</Link>}
-            icon={<PeopleOutlinedIcon />}
-            onClick={(e) => setTitle(e.currentTarget.textContent)}
-          >
-            Team
-          </MenuItem> */}
           <MenuItem
             component={<Link to="Dashboard/Setup" className="link" />}
             icon={<PeopleOutlinedIcon />}
             onClick={(e) => setTitle(e.currentTarget.textContent)}
           >
             Setup
-
           </MenuItem>
-          <SubMenu
-            icon={<AnalyticsOutlinedIcon />}
-            label="Metrics"
-          >
+          <SubMenu icon={<AnalyticsOutlinedIcon />} label="Metrics">
             <MenuItem
               component={<Link to="Dashboard/Metrics/Cluster" />}
               icon={<ScatterPlotOutlinedIcon />}
@@ -125,7 +98,7 @@ function Navbar({ apiKey }: navbarProps) {
               Kubelet
             </MenuItem>
             <MenuItem
-              component={<Link to="Dashboard/ClusterUseMethod" />}
+              component={<Link to="Dashboard/Metrics/ClusterUseMethod" />}
               icon={<HubOutlinedIcon />}
               onClick={(e) => setTitle(e.currentTarget.textContent)}
             >
@@ -168,7 +141,6 @@ function Navbar({ apiKey }: navbarProps) {
           >
             Custom Alerts
           </MenuItem>
-          {/* <MenuItem icon={<NotificationAddOutlinedIcon />}>Calendar</MenuItem> */}
         </Menu>
       </Sidebar>
       <div className="page">
@@ -195,14 +167,16 @@ function Navbar({ apiKey }: navbarProps) {
             path="Dashboard/Metrics/Kubelet"
             element={<Kubelet apiKey={apiKey} />}
           />
-          <Route path="Dashboard/Metrics/Nodes" element={<Nodes apiKey={apiKey} />} />
+          <Route
+            path="Dashboard/Metrics/Nodes"
+            element={<Nodes apiKey={apiKey} />}
+          />
           <Route
             path="Dashboard/Metrics/NodeUseMethod"
             element={<NodeUseMethod apiKey={apiKey} />}
           />
           <Route path="Dashboard/PromQuery" element={<PromQuery />} />
         </Routes>
-
       </div>
     </div>
   );
