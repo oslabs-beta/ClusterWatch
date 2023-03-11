@@ -1,13 +1,18 @@
-const express = require('express');
-const setupController = require('../controllers/setupController');
-const router = express.Router();
-router.get('/promSetup', setupController.promInit, (req, res) => {
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const setupController_1 = __importDefault(require("../controllers/setupController"));
+const router = express_1.default.Router();
+router.get('/promSetup', setupController_1.default.promInit, (req, res) => {
     res.sendStatus(200);
 });
-router.get('/grafSetup', setupController.grafEmbed, (req, res) => {
+router.get('/grafSetup', setupController_1.default.grafEmbed, (req, res) => {
     res.sendStatus(200);
 });
-router.get('/forwardPort', setupController.forwardPort, (req, res) => {
+router.get('/forwardPorts', setupController_1.default.forwardPorts, (req, res) => {
     res.sendStatus(200);
 });
-module.exports = router;
+exports.default = router;
