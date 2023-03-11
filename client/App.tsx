@@ -2,7 +2,7 @@ import React from 'react';
 import { Navigate, Routes, Route } from 'react-router-dom';
 import { Sidebar, Menu, MenuItem, useProSidebar } from 'react-pro-sidebar';
 import Dashboard from './components/dashboard/Dashboard';
-import Setup from './components/SetupButtons';
+import Setup from './Pages/Setup';
 // Custom Theme for Material UI
 
 function App() {

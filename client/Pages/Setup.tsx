@@ -3,8 +3,8 @@ import SetupButtons from '../components/SetupButtons';
 
 function SetupPage() {
   return (
-    <div>
-      <SetupButtons/>
+    <div className='d-flex flex-column justify-contents-center align-items-center'>
+      <SetupButtons />
     </div>
   );
 }

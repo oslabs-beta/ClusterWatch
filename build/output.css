@@ -1,3 +1,11 @@
+/* #0bc1d1
+#306ce6 */
+
+:root {
+  --k8blue:#306ce6;
+  --k8teal: #0bc1d1;
+}
+
 body {
   margin: 0;
   font-family: open sans,-apple-system,BlinkMacSystemFont,segoe ui,Roboto,helvetica neue,Arial,sans-serif,apple color emoji,segoe ui emoji,segoe ui symbol;
@@ -8,8 +16,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
   /* additions here*/
   height: 100vh;
-  /* background: black; */
+  background: var(--k8blue);
 }
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
@@ -21,6 +30,7 @@ code {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  color: white;
 }
 
 #Banner h2 {
@@ -45,7 +55,7 @@ code {
 }
 
 .frame {
- margin:auto;
+  margin:auto;
 }
 
 .link {
@@ -57,20 +67,20 @@ code {
 }
 
 .page {
-  display: flex; 
+  display: flex;
   flex-direction: column;
-  align-items: center; 
+  align-items: center;
   /* justify-content: center; */
   /* height: 100vh; */
   height: 100%;
   width: 100%;
+  background-color: var(--k8blue);
 }
 
 #logo {
   margin-top:25px;
   margin-bottom: 25px;
 }
-
 
 #visualizer{
   height:calc((100vh - 100px) - 2.5%);
@@ -82,11 +92,10 @@ code {
   border-style: solid;
   border-width: 3px;
   border-color: #306ce6;
-  
   border-radius: 30px;
-
   box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
+
 /* canvas {
 
 }
@@ -95,15 +104,12 @@ code {
   z-index: 200000000000;
 } */
 
-
 .popup {
-
   /* top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 9999; */
-  
-  background-color: #232d96;
+  background-color: var(--k8teal);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   border-radius: 5px;
   padding: 20px;
@@ -121,8 +127,8 @@ code {
   margin-bottom: 20px;
 }
 
-#viz-wrapper {
-
+#visualizer {
+  background-color: white;
 }
 
 div.vis-tooltip {
