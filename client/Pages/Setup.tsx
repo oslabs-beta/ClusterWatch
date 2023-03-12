@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import SetupButtons from '../components/SetupButtons';
+import Particle from './Particle';
 
 function SetupPage() {
   return (
-    <div className='d-flex flex-column justify-contents-center align-items-center'>
+    <div className="setup-bg" id="particles-js">
+      <Particle />
       <SetupButtons />
     </div>
   );

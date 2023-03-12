@@ -28,7 +28,7 @@ function Cluster({ apiKey } : Clusterprops) {
       });
   }, []);
 
-  const url = `http://localhost:3001/d/${uid}/kubernetes-api-server?orgId=1&refresh=10s&from=${from}&to=${now}&kiosk=true&theme=light`;
+  const url = `http://localhost:3001/d/${uid}/kubernetes-api-server?orgId=1&refresh=10s&from=${from}&to=${now}&kiosk=true`;
 
   return (
     <div className="iframe">

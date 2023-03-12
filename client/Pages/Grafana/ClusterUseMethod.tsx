@@ -28,7 +28,7 @@ function ClusterUseMethod({ apiKey } : ClusterUseMethodProps) {
   const url = `http://localhost:3001/d/${uid}/node-exporter-use-method-cluster?orgId=1&refresh=30s&from=${from}&to=${now}&kiosk=true&theme=light`;
   return (
     <div className="iframe">
-      <iframe src={url} width="100%" height="100%"></iframe>
+      <iframe  className="frame" src={url} width="100%" height="100%"></iframe>
     </div>
   );
 }

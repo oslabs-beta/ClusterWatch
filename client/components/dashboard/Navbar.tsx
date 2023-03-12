@@ -8,6 +8,7 @@ import {
   useProSidebar,
 } from 'react-pro-sidebar';
 // import icons
+import logo from '../../styles/logo-color-transformed.png';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import AnalyticsOutlinedIcon from '@mui/icons-material/AnalyticsOutlined';
 import ScatterPlotOutlinedIcon from '@mui/icons-material/ScatterPlotOutlined';
@@ -58,7 +59,7 @@ function Navbar({ apiKey }: navbarProps) {
       {/* <Testvis /> */}
       <Sidebar>
         <Menu
-          style={{ height: '100vh', backgroundColor: 'rgb(11,193,209, 0.6)' }}
+          style={{ height: '100vh', backgroundColor: ' rgb(48,108,230)',backgroundImage: "linear-gradient(to right, #0f0c29, #302b63, #24243e)" }}
         >
           <MenuItem
             className="k8title"
@@ -70,7 +71,7 @@ function Navbar({ apiKey }: navbarProps) {
             id="logo"
             data-testid="pro-sidebar"
           >
-            ClusterWatch
+            <img src={logo} alt="My Logo" style={{ height: '150px', zIndex: '1000' }}/>
           </MenuItem>
           <MenuItem
             className="k8"

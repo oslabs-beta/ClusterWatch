@@ -7,7 +7,7 @@ import Setup from './Pages/Setup';
 
 function App() {
   return (
-    <div>
+    <div id='mainApp'>
       <Routes>
         <Route path="/Dashboard/*" element={<Dashboard />} />
         {/* <Route path="/Setup" element={<Setup />} /> */}

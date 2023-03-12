@@ -30,7 +30,7 @@ function Nodes({ apiKey } : NodesProps) {
 
   return (
     <div className="iframe">
-      <iframe src={url} width="100%" height="100%"></iframe>
+      <iframe  className="frame" src={url} width="100%" height="100%"></iframe>
     </div>
   );
 }

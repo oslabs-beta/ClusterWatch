@@ -29,7 +29,7 @@ function CoreDNS({ apiKey } : CoreDNSProps) {
   const url = `http://localhost:3001/d/${uid}/coredns?orgId=1&refresh=10s&from=${from}&to=${now}&kiosk=true&theme=light`;
   return (
     <div className="iframe">
-      <iframe src={url} width="100%" height="100%"></iframe>
+      <iframe  className="frame" src={url} width="100%" height="100%"></iframe>
     </div>
   );
 }
