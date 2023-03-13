@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import SetupButtons from '../components/SetupButtons';
 import Particle from './Particle';
 

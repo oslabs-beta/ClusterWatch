@@ -1,10 +1,7 @@
 /* eslint-disable no-restricted-syntax */
 import Graph from 'react-graph-vis';
 import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
-import './vis-styles.css';
-// import react-graph-vis  from '../../../custom'
-// import { graphData } from 'react-graph-vis';
+
 
 import { Box } from '@mui/material';
 import cpIcon from './icons/control-plane-icon.svg';
@@ -24,7 +21,7 @@ interface ClusterNode {
     color: string;
     size?: number;
   };
-  labels?: any; // any?
+  labels?: any;
   matchLabels?: any;
   image: any;
   shape: string;
@@ -261,7 +258,6 @@ function Testvis() {
 
             if (pod.serviceAccount) {
               // console.log('service name for pod:', pod.serviceAccount);
-              // localGraph.edges.push({ from: `${pod.serviceAccount}-service`, to: podName });
             }
           });
           services.forEach((service: any) => {
@@ -341,13 +337,6 @@ function Testvis() {
                 length: 50,
               });
               console.log('match labels', deployment.matchLabels);
-              // localGraph.nodes.forEach(((node) => {
-              //   // if (node.kind === 'pod') console.log('labels', node.labels);
-              //   if (node.kind === 'pod' && Object.entries(deployment.matchLabels.matchLabels).some((([label, value]) => node.labels[label] === value))) {
-              //     console.log('match, pod:', `${node.name}, deployment: ${deployment.name}`);
-              //     localGraph.edges.push({ from: deploymentName, to: node.id });
-              //   }
-              // }));
             }
           });
 

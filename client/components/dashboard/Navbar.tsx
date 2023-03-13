@@ -56,10 +56,14 @@ function Navbar({ apiKey }: navbarProps) {
 
   return (
     <div id="app" style={{ height: '100vh', display: 'flex' }}>
-      {/* <Testvis /> */}
       <Sidebar>
         <Menu
-          style={{ height: '100vh', backgroundColor: ' rgb(48,108,230)',backgroundImage: "linear-gradient(to right, #0f0c29, #302b63, #24243e)" }}
+          style={{
+            height: '100vh',
+            backgroundColor: ' rgb(48,108,230)',
+            backgroundImage:
+              'linear-gradient(to right, #0f0c29, #302b63, #24243e)',
+          }}
         >
           <MenuItem
             className="k8title"
@@ -71,7 +75,11 @@ function Navbar({ apiKey }: navbarProps) {
             id="logo"
             data-testid="pro-sidebar"
           >
-            <img src={logo} alt="My Logo" style={{ height: '150px', zIndex: '1000' }}/>
+            <img
+              src={logo}
+              alt="My Logo"
+              style={{ height: '150px', zIndex: '1000' }}
+            />
           </MenuItem>
           <MenuItem
             className="k8"

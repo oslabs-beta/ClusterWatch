@@ -23,7 +23,7 @@ function Cluster({ apiKey } : Clusterprops) {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        console.log('kubernetes-api',data);
         setUid(data);
       });
   }, []);

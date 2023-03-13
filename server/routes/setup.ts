@@ -12,14 +12,14 @@ router.get(
 );
 router.get(
   '/grafSetup',
-  setupController.grafEmbed,
+  setupController.grafEmbed, setupController.redisInit,
   (req: Request, res: Response): void => {
     res.sendStatus(200);
   }
 );
 router.get(
   '/forwardPorts',
-  setupController.forwardPorts,
+  setupController.redisInit, setupController.forwardPorts,
   (req: Request, res: Response): void => {
     res.sendStatus(200);
   }
