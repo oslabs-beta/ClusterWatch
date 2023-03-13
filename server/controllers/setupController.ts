@@ -1,13 +1,16 @@
 import { exec, execSync, spawn, spawnSync } from 'child_process';
 import { Request, Response, NextFunction, RequestHandler } from 'express';
+const Redis = require('ioredis');
+import redis from '../redis/redis';
 
 type Controller = {
   promInit?: RequestHandler;
   grafEmbed?: RequestHandler;
   forwardPorts?: RequestHandler;
   forwardProm?: RequestHandler;
+  redisInit?: RequestHandler;
 };
-const setupController : Controller = {};
+const setupController: Controller = {};
 
 // synchronous child processes used here because these commands must execute successively
 setupController.promInit = (
@@ -80,9 +83,13 @@ setupController.grafEmbed = (
 };
 
 // while loop checks to ensure kubernetes pod is ready otherwise port forwarding will fail
-setupController.forwardPorts = (req : Request, res: Response, next : NextFunction) => {
+setupController.forwardPorts = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   console.log('\n\nForwarding Ports\n\n');
-  let grafPod: string, promPod : string, alertPod: string;
+  let grafPod: string, promPod: string, alertPod: string;
   let podStatus;
   while (podStatus !== 'Running') {
     const abc = execSync('kubectl get pods');
@@ -90,25 +97,44 @@ setupController.forwardPorts = (req : Request, res: Response, next : NextFunctio
       .toString()
       .split('\n')
       .forEach((line) => {
-        if (!promPod && line.includes('prometheus-0')) [promPod] = line.split(' ');
-        if (!alertPod && line.includes('alertmanager-0')) [alertPod] = line.split(' ')
+        if (!promPod && line.includes('prometheus-0'))
+          [promPod] = line.split(' ');
+        if (!alertPod && line.includes('alertmanager-0'))
+          [alertPod] = line.split(' ');
         if (line.includes('prometheus-grafana')) {
           if (line.includes('Running')) podStatus = 'Running';
           [grafPod] = line.split(' ');
         }
-        console.log('grapod:', grafPod);
+        console.log('grafana pod:', grafPod);
       });
   }
 
-  const ports = spawn(`kubectl port-forward ${grafPod} 3001:3000 & kubectl port-forward ${promPod} 9090 & kubectl port-forward ${alertPod} 9093`, { shell: true, });
+  const ports = spawn(
+    `kubectl port-forward ${grafPod} 3001:3000 & kubectl port-forward ${promPod} 9090 & kubectl port-forward ${alertPod} 9093`,
+    { shell: true }
+  );
   ports.stdout.on('data', (data) => {
     console.log(`stdout: ${data}`);
   });
   ports.stderr.on('data', (data) => {
     console.error(`grafana port forwarding error: ${data}`);
   });
-
-  
   return next();
 };
+
+setupController.redisInit = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  redis.flushall((err:Error, result:string) => {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log(result); // Output: OK
+    }
+  });
+  return next();
+};
+
 export default setupController;

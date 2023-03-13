@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AlignType } from 'react-bootstrap/esm/types';
+import Particle from './Particle';
 
 function CustomAlerts() {
   const [selectedAlertOption, setSelectedAlertOption] = useState('');
@@ -11,38 +11,38 @@ function CustomAlerts() {
 
   const [alertName, setAlertName] = useState('');
 
-  const handleTypeSubmit = (event : any) => {
+  const handleTypeSubmit = (event: any) => {
     event.preventDefault();
     setSubmittedAlertOption(selectedAlertOption);
   };
 
-  const handleRadioChange = (event : any) => {
+  const handleRadioChange = (event: any) => {
     setSelectedAlertOption(event.target.value);
   };
 
-  const handleMemoryChange = (event : any) => {
+  const handleMemoryChange = (event: any) => {
     setSelectedMemory(event.target.value);
   };
 
-  const handleMemorySubmit = (event : any) => {
+  const handleMemorySubmit = (event: any) => {
     event.preventDefault();
     setsubmittedMemory(selectedMemory);
   };
 
-  const handleCPUChange = (event : any) => {
+  const handleCPUChange = (event: any) => {
     setSelectedCPU(event.target.value);
   };
 
-  const handleCPUSubmit = (event : any) => {
+  const handleCPUSubmit = (event: any) => {
     event.preventDefault();
     setSubmittedCPU(selectedCPU);
   };
 
-  const handleNameChange = (event : any) => {
+  const handleNameChange = (event: any) => {
     setAlertName(event.target.value);
   };
 
-  const handleFormSubmit = (event : any) => {
+  const handleFormSubmit = (event: any) => {
     event.preventDefault();
     event.preventDefault();
     setSubmittedAlertOption(selectedAlertOption);
@@ -73,47 +73,55 @@ function CustomAlerts() {
   };
 
   return (
-    <div>
-      <iframe src="https://giphy.com/embed/dWa2rUaiahx1FB3jor" width="480" height="480" frameBorder="0" className="giphy-embed" allowFullScreen></iframe>
+    <div className="alert-container">
+      <Particle
+      />
       {submittedAlertOption === '' && (
         <div className="add-alert">
-          <h3>type of alerts</h3>
-          <form onSubmit={handleTypeSubmit}>
-            <input
-              type="radio"
-              id="memory"
-              name="alertType"
-              value="Memory"
-              onChange={handleRadioChange}
-            />
-            <label htmlFor="memory">Memory Usage</label>
-            <br />
-            <input
-              type="radio"
-              id="cpu"
-              name="alertType"
-              value="CPU"
-              onChange={handleRadioChange}
-            />
-            <label htmlFor="cpu">CPU Usage</label>
-            <br />
-            <input
-              type="radio"
-              id="kube"
-              name="alertType"
-              value="Kube"
-              onChange={handleRadioChange}
-            />
-            <label htmlFor="kube">Kube Node Down</label>
-            <br />
-            <input type="submit" value="Next"></input>
+          <h3>Select Alert Type</h3>
+          <form onSubmit={handleTypeSubmit} className="form">
+            <div className="input-div">
+              {' '}
+              <input
+                type="radio"
+                id="memory"
+                name="alertType"
+                value="Memory"
+                onChange={handleRadioChange}
+              />
+              <label htmlFor="memory">Memory Usage</label>
+            </div>
+
+            <div className="input-div">
+              <input
+                type="radio"
+                id="cpu"
+                name="alertType"
+                value="CPU"
+                onChange={handleRadioChange}
+              />
+              <label htmlFor="cpu">CPU Usage</label>
+            </div>
+
+            <div className="input-div">
+              <input
+                type="radio"
+                id="kube"
+                name="alertType"
+                value="Kube"
+                onChange={handleRadioChange}
+              />
+              <label htmlFor="kube">Kube Node Down</label>
+            </div>
+
+            <input type="submit" value="Next" className="setup-btn"></input>
           </form>
         </div>
       )}
       {submittedAlertOption === 'Memory' && submittedMemory === '' && (
         <div className="add-alert">
           <h3>Memory Threshold</h3>
-          <form onSubmit={handleMemorySubmit}>
+          <form onSubmit={handleMemorySubmit} className="form">
             <label htmlFor="memorythreshold">
               Alert after memory usage exceeds (in Gigabytes)
             </label>
@@ -123,8 +131,8 @@ function CustomAlerts() {
               name="memorythreshold"
               onChange={handleMemoryChange}
             />
-            <br />
-            <input type="submit" value="Next"></input>
+
+            <input type="submit" value="Next" className="setup-btn"></input>
           </form>
         </div>
       )}
@@ -134,7 +142,7 @@ function CustomAlerts() {
         submittedAlertOption === 'Kube') && (
         <div className="add-alert">
           <h3>Create Alert Name</h3>
-          <form onSubmit={handleFormSubmit}>
+          <form onSubmit={handleFormSubmit} className="form">
             <label htmlFor="memorythreshold">Enter alert name</label>
             <input
               type="input"
@@ -142,8 +150,13 @@ function CustomAlerts() {
               name="alertname"
               onChange={handleNameChange}
             />
+
             <br />
-            <input type="submit" value="Create Alert"></input>
+            <input
+              type="submit"
+              value="Create Alert"
+              className="setup-btn"
+            ></input>
           </form>
         </div>
       )}
@@ -151,7 +164,7 @@ function CustomAlerts() {
       {submittedAlertOption === 'CPU' && submittedCPU === '' && (
         <div className="add-alert">
           <h3>CPU Threshold</h3>
-          <form onSubmit={handleCPUSubmit}>
+          <form onSubmit={handleCPUSubmit} className="form">
             <label htmlFor="cputhreshold">
               Alert after total CPU usage exceeds
             </label>
@@ -163,7 +176,7 @@ function CustomAlerts() {
               onChange={handleCPUChange}
             />
             <br />
-            <input type="submit" value="Next"></input>
+            <input type="submit" value="Next" className="setup-btn"></input>
           </form>
         </div>
       )}

@@ -38,7 +38,10 @@
     "react-loader-spinner": "^5.3.4",
     "react-pro-sidebar": "^1.0.0",
     "react-router-dom": "^6.8.1",
-    "redis": "^4.6.5"
+    "react-tsparticles": "^2.9.3",
+    "redis": "^4.6.5",
+    "tsparticles": "^2.9.3",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@babel/plugin-syntax-jsx": "^7.18.6",
