@@ -56,7 +56,7 @@ function Setup() {
             className="btn btn-outline-success w-25"
             onClick={() => {
               setLoading(true);
-              fetch('http://localhost:3000/setup/forwardGraf').then(() =>
+              fetch('http://localhost:3000/setup/forwardPorts').then(() =>
                 setLoading(false)
               );
             }}
