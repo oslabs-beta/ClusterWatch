@@ -6,6 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importDefault(require("react"));
 function PromQuery() {
     return (react_1.default.createElement("div", { className: 'iframe' },
-        react_1.default.createElement("iframe", { src: "http://localhost:9090/graph?&hideGraph=1", width: "100%", height: "100%" })));
+        react_1.default.createElement("iframe", { src: "http://localhost:9090/graph?&hideGraph=1", title: 'prom query embed', width: "100%", height: "100%" })));
 }
 exports.default = PromQuery;

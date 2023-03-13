@@ -38,10 +38,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /* eslint-disable no-restricted-syntax */
 const react_graph_vis_1 = __importDefault(require("react-graph-vis"));
 const react_1 = __importStar(require("react"));
-const react_dom_1 = __importDefault(require("react-dom"));
 require("./vis-styles.css");
-const material_1 = require("@mui/material");
-const control_plane_icon_svg_1 = __importDefault(require("./icons/control-plane-icon.svg"));
 const namespace_icon_svg_1 = __importDefault(require("./icons/namespace-icon.svg"));
 const node_icon_svg_1 = __importDefault(require("./icons/node-icon.svg"));
 const deployment_icon_svg_1 = __importDefault(require("./icons/deployment-icon.svg"));
@@ -99,7 +96,8 @@ const helperFunc = (obj) => {
             ul.appendChild(li);
         }
     }
-    return div;
+    const val = div;
+    return val;
 };
 // create a div
 // add an unorder list to the div
@@ -136,7 +134,11 @@ function Testvis() {
                 clusterData.nodes.forEach((node) => {
                     // if (node.name.includes('control-plane')) {
                     const { name, uid, status: { allocatable, capacity, conditions, nodeInfo: { architecture, operatingSystem, osImage, }, }, } = node;
-                    const nodeConditions = {};
+                    const nodeConditions = {
+                        'CPU Availability': '',
+                        'Memory Availability': '',
+                        'Pod Availability': ''
+                    };
                     conditions.forEach((cond) => {
                         nodeConditions[cond.type] = cond.status;
                     });
@@ -289,17 +291,9 @@ function Testvis() {
         });
         func();
     }, []);
-    const events = {
-        select: ({ nodes, edges }) => {
-            console.log('Selected nodes:');
-            console.log(nodes);
-            console.log('Selected edges:');
-            console.log(edges);
-            alert(`Selected node: ${nodes}`);
-            // asdfasdasdf
-        },
-    };
-    return (react_1.default.createElement(react_graph_vis_1.default, { graph: graph, options: options, events: events, getNetwork: (network) => {
+    return (react_1.default.createElement(react_graph_vis_1.default, { graph: graph, options: options, 
+        // events={events}
+        getNetwork: (network) => {
             // ensure that the network eases in to fit the viewport
             setTimeout(() => network.fit({
                 animation: {
@@ -307,6 +301,7 @@ function Testvis() {
                     easingFunction: 'linear',
                 },
             }), 1000);
+            network.moveTo({ position: { x: 0, y: 0 }, });
         } }));
 }
 exports.default = Testvis;

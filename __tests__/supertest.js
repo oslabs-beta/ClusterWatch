@@ -24,13 +24,9 @@ xdescribe('Route integration', () => {
       it('responds with status 200', () =>
         request(server).get('/setup/grafSetup').expect(200));
     });
-    describe('/forwardGraf', () => {
+    describe('/forwardPorts', () => {
       it('responds with status 200', () =>
-        request(server).get('/setup/forwardGraf').expect(200));
-    });
-    describe('/forwardProm', () => {
-      it('responds with status 200', () =>
-        request(server).get('/setup/forwardProm'));
+        request(server).get('/setup/forwardPorts').expect(200));
     });
   });
   xdescribe('/clusterdata', () => {

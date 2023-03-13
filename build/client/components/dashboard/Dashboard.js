@@ -28,8 +28,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importStar(require("react"));
 const Navbar_1 = __importDefault(require("./Navbar"));
+const react_pro_sidebar_1 = require("react-pro-sidebar");
 function Dashboard() {
-    const [api, setApi] = (0, react_1.useState)(null);
+    const [api, setApi] = (0, react_1.useState)('');
     (0, react_1.useEffect)(() => {
         fetch('http://localhost:3000/grafana/key', {
             method: 'GET',
@@ -44,6 +45,7 @@ function Dashboard() {
         });
     }, []);
     return (react_1.default.createElement("div", { className: "dashboard" },
-        react_1.default.createElement(Navbar_1.default, { apiKey: api })));
+        react_1.default.createElement(react_pro_sidebar_1.ProSidebarProvider, null,
+            react_1.default.createElement(Navbar_1.default, { apiKey: api, "data-testid": "navbar" }))));
 }
 exports.default = Dashboard;

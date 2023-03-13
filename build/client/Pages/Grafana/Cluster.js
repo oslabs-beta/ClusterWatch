@@ -24,7 +24,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const react_1 = __importStar(require("react"));
-const react_router_dom_1 = require("react-router-dom");
 function Cluster({ apiKey }) {
     const [uid, setUid] = (0, react_1.useState)(null);
     const now = new Date().getTime();
@@ -48,7 +47,7 @@ function Cluster({ apiKey }) {
     }, []);
     const url = `http://localhost:3001/d/${uid}/kubernetes-api-server?orgId=1&refresh=10s&from=${from}&to=${now}&kiosk=true&theme=light`;
     return (react_1.default.createElement("div", { className: "iframe" },
-        react_1.default.createElement("iframe", { className: "frame", src: url, width: "100%", height: "100%", frameBorder: "0" })));
+        react_1.default.createElement("iframe", { className: "frame", src: url, width: "100%", height: "100%", title: "embed cluster" })));
 }
 exports.default = Cluster;
 // http://localhost:3001/d/${uid}/kubernetes-api-server?orgId=1&refresh=10s&from=1677342274613&to=1677345874613&kiosk=true&theme=light

@@ -1,3 +1,4 @@
+"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -7,8 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+Object.defineProperty(exports, "__esModule", { value: true });
 const apiController = {};
-apiController.getApi = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+apiController.getApi = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     console.log('received get request');
     try {
         let response = yield fetch('http://localhost:3001/api/auth/keys', {
@@ -36,7 +38,7 @@ apiController.getApi = (req, res, next) => __awaiter(this, void 0, void 0, funct
         return next(error);
     }
 });
-apiController.getUid = (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+apiController.getUid = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     console.log('received uid request');
     console.log(req.body);
     const { key, dashboard } = req.body;
@@ -60,4 +62,4 @@ apiController.getUid = (req, res, next) => __awaiter(this, void 0, void 0, funct
         return next(error);
     }
 });
-module.exports = apiController;
+exports.default = apiController;
