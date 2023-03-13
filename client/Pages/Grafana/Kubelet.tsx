@@ -30,7 +30,7 @@ function Kubelet({ apiKey } : KubeletProps) {
 
   return (
     <div className="iframe">
-      <iframe src={url} width="100%" height="100%"></iframe>
+      <iframe  className="frame" src={url} width="100%" height="100%"></iframe>
     </div>
   );
 }
