@@ -73,12 +73,14 @@ apiController.getUid = async (
     let data: any = await response.json();
 
     // Get the uid of the first dashboard in the list
-    const uid: string = data[0].uid;
+    const uid: any = data[0].uid;
     res.locals.uid = uid;
+    console.log('uid not in redis, setting uid', uid);
     await redis.set(dashboard, uid, 'EX', 3600);
 
     return next();
   } catch (error) {
+    console.log('error fetching uid', error);
     return next(error);
   }
 };

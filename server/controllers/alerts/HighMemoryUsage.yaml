@@ -3,7 +3,7 @@ additionalPrometheusRulesMap:
   groups:
   - name: GroupA
     rules:
-    - alert: HighMemoryUsage
+    - alert: MemoryExceed3
       expr: sum(container_memory_working_set_bytes{namespace="default"}) by (pod_name) > 1e+09
       for: 5m
       labels:

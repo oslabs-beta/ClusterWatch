@@ -6,6 +6,7 @@ function PromQuery() {
 
     <div className='iframe'>
      <iframe
+     className='frame'
       src="http://localhost:9090/graph?&hideGraph=1"
       title='prom query embed'
       width="100%"
