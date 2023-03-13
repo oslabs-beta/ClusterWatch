@@ -15,7 +15,7 @@ interface ClusterNode {
   kind: string;
   id: string;
   title: string;
-  label: string | undefined;
+  // label: string | undefined;
   size: number;
   font: {
     color: string;
@@ -55,7 +55,7 @@ const options = {
     },
   },
   edges: {
-    color: '#8526d3',
+    color: '#0bc1d1',
   },
 };
 function capitalizeFirstLetter(string: string): string {
@@ -189,7 +189,7 @@ function Testvis() {
               osImage,
               ...nodeConditions,
             }),
-            label: 'node',
+            //label: 'node',
             size: 100,
             font: { color: '#ffffff', size: 48 },
             image: nodeIcon,
@@ -204,7 +204,7 @@ function Testvis() {
             kind: 'namespace',
             id: nsId,
             // label: `Namespace: ${ns.name}`,
-            label: 'ns',
+            //label: 'ns',
             title: helperFunc({
               nsId,
               id: ns.id,
@@ -236,7 +236,7 @@ function Testvis() {
                 kind: 'pod',
                 id: podName,
                 // label: `Pod: ${pod.name}`,
-                label: 'pod',
+                //label: 'pod',
                 title: helperFunc({
                   name,
                   namespace,
@@ -286,7 +286,7 @@ function Testvis() {
                   type,
                   ports: serviceInfo,
                 }),
-                label: 'svc',
+                //label: 'svc',
                 size: 37.5,
                 font: { color: '#ffffff' },
                 // nodes: [`${ns.name}-ns`],
@@ -316,7 +316,7 @@ function Testvis() {
                 kind: 'deployment',
                 id: deploymentName,
                 // label: `Deployment: ${deployment.name}`,
-                label: 'dpl',
+                // label: 'dpl',
                 title: helperFunc({
                   name,
                   namespace,
