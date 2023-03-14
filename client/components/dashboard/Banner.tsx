@@ -8,7 +8,7 @@ type bannerProps = {
 function Banner(props: bannerProps) {
   const { title } = props;
   return (
-    <div id="Banner">
+    <div id="Banner" className='banner'>
       <h2>{title}</h2>
     </div>
   );
