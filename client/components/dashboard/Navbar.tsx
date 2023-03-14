@@ -92,11 +92,14 @@ function Navbar({ apiKey }: navbarProps) {
             Overview
           </MenuItem>
           <MenuItem
-            className="k8"
+            className="k8 setup"
             component={<Link to="Dashboard/Setup" className="link" />}
             icon={<PeopleOutlinedIcon />}
-            onClick={
-              /*(e) => setTitle(e.currentTarget.textContent*/ handleActive
+            onClick={ (e) => {
+              handleActive(e);
+              setTitle(e.currentTarget.textContent);
+            }
+              // /*(e) => setTitle(e.currentTarget.textContent*/ handleActive
             }
           >
             Setup
@@ -169,7 +172,7 @@ function Navbar({ apiKey }: navbarProps) {
             Alert Manager
           </MenuItem>
           <MenuItem
-            className="k8"
+            className="k8 custom-alerts"
             component={<Link to="Dashboard/CustomAlerts" />}
             icon={<NotificationAddOutlinedIcon />}
             onClick={(e) => setTitle(e.currentTarget.textContent)}
@@ -183,7 +186,7 @@ function Navbar({ apiKey }: navbarProps) {
 
         <Routes>
           <Route path="Dashboard/Overview" element={<Overview />} />
-          <Route path="Dashboard/Setup" element={<Setup />} />
+          <Route path="Dashboard/Setup" element={ <Setup />} />
           <Route path="Dashboard/Alerts" element={<Alerts />} />
           <Route path="Dashboard/CustomAlerts" element={<CustomAlerts />} />
           <Route
