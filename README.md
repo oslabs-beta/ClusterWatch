@@ -5,7 +5,7 @@ ClusterWatch is an open-source tool which simplifies and provides an all-in-one 
 ClusterWatch integrates the industry standard tools that dev ops engineers normally configure on their own, and automates the booting process so that getting important cluster information from various different tools can be done from a single source, within a matter of seconds.
 
 <p align='center'>
-<img src = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXhhn1lEuHSUSQSJNocSJkRIqLGq_Boap5YMhsxjS27A&s'>
+<img src = './client/styles/logo-color.png' height='600'>
 </p>
 
 ## Features
@@ -37,7 +37,9 @@ ClusterWatch integrates the industry standard tools that dev ops engineers norma
 3. Start the application:
   `npm run dev`
 
-4. Once launched, you'll be redirected to our setup page:
+4. Navigate to: `http:/localhost8080`
+
+5. Once launched, you'll be redirected to our setup page:
 - If you do not have the prometheus-kube-stack helm chart, (which inlcudes kube-state-metrics, node-exporter, and grafana), utilize the setup button to download, update, and install the repos. Note: this step can take a moment, don't worry.
 
 - If you have grafana, but have not used our applciation previously, hit the grafana setup button to apply our custom grafana configurations.
