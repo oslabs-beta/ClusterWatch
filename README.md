@@ -4,15 +4,15 @@
 <img src = './client/styles/logo-color.png' height='250'>
 </p>
 
-<img src ='	https://img.shields.io/badge/kubernetes-326ce5.svg?&style=for-the-badge&logo=kubernetes&logoColor=white'>
-<img src ='	https://img.shields.io/badge/Prometheus-000000?style=for-the-badge&logo=prometheus&labelColor=000000'>
-<img src ='	https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB'>
+<img src ='https://img.shields.io/badge/kubernetes-326ce5.svg?&style=for-the-badge&logo=kubernetes&logoColor=white'>
+<img src ='https://img.shields.io/badge/Prometheus-000000?style=for-the-badge&logo=prometheus&labelColor=000000'>
+<img src ='https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB'>
 <img src ='https://img.shields.io/badge/Cypress-17202C?style=for-the-badge&logo=cypress&logoColor=white'>
 <img src ='https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white'>
 <img src ='https://img.shields.io/badge/Grafana-F2F4F9?style=for-the-badge&logo=grafana&logoColor=orange&labelColor=F2F4F9'>
-<img src ='	https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white'>
-<img src ='	https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white'>
-<img src ='	https://img.shields.io/badge/redis-%23DD0031.svg?&style=for-the-badge&logo=redis&logoColor=white'>
+<img src ='https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white'>
+<img src ='https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white'>
+<img src ='https://img.shields.io/badge/redis-%23DD0031.svg?&style=for-the-badge&logo=redis&logoColor=white'>
 
 ClusterWatch is an open-source tool which simplifies and provides an all-in-one hub for Kubernetes cluster monitoring.
 It reduces the need for devops engineers to configure their own Kubernetes monitoring stacks, and automates the process so you can get vital cluster information from various different tools, all in one place, in just a few seconds.
@@ -71,7 +71,7 @@ Keep in mind that the application utilizes local ports which must not be occupie
 
 ## Usage Guidelines
 
-#### **Overview**
+### **Overview**
 
 The first page of the application will provide a visual overview of your kubernetes cluster. The visualization will show the control plane, namespaces, pods, services, deployments and nodes. Hovering over the components will display a modal displaying information relevant to that specific object.
 
@@ -79,7 +79,7 @@ The first page of the application will provide a visual overview of your kuberne
 <img src = './readme_assets/visualizer.gif' height='500'>
 </p>
 
-#### **Metrics**
+### **Metrics**
 
 The metrics section of the application provides grafana dashboards for various aspects of your kubernetes cluster. This includes:
 
@@ -93,7 +93,7 @@ The metrics section of the application provides grafana dashboards for various a
   <img src = './readme_assets/nodes.png' width='650' >
 </p>
 
-#### **Prometheus Query**
+### **Prometheus Query**
 
 Here you can access the Prometheus console from within the app to run customized [queries](https://prometheus.io/docs/prometheus/latest/querying/basics/) and create graphs based on the data.
 
@@ -101,7 +101,7 @@ Here you can access the Prometheus console from within the app to run customized
 <img src = './readme_assets/prom.gif' height='500'>
 </p>
 
-#### **Alert Manager**
+### **Alert Manager**
 
 Here you can view all the active alerts that are set up for your cluster.
 
@@ -109,7 +109,7 @@ Here you can view all the active alerts that are set up for your cluster.
 <img src = './readme_assets/alert-manager.png' height='500'>
 </p>
 
-#### **Custom Alerts**
+### **Custom Alerts**
 
 Configure your own alerts without having to create YAML files.
 
