@@ -2,6 +2,7 @@
   --k8blue: #306ce6;
   --k8teal: rgb(48, 108, 230);
 }
+/* * { border: 1px solid red; } */
 .k8title {
   color: white;
   font-size: 1.5em;
@@ -86,6 +87,9 @@ code {
   margin-top: 25px;
   margin-bottom: 25px;
 }
+#logo:hover {
+  background-color: transparent;
+}
 
 #visualizer {
   height: calc((100vh - 100px) - 2.5%);
@@ -165,13 +169,20 @@ div.vis-tooltip {
 
 #Banner {
   width: 100%;
-  color: rgb(11, 193, 209);
-  background-color: rgb(48, 108, 230);
-  background-image: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+  color: white;
+  /* background: transparent; */
+  /* background-image: linear-gradient(to right, #0f0c29, #302b63, #24243e); */
+  /* background-color: rgb(48, 108, 230);sright, #0f0c29, #302b63, #24243e); */
+  /* background-image: linear-gradient(
+    109.6deg,
+    rgba(156, 252, 248, 1) 11.2%,
+    rgba(110, 123, 251, 1) 91.1%
+  ); */
+  height: 20%;
   border: none;
   margin-left: 0;
-  margin-bottom: 20px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  /* margin-bottom: 20px;      */
+  /* box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23); */
 }
 
 nav {
@@ -198,6 +209,7 @@ li.ps-menuitem-root {
 }
 
 .setup-bg {
+  margin-top: 0px;
   position: relative;
   min-height: 103vh;
   background-image: linear-gradient(
@@ -359,5 +371,26 @@ li.ps-menuitem-root {
   );
   height: 100%;
   width: 100%;
-  margin-top: -19px;
+  /* margin-top: -19px; */
+}
+
+.ps-sidebar-container {
+  background-image: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+}
+.page{
+  background-image: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+}
+.add-alert {
+  z-index: 100;
+}
+.ps-menu-button:hover{
+  background-color: transparent;
+}
+
+.light-gradient {
+  background-image: linear-gradient(
+    109.6deg,
+    rgba(156, 252, 248, 1) 11.2%,
+    rgba(110, 123, 251, 1) 91.1%
+  );
 }
