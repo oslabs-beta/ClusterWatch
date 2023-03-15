@@ -71,7 +71,7 @@ Keep in mind that the application utilizes local ports which must not be occupie
 
 ## Usage Guidelines
 
-#### Overview
+#### **Overview**
 
 The first page of the application will provide a visual overview of your kubernetes cluster. The visualization will show the control plane, namespaces, pods, services, deployments and nodes. Hovering over the components will display a modal displaying information relevant to that specific object.
 
@@ -79,7 +79,7 @@ The first page of the application will provide a visual overview of your kuberne
 <img src = './readme_assets/visualizer.gif' height='500'>
 </p>
 
-#### Metrics
+#### **Metrics**
 
 The metrics section of the application provides grafana dashboards for various aspects of your kubernetes cluster. This includes:
 
@@ -93,7 +93,7 @@ The metrics section of the application provides grafana dashboards for various a
   <img src = './readme_assets/nodes.png' width='650' >
 </p>
 
-#### Prometheus Query
+#### **Prometheus Query**
 
 Here you can access the Prometheus console from within the app to run customized [queries](https://prometheus.io/docs/prometheus/latest/querying/basics/) and create graphs based on the data.
 
@@ -101,7 +101,7 @@ Here you can access the Prometheus console from within the app to run customized
 <img src = './readme_assets/prom.gif' height='500'>
 </p>
 
-#### Alert Manager
+#### **Alert Manager**
 
 Here you can view all the active alerts that are set up for your cluster.
 
@@ -109,7 +109,7 @@ Here you can view all the active alerts that are set up for your cluster.
 <img src = './readme_assets/alert-manager.png' height='500'>
 </p>
 
-#### Custom Alerts
+#### **Custom Alerts**
 
 Configure your own alerts without having to create YAML files.
 
@@ -155,10 +155,6 @@ To run end-to-end tests, execute: `npm run cypress`
 
 ## Contributors
 
-- 💻 = Website
-- 🖇️ = LinkedIn
-- 🐙 = Github
-
 <table>
 
   <tr>
@@ -167,7 +163,8 @@ To run end-to-end tests, execute: `npm run cypress`
       <br />
       <sub><b>Sheng li</b></sub>
       <br />
-      <a href="https://www.linkedin.com/in/sheng-li-3537783a/">🖇️</a>
+      <a href="https://www.linkedin.com/in/sheng-li-3537783a/"> <img src="readme_assets/linkedin.png" height="20"></img>
+      </a>
       <a href="https://github.com/shengli356"><img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" height="20"/></a>
     </td>
     <td align="center">
@@ -175,7 +172,7 @@ To run end-to-end tests, execute: `npm run cypress`
       <br />
       <sub><b>Mushrath Choudhury</b></sub>
       <br />
-      <a href="https://www.linkedin.com/in/mushrathc/">🖇️</a>
+      <a href="https://www.linkedin.com/in/mushrathc/"><img src="readme_assets/linkedin.png" height="20"></a>
       <a href="https://github.com/mushrathc"><img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" height="20"/></a>
     </td>
     <td align="center">
@@ -183,7 +180,7 @@ To run end-to-end tests, execute: `npm run cypress`
       <br />
       <sub><b>Kevin Hendrix</b></sub>
       <br />
-      <a href="https://www.linkedin.com/in/kevin-hendrix-sw">🖇️</a>
+      <a href="https://www.linkedin.com/in/kevin-hendrix-sw"><img src="readme_assets/linkedin.png" height="20"></a>
       <a href="https://github.com/khendrix12"><img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" height="20"/></a>
     </td>
      <td align="center">
@@ -191,7 +188,7 @@ To run end-to-end tests, execute: `npm run cypress`
       <br />
       <sub><b>Jordy Gonzalez</sub>
       <br />
-      <a href="https://www.linkedin.com/in/jordy-gonz%C3%A1lez-a0139524a/">🖇️</a>
+      <a href="https://www.linkedin.com/in/jordy-gonz%C3%A1lez-a0139524a/"><img src="readme_assets/linkedin.png" height="20"></a>
       <a href="https://github.com/JordyGonza"><img src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png" height="20"/></a>
     </td>
   </tr>
@@ -199,5 +196,4 @@ To run end-to-end tests, execute: `npm run cypress`
 
 ## Publications
 
-Check out our medium article
-delete later https://medium.com/@shengli356/clusterwatch-official-launch-8c77885de58b
+Check out our medium article: https://medium.com/@shengli356/clusterwatch-official-launch-8c77885de58b
