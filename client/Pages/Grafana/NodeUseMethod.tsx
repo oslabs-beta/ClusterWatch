@@ -8,7 +8,7 @@ type NodeUseMethodProps = {
 function NodeUseMethod({ apiKey } : NodeUseMethodProps) {
   const [uid, setUid] = useState(null);
   const now = new Date().getTime();
-  const from = new Date(now - 4 * 60 * 60 * 1000).getTime();
+  const from = new Date(now - 60 * 60 * 1000).getTime();
 
   useEffect(() => {
     fetch('http://localhost:3000/grafana/uid', {
