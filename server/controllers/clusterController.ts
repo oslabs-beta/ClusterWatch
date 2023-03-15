@@ -92,7 +92,7 @@ const clusterController: Controller = {};
 
 const getNodes = async () => {
   const res = await k8sApi.listNode();
-  console.log(res.body.items[0]);
+  // console.log(res.body.items[0]);
   const nodes: Node[] = res.body.items.map((data) => {
     const { name, namespace, uid, labels } = data.metadata;
     const creationTimeStamp: any = data.metadata.creationTimestamp;
