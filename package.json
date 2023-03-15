@@ -7,7 +7,7 @@
     "test": "jest --verbose",
     "start": "webpack serve --hot --open",
     "dev": "concurrently \"redis-server\" \"nodemon ./server/server.ts\" \"webpack serve --hot --open\"",
-    "cypress:open": "cypress open"
+    "cypress": "cypress open"
   },
   "repository": {
     "type": "git",
