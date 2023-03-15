@@ -20,9 +20,9 @@ const PORT: number = 3000;
 
 app.use(express.json());
 app.use(cors());
-console.log('type: ', process.env.NODE_ENV);
+// console.log('type: ', process.env.NODE_ENV);
 if (process.env.NODE_ENV === 'production') {
-  console.log('i am inside the production mode fetching files...')
+  // console.log('i am inside the production mode fetching files...')
   // statically serve everything in the build folder on the route '/build'
   app.use('/', express.static(path.join(__dirname, '../build')));
   // serve index.html on the route '/'
