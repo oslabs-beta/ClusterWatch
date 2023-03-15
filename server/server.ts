@@ -4,6 +4,7 @@ import clusterRouter from './routes/cluster';
 import grafanaRouter from './routes/grafana';
 import setupRouter from './routes/setup';
 import alertsRouter from './routes/alerts';
+import * as path from 'path';
 
 //Define the error object type to use
 type ServerError= {
@@ -19,6 +20,16 @@ const PORT: number = 3000;
 
 app.use(express.json());
 app.use(cors());
+console.log('type: ', process.env.NODE_ENV);
+if (process.env.NODE_ENV === 'production') {
+  console.log('i am inside the production mode fetching files...')
+  // statically serve everything in the build folder on the route '/build'
+  app.use('/', express.static(path.join(__dirname, '../build')));
+  // serve index.html on the route '/'
+  // app.get('/', (req, res) => {
+  //   return res.status(200).sendFile(path.join(__dirname, '../build/index.html'));
+  // });
+}
 
 app.use('/setup', setupRouter);
 app.use('/clusterdata', clusterRouter);
