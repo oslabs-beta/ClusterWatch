@@ -20,7 +20,7 @@ function Setup() {
           <img
             src={logo}
             alt="My Logo"
-            style={{ height: '180px', zIndex: '1000' }}
+            style={{ height: '180px', zIndex: '1000', objectFit: 'fill' }}
           />
 
           <div className="buttonContainer">
