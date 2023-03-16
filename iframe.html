@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <iframe
+      src="http://localhost:9090/graph"
+      frameborder="0"
+      width="2650"
+      height="1500"
+    ></iframe>
+    <!-- <iframe
+      src="http://localhost:3001/d/5-EQNgbVz/prometheus-overview?orgId=1&refresh=5s&from=1677107175526&to=1677110775526&viewPanel=2&kiosk=true"
+      frameborder="0"
+      width="2000"
+      height="500"
+    ></iframe> -->
+  </body>
+</html>
+
+<!-- http://localhost:3001/d/5-EQNgbVz/prometheus-overview?orgId=1&refresh=5s&from=1677107175526&to=1677110775526&viewPanel=2 -->
+
+ Node Exporter = "http://localhost:3001/d/YEPQHRbVz/node-exporter-nodes?kiosk&orgId=1&refresh=30s&from=1677163156470&to=1677166756470"
+ Node Exporter metrics are important for monitoring Kubernetes clusters, as they provide information about the utilization of system resources such as CPU, memory, and disk usage, which is essential for identifying performance issues and optimizing resource allocation. I would rate the importance of Node Exporter metrics for Kubernetes at around 8 or 9 out of 10.
+
+ CoreDNS = "http://localhost:3001/d/vkQ0UHxik/coredns?orgId=1&refresh=10s&from=1677156726881&to=1677167526881&kiosk=true"
+ The importance of the CoreDNS dashboard metric for Kubernetes depends on your specific use case and the extent to which CoreDNS is being utilized within your cluster. For some deployments, CoreDNS may play a critical role in service discovery and network routing, making it important to monitor and track its performance. However, for other deployments that do not rely heavily on CoreDNS, this metric may be less important. In general, I would say the importance of this metric falls somewhere in the range of 4-7, depending on the context.
+
+ Kubernetes API Server = "http://localhost:3001/d/09ec8aa1e996d6ffcd6817bbaff4db1b/kubernetes-api-server?orgId=1&refresh=10s&from=1677164164299&to=1677167764299&kiosk=true"
+ The importance of the Kubernetes API Server metric in Grafana for Kubernetes depends on the specific use case and monitoring requirements.
+ In general, the Kubernetes API Server is a critical component of a Kubernetes cluster, and it is responsible for managing the cluster state and providing an interface for cluster management operations. Therefore, monitoring the API server's performance and health can be important to ensure the overall health and availability of the Kubernetes cluster.
+ On a scale of 0-10, the importance of the Kubernetes API Server metric in Grafana for Kubernetes could range from 7 to 10, depending on the specific use case and criticality of the Kubernetes cluster.
+
+ Kubernetes Kublet = "http://localhost:3001/d/3138fa155d5915769fbded898ac09fd9/kubernetes-kubelet?orgId=1&refresh=10s&from=1677164554072&to=1677168154072&kiosk=true"
+ On a scale of 0-10, I would say the importance of Kubernetes Kubelet metrics in Grafana for Kubernetes is around 7-8. The kubelet is a critical component of Kubernetes that runs on each node and is responsible for managing containers and ensuring they are running as intended. Metrics such as CPU and memory usage, network performance, and disk I/O are crucial for monitoring the health and performance of the kubelet and can provide valuable insights into the overall health of the cluster. However, the relative importance of these metrics may vary depending on the specific use case and workload being run on the cluster.
+
+ Node Exporter / USE Method / Node = "http://localhost:3001/d/xHEwHRb4z/node-exporter-use-method-node?orgId=1&refresh=30s&from=1677164871992&to=1677168471992&kiosk=true"
+ The importance of the Node Exporter / USE Method / Node metric in Grafana for Kubernetes depends on the specific use case and needs of the system being monitored. However, in general, this metric is important and can be assigned a score of 7-8 out of 10.
+ The USE method is a widely recognized and accepted method for measuring the utilization of system resources, including CPU, memory, and I/O. By tracking these metrics at the node level, it is possible to gain insights into the overall health and performance of the system. This can be particularly valuable in a Kubernetes environment where nodes are often dynamic and can experience varying levels of load.
+ Overall, the Node Exporter / USE Method / Node metric is a key performance indicator that can help to identify issues and optimize system performance, making it an important metric to monitor in a Kubernetes environment.
+
+
+Node Exporter / USE Method / Cluster = "http://localhost:3001/d/PtPwNRbVk/node-exporter-use-method-cluster?orgId=1&refresh=30s&from=1677165116649&to=1677168716649"
+The importance of the "Node Exporter / USE Method / Cluster" metric in Grafana for Kubernetes really depends on the specific needs and goals of the system being monitored.
+However, in general, this metric can be quite important for identifying performance bottlenecks, understanding how resources are being utilized across the cluster, and identifying potential issues related to CPU, memory, and disk usage.
+On a scale of 0-10, I would rate the importance of this metric at around 7 or 8.
+
+
+

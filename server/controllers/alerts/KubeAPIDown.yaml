@@ -1,0 +1,58 @@
+additionalPrometheusRulesMap:
+ custom-rules:
+  groups:
+  - name: Kubernetes cluster alerts
+    rules:
+    - alert: HighCPUUsage
+      expr: sum(rate(container_cpu_usage_seconds_total{namespace="default"}[5m])) by (pod_name) > 1
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: "High CPU usage in pod {{ $labels.pod_name }}"
+        description: "The pod {{ $labels.pod_name }} in the default namespace has had high CPU usage for the past 5 minutes."
+
+    - alert: HighMemoryUsage
+      expr: sum(container_memory_working_set_bytes{namespace="default"}) by (pod_name) > 1e+09
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: "High memory usage in pod {{ $labels.pod_name }}"
+        description: "The pod {{ $labels.pod_name }} in the default namespace has used more than 1GB of memory for the past 5 minutes."
+
+    - alert: PodCrashLoopBackOff
+      expr: rate(kube_pod_container_status_restarts_total{namespace="default",status="CrashLoopBackOff"}[5m]) > 0
+      for: 5m
+      labels:
+        severity: critical
+      annotations:
+        summary: "Pod {{ $labels.pod_name }} is in a CrashLoopBackOff state"
+        description: "The pod {{ $labels.pod_name }} in the default namespace has been in a CrashLoopBackOff state for the past 5 minutes."
+
+    - alert: KubeAPIDown
+      expr: up{job="kube-apiserver"} == 0
+      for: 1m
+      labels:
+        severity: critical
+      annotations:
+        summary: "Kubernetes API server is down"
+        description: "The Kubernetes API server is down and is not responding to requests."
+
+    - alert: KubeNodeDown
+      expr: up{job="kubelet"} == 0
+      for: 1m
+      labels:
+        severity: critical
+      annotations:
+        summary: "Kubernetes node is down"
+        description: "A Kubernetes node is down and is not responding to requests."
+
+    - alert: KubePersistentVolumeClaimPending
+      expr: kube_persistentvolumeclaims_pending{namespace="default"} > 0
+      for: 5m
+      labels:
+        severity: warning
+      annotations:
+        summary: "PersistentVolumeClaim pending"
+        description: "A PersistentVolumeClaim in the default namespace has been pending for the past 5 minutes."

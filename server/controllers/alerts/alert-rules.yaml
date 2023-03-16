@@ -1,0 +1,21 @@
+additionalPrometheusRulesMap:
+ custom-rules:
+  groups:
+  - name: GroupA
+    rules:
+    - alert: InstanceLowMemory
+      expr: :node_memory_MemAvailable_bytes:sum < 123
+      for: 1m
+      labels:
+        severity: critical
+      annotations:
+        summary: “Instance [{{ $labels.host }}] memory low”
+        description: “{{ $labels.host }} has less than 50G memory available”
+    - alert: InstanceDown
+      expr: up == 0
+      for: 1m
+      labels:
+        severity: critical
+      annotations:
+        summary: “Instance [{{ $labels.instance }}] down”
+        description: “[{{ $labels.instance }}] of job [{{ $labels.job }}] has been down for more than 1 minute.”
