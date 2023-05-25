@@ -18,9 +18,9 @@
 <img src ='https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white'>
 </p>
 ClusterWatch is an open-source tool which simplifies and provides an all-in-one hub for Kubernetes cluster monitoring.
-It reduces the need for devops engineers to configure their own Kubernetes monitoring stacks, and automates the process so you can get vital cluster information from various different tools, all in one place, in just a few seconds.
+It reduces the need for DevOps engineers to configure their own Kubernetes monitoring stacks, and automates the process so you can get vital cluster information from various different tools, all in one place, in just a few seconds.
 
-ClusterWatch provides a clear visualization of kubernetes cluster architecture with detailed descriptions and stats for components within your clusters. ClusterWatch also offers real time metrics data, presented via grafana charts, and built-in support for Prometheus and alert managing.
+ClusterWatch provides a clear visualization of Kubernetes cluster architecture with detailed descriptions and stats for components within your clusters. ClusterWatch also offers real time metrics data, presented via Grafana charts, and built-in support for Prometheus and alert managing.
 
 ## Features
 
