@@ -3,8 +3,6 @@ import Graph from 'react-graph-vis';
 import React, { useState, useEffect } from 'react';
 
 
-import { Box } from '@mui/material';
-import cpIcon from './icons/control-plane-icon.svg';
 import nsIcon from './icons/namespace-icon.svg';
 import nodeIcon from './icons/node-icon.svg';
 import deplIcon from './icons/deployment-icon.svg';
@@ -104,11 +102,6 @@ const helperFunc = (obj: { [k: string]: any }): string => {
   const val = div as unknown as string;
   return val;
 };
-// create a div
-// add an unorder list to the div
-// for each key: value pair in object
-// add list item to unordered list with corresponding key and value
-// return the div
 
 function Testvis() {
   const [graph, setGraph] = useState<clusterGraphData>({
@@ -124,13 +117,10 @@ function Testvis() {
     const func = async () => {
       try {
         const response = await fetch('http://localhost:3000/clusterdata');
-        // alert('finished fetch');
         if (!response.ok)
           throw new Error('failed to fetch data for visualizer');
         const data = await response.json();
 
-        // console.log('data', data);
-        // console.log('namespaces', data.namespaces);
         const test = document.createElement('div');
         test.className = 'popup';
         clusterData = data;
@@ -138,9 +128,7 @@ function Testvis() {
 
         const { pods, services, deployments, ingresses } = data;
         let controlPlaneId: string;
-        // console.log(clusterNodes);
         clusterData.nodes.forEach((node: { [k: string]: any }) => {
-          // if (node.name.includes('control-plane')) {
           const {
             name,
             uid,
@@ -176,11 +164,9 @@ function Testvis() {
 
           console.log(name, uid);
           test.innerText += `Name: ${name}\nUID: ${uid}`;
-          // console.log('found control-plane');
           localGraph.nodes.push({
             kind: 'node',
             id: `${node.name}-node`,
-            // label: node.name,
             title: helperFunc({
               name,
               uid,
@@ -189,22 +175,18 @@ function Testvis() {
               osImage,
               ...nodeConditions,
             }),
-            //label: 'node',
             size: 100,
             font: { color: '#ffffff', size: 48 },
             image: nodeIcon,
             shape: 'image',
           });
           controlPlaneId = `${node.name}-node`;
-          // }
         });
         clusterData.namespaces.forEach((ns) => {
           const nsId = `${ns.name}-ns`;
           localGraph.nodes.push({
             kind: 'namespace',
             id: nsId,
-            // label: `Namespace: ${ns.name}`,
-            //label: 'ns',
             title: helperFunc({
               nsId,
               id: ns.id,
@@ -235,8 +217,6 @@ function Testvis() {
               localGraph.nodes.push({
                 kind: 'pod',
                 id: podName,
-                // label: `Pod: ${pod.name}`,
-                //label: 'pod',
                 title: helperFunc({
                   name,
                   namespace,
@@ -249,7 +229,6 @@ function Testvis() {
                 labels: pod.labels,
                 size: 37.5,
                 font: { color: '#ffffff' },
-                // nodes: [`${ns.name}-ns`],
                 image: podIcon,
                 shape: 'image',
               });
@@ -257,7 +236,6 @@ function Testvis() {
             }
 
             if (pod.serviceAccount) {
-              // console.log('service name for pod:', pod.serviceAccount);
             }
           });
           services.forEach((service: any) => {
@@ -279,17 +257,14 @@ function Testvis() {
               localGraph.nodes.push({
                 kind: 'service',
                 id: serviceName,
-                // label: `Service: ${service.name}`,
                 title: helperFunc({
                   name,
                   namespace,
                   type,
                   ports: serviceInfo,
                 }),
-                //label: 'svc',
                 size: 37.5,
                 font: { color: '#ffffff' },
-                // nodes: [`${ns.name}-ns`],
                 image: svcIcon,
                 shape: 'image',
               });
@@ -315,8 +290,6 @@ function Testvis() {
               localGraph.nodes.push({
                 kind: 'deployment',
                 id: deploymentName,
-                // label: `Deployment: ${deployment.name}`,
-                // label: 'dpl',
                 title: helperFunc({
                   name,
                   namespace,
@@ -329,7 +302,6 @@ function Testvis() {
                 font: { color: '#ffffff' },
                 image: deplIcon,
                 shape: 'image',
-                // nodes: [`${ns.name}-ns`],
               });
               localGraph.edges.push({
                 from: nsId,
@@ -357,7 +329,6 @@ function Testvis() {
     <Graph
       graph={graph}
       options={options}
-      // events={events}
       getNetwork={(network) => {
         // ensure that the network eases in to fit the viewport
         setTimeout(
