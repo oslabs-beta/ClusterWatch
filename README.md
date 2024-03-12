@@ -50,7 +50,7 @@ ClusterWatch provides a clear visualization of Kubernetes cluster architecture w
 
 4. Make sure you have your kubernetes cluster up and running. If you'd like to set up a cluster to test the application, install docker and minikube or kind to get started.
 
-5. Start the application:
+5. Navigate to the repo you've cloned and start the application:
    `npm start`
 
 6. Navigate to: `http://localhost:3000`
